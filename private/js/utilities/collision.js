@@ -1,3 +1,5 @@
+const math = require('./math');
+
 module.exports = (self, others) => {
     // if (self.dead) {
     //     return;
@@ -6,7 +8,7 @@ module.exports = (self, others) => {
         // if (self.owner && self.owner.id == others[i].id) {
         //     continue;
         // }
-        collisionDistance = pointDistance(self.x, self.y, others[i].x, others[i].y);
+        collisionDistance = math.pointDistance(self.x, self.y, others[i].x, others[i].y);
         if (collisionDistance < self.collisionRadius || others[i].collisionRadius) {
             return true;
         }
