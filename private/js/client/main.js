@@ -11,6 +11,8 @@ class Client {
             this.socket.send(JSON.stringify({
                 type: 'view',
                 data: {
+                    x: 0,
+                    y: 0,
                     width: window.innerWidth,
                     height: window.innerHeight,
                 },
