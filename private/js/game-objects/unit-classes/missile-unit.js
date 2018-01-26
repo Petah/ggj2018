@@ -19,7 +19,7 @@ module.exports = class MissileUnit extends Unit {
             x,
             y,
             direction,
-            sprite,
+            5,
             xVelocity,
             yVelocity,
             player,

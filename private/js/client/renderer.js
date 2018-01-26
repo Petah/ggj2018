@@ -3,6 +3,8 @@ const assets = {
     2: '/images/ship.png',
     3: '/images/background_nebula.jpg',
     4: '/images/projectile.png',
+    5: '/images/collector-front-1.png',
+    6: '/images/collector-front-1.png',
 };
 
 class Renderer {
@@ -35,7 +37,6 @@ class Renderer {
     cameraPanAbsolute(x, y) {
         this.layers.foreground.setTransform(-x, -y);
         this.layers.background.setTransform(-x, -y);
-        // this.layers.background.setTransform(-x, -y);
     }
 
     // cameraPanRelative(xPos, yPos) {

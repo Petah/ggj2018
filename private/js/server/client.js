@@ -58,6 +58,9 @@ module.exports = class Client {
     }
 
     loop(deltaTime, currentTime) {
+        this.view.x = this.game.gameObjects[0] ? this.game.gameObjects[0].x - this.view.width / 2 : 0;
+        this.view.y = this.game.gameObjects[0] ? this.game.gameObjects[0].y - this.view.height / 2 : 0;
+
         const updates = [];
         let i = this.game.gameObjects.length;
         while (i--) {
@@ -78,8 +81,8 @@ module.exports = class Client {
         }
         this.send('update', {
             renderer: {
-                x: this.game.gameObjects[0] ? this.game.gameObjects[0].x - this.view.width / 2 : 0,
-                y: this.game.gameObjects[0] ? this.game.gameObjects[0].y - this.view.height / 2 : 0,
+                x: this.view.x,
+                y: this.view.y,
                 zoom: 1,
             },
             updates: updates,
