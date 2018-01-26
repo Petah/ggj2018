@@ -1,6 +1,6 @@
 const MovableGameObject = require("../movable-game-object")
 const Weapon = require("./weapon");
-const Team = require("./../../team");
+const Team = require("../../player-collections/team");
 const Projectile = require("./../projectile");
 
 module.export = class Unit extends MovableGameObject{
