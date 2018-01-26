@@ -1,5 +1,5 @@
-const GameObject = require('./game-object');
-const collision = require("./../utilities/collision");
+const GameObject = require('../game-object');
+const collision = require("../../utilities/collision");
 
 class Satellite extends GameObject{
     constructor(
@@ -23,11 +23,23 @@ class Satellite extends GameObject{
         this.timeToSteal = 5000;
         this.timeToHold = 30000;
         this.holdId = 0;
+        this.type = 'SatelliteDish';
         this.hold(this.owningTeam);
     }
 
     loop(deltaTime, currentTime) {
-
+        super.loop(deltaTime, currentTime);
+        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        let i = collisions.length;
+        while (i--) {
+            if (collisions[i].id !== this.id) {
+                switch(collisions[i].type) {
+                    case 'Unit':
+                        this.onCollisionWithUnit(collisions[i]);
+                        break;
+                }
+            }
+        }
     }
 
     onCollisionWithUnit(unit) {
