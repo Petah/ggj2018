@@ -9,13 +9,13 @@ module.exports = class extends GameObject{
         xVelocity,
         yVelocity
     ){
-        super(x,y,direction,sprite);
+        super(x, y, direction, sprite);
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
     }
 
     move(deltaTime){
-        this.x += (xVelocity * deltaTime);
-        this.y += (yVelocity * deltaTime);
+        this.x += this.xVelocity * deltaTime;
+        this.y += this.yVelocity * deltaTime;
     }
 }
