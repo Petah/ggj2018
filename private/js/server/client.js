@@ -1,4 +1,5 @@
 const logger = require('./logger')(__filename);
+const WebSocket = require('ws');
 const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
 const KamikazeUnit = require('../game-objects/unit-classes/kamikaze-unit');
@@ -29,6 +30,10 @@ module.exports = class Client {
             message = JSON.parse(message);
             // logger.log('Client message', message);
             switch (message.type) {
+                case 'view': {
+                    this.game.reset();
+                }
+
                 case 'view': {
                     logger.log('Client view', message.data);
                     this.view.x = message.data.x;
@@ -91,6 +96,10 @@ module.exports = class Client {
     }
 
     send(type, data) {
+        if (this.webSocketClient.readyState !== WebSocket.OPEN) {
+            logger.log('Socket not ready')
+            return;
+        }
         this.webSocketClient.send(JSON.stringify({
             type: type,
             data: data,

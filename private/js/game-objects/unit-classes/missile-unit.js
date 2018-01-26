@@ -33,13 +33,13 @@ module.exports = class MissileUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
-        if (this.direction >= 225 && this.direction <= 315) {
+        if (this.direction >= 230 && this.direction <= 320) {
             // Up
             this.sprite = 6;
-        } else if (this.direction >= 135 && this.direction <= 225) {
+        } else if (this.direction >= 140 && this.direction <= 230) {
             // Left
             this.sprite = 7;
-        } else if (this.direction >= 45 && this.direction <= 135) {
+        } else if (this.direction >= 50 && this.direction <= 140) {
             // Down
             this.sprite = 5;
         } else {

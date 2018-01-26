@@ -6,15 +6,15 @@ class TitleUi {
 
     render() {
         const players = this.game.players.map((player, i) => {
-            return 'Player ' + (i + 1) + ' joined!';
+            return 'Player ' + (i + 1) + ' (' + (player.keyboard ? 'keyboard' : ('gamepad ' + (player.input.gamepadIndex + 1))) + ') joined!';
         });
         this.element.innerHTML = `
-            Press [A] to join.<br/>
+            Press [A] or [Space] to join.<br/>
             <br/>
             ${players.join('<br/>')}
             <br/>
             <br/>
-            Press [Start] to start game.<br/>
+            Press [Start] or [Enter] to start game.<br/>
         `;
     }
 

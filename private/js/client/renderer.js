@@ -80,7 +80,8 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
-        console.log(this.textures[spriteAsset]);
+        console.log('Create sprite', id, spriteAsset);
+
         const sprite = new PIXI.Sprite(this.textures[spriteAsset]);
         sprite.anchor.set(0.5);
         sprite.x = x;
@@ -110,6 +111,24 @@ class Renderer {
         this.sprites[id].y = y;
         this.sprites[id].rotation = direction * Math.PI / 180;
         this.sprites[id].texture = this.textures[spriteAsset];
+    }
+
+    cullSprites(gameObjects) {
+        for (let id in this.sprites) {
+            let found = false;
+            let i = gameObjects.length;
+            while (i--) {
+                if (gameObjects[i][0] == id) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                console.log('Removing sprite', id);
+                this.layers.foreground.removeChild(this.sprites[id]);
+                delete this.sprites[id];
+            }
+        }
     }
 
     getWidth() {
