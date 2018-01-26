@@ -4,7 +4,7 @@ const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
 const BulletHellPowerUp = require('../powerups/bullet-hell-powerup');
 const FOVPowerUp = require('../powerups/fov-powerup');
-const FauxPowerUp = require('../po')
+const FauxPowerUp = require('../powerups/faux-powerup')
 
 module.exports = class Game {
     constructor() {
@@ -91,7 +91,7 @@ module.exports = class Game {
                 30,
                 5));
         } else if (randomPowerUp <= 0.4) {
-            this.gameObjects.push(new FOVPowerup(
+            this.gameObjects.push(new FOVPowerUp(
                 this,
                 this.mapWidth/2,
                 this.mapHeight/2,
@@ -100,7 +100,7 @@ module.exports = class Game {
                 30,
                 10));
         } else if (randomPowerUp <= 0.6) {
-            this.gameObjects.push(new FOVPowerup(
+            this.gameObjects.push(new ShieldPowerUp(
                 this,
                 this.mapWidth/2,
                 this.mapHeight/2,
@@ -109,7 +109,7 @@ module.exports = class Game {
                 30,
                 10));
         } else if (randomPowerUp <= 0.8) {
-            this.gameObjects.push(new FOVPowerup(
+            this.gameObjects.push(new SpeedPowerUp(
                 this,
                 this.mapWidth/2,
                 this.mapHeight/2,
