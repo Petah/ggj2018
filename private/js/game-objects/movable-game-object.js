@@ -49,6 +49,13 @@ module.exports = class extends GameObject {
         this.y += this.yVelocity * deltaTime;
         if (this.oldX != this.x || this.oldY != this.y) {
             this.direction = math.pointDirection(this.oldX, this.oldY, this.x, this.y);
+            while (this.direction < 0) {
+                this.direction += 360;
+            }
+
+            while (this.direction >= 360) {
+                this.direction -= 360;
+            }
         }
     }
 }

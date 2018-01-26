@@ -9,7 +9,8 @@ class FOVPowerUp extends GameObject {
         direction,
         sprite,
         collisionRadius,
-        duration
+        duration,
+        increase
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.game = game;
@@ -19,6 +20,9 @@ class FOVPowerUp extends GameObject {
         this.sprite = sprite;
         this.collisionRadius = collisionRadius;
         this.duration = duration;
+        this.increase = increase;
+        this.timeElapsed = 0;
+        this.isActive = false;
         this.type = 'FOVPowerup';
     }
 
@@ -30,23 +34,23 @@ class FOVPowerUp extends GameObject {
             if (collisions[i].id !== this.id) {
                 switch(collisions[i].type) {
                     case 'Unit':
+                        var unit = collisions[i];
                         this.onCollisionWithUnit(collisions[i]);
                         break;
                 }
             }
         }
+
+        if (this.isActive) {
+            this.timeElapsed += deltaTime;
+            if (this.timeElapsed >= this.duration) {
+                //zoom camera back in
+                this.isActive = false;
+            }
+        }
     }
 
     onCollisionWithUnit(unit) {
-        let increase = 5;
-
         // zoom camera out
-
-        setTimeout(() => {
-            unit.xVelocity -= increase;
-            unit.yVelocity -= increase;
-        }, this.duration);
-
-        //destroy()?? dont wanna render anymore
     }
 }

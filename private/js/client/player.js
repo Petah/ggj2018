@@ -1,5 +1,5 @@
 class Player {
-    constructor(game) {
+    constructor(game, input) {
         this.game = game;
 
         this.id = genUid();
@@ -10,7 +10,7 @@ class Player {
         this.rightDown = false;
         this.shootDown = false;
 
-        this.input = new Controller(this);
+        this.input = null;
 
         this.game.client.send('createPlayer', {
             id: this.id,
@@ -18,21 +18,6 @@ class Player {
     }
 
     loop(deltaTime, currentTime) {
-        let horizontalAxis = this.game.gamepads[this.gamepadIndex].axes[0];
-        if (Math.abs(horizontalAxis) < 0.3) {
-            horizontalAxis = 0;
-        }
-        let verticalAxis = this.game.gamepads[this.gamepadIndex].axes[1];
-        if (Math.abs(verticalAxis) < 0.3) {
-            verticalAxis = 0;
-        }
-        this.game.client.send('updateInput', {
-            id: this.id,
-            move: {
-                x: horizontalAxis,
-                y: verticalAxis,
-            },
-            shoot: this.game.gamepads[this.gamepadIndex].buttons[0].pressed,
-        });
+        this.input.loop(deltaTime, currentTime);
     }
 }

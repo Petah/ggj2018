@@ -128,4 +128,9 @@ module.exports = class Game {
                 10));
         }
     }
+
+    reset() {
+        logger.log('Game reset');
+        this.gameObjects = [];
+    }
 }

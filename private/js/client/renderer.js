@@ -4,9 +4,15 @@ const assets = {
     3: '/images/background_nebula.jpg',
     4: '/images/projectile.png',
     5: '/images/collector-front-1.png',
-    6: '/images/collector-front-1.png',
-    7: '/images/bg-tiled-bacteria.jpg',
-    8: '/images/bg-tiled-stones.jpg',
+    6: '/images/collector-back-1.png',
+    7: '/images/collector-left-1.png',
+    8: '/images/collector-right-1.png',
+    9: '/images/collector-front-2.png',
+    10: '/images/collector-back-2.png',
+    11: '/images/collector-left-2.png',
+    12: '/images/collector-right-2.png',
+    700: '/images/bg-tiled-bacteria.jpg',
+    800: '/images/bg-tiled-stones.jpg',
 };
 
 class Renderer {
@@ -16,6 +22,11 @@ class Renderer {
         this.width = width || document.body.clientWidth;
         this.height = height || document.body.clientHeight;
         this.options = options;
+
+        this.textures = {};
+        for (let key in assets) {
+            this.textures[key] = PIXI.Texture.fromImage(assets[key]);
+        }
     }
 
     cameraZoomAbsolute(zoom) {
@@ -41,13 +52,13 @@ class Renderer {
         this.layers.background.setTransform(-x, -y);
     }
 
-    // cameraPanRelative(xPos, yPos) {
-    //     if (!xPos || !yPos) {
+    // cameraPanRelative(x, y) {
+    //     if (!x || !y) {
     //         return null;
     //     }
 
-    //     this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
-    //     this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
+    //     this.layers.foreground.setTransform((this.layers.foreground.x + x), (this.layers.foreground.y + y));
+    //     this.layers.background.setTransform((this.layers.background.x + (x * 0.1)), (this.layers.background.y + (y * 0.1)));
     // }
 
     resizeViewport() {
@@ -68,11 +79,13 @@ class Renderer {
         return this.sprites[id];
     }
 
-    createSprite(id, assetPath, xPos = 0, yPos = 0, anchor = 0.5, layer = 'foreground') {
-        const sprite = PIXI.Sprite.fromImage(assetPath);
+    createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
+        console.log('Create sprite', id, spriteAsset);
+
+        const sprite = new PIXI.Sprite(this.textures[spriteAsset]);
         sprite.anchor.set(0.5);
-        sprite.x = xPos;
-        sprite.y = yPos;
+        sprite.x = x;
+        sprite.y = y;
 
         switch (layer) {
             case 'background': {
@@ -90,13 +103,32 @@ class Renderer {
 
     moveSprite(id, x, y, direction, spriteAsset) {
         if (!this.sprites[id]) {
-            this.sprites[id] = this.createSprite(id, assets[spriteAsset], x, y);
+            this.sprites[id] = this.createSprite(id, spriteAsset, x, y);
             return;
         }
 
         this.sprites[id].x = x;
         this.sprites[id].y = y;
         this.sprites[id].rotation = direction * Math.PI / 180;
+        this.sprites[id].texture = this.textures[spriteAsset];
+    }
+
+    cullSprites(gameObjects) {
+        for (let id in this.sprites) {
+            let found = false;
+            let i = gameObjects.length;
+            while (i--) {
+                if (gameObjects[i][0] == id) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                console.log('Removing sprite', id);
+                this.layers.foreground.removeChild(this.sprites[id]);
+                delete this.sprites[id];
+            }
+        }
     }
 
     getWidth() {
@@ -141,7 +173,7 @@ class Renderer {
             this.renderer.stage.addChild(this.layers.foreground);
 
             // Init background
-            let texture = PIXI.Texture.fromImage(assets[8]);
+            let texture = PIXI.Texture.fromImage(assets[800]);
             this.sprites.background = new PIXI.extras.TilingSprite(texture, 15360, 9792);
             this.sprites.background.setTransform(-7680, -4896);
             this.layers.background.addChild(this.sprites.background);

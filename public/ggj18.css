@@ -14,9 +14,18 @@ body {
 
 #game {
     flex: 0 1 auto;
-    /* display: none; */
+    display: none;
 }
 
 #title {
     color: white;
+}
+
+#hud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: transparent;
 }

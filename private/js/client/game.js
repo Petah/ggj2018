@@ -47,17 +47,33 @@ class Game {
         this.started = false;
     }
 
-    createPlayer(gamepadIndex) {
+    createGamepadPlayer(gamepadIndex) {
         let found = false;
         let p = this.players.length;
         while (p--) {
-            if (this.players[p].gamepadIndex == gamepadIndex) {
+            if (this.players[p].input.gamepadIndex == gamepadIndex) {
                 return;
             }
         }
-        console.log('Creating player');
+        console.log('Creating gamepad player');
         const player = new Player(this);
-        player.gamepadIndex = gamepadIndex;
+        const input = new Gamepad(this, player, gamepadIndex);
+        player.input = input;
+        this.players.push(player);
+    }
+
+    createKeyboardPlayer() {
+        let p = this.players.length;
+        while (p--) {
+            if (this.players[p].keyboard) {
+                return;
+            }
+        }
+        console.log('Creating keyboard player');
+        const player = new Player(this);
+        const input = new Keyboard(this, player);
+        player.keyboard = true;
+        player.input = input;
         this.players.push(player);
     }
 
@@ -78,9 +94,8 @@ class Game {
 
                         // A
                         if (this.gamepads[i].buttons[0].pressed) {
-                            this.createPlayer(i);
+                            this.createGamepadPlayer(i);
                         }
-                        this.titleUi.render();
 
                         // Start
                         if (this.gamepads[i].buttons[9] && this.gamepads[i].buttons[9].pressed) {
@@ -91,6 +106,18 @@ class Game {
                     }
                 }
 
+                if (Keyboard.buttons[32]) {
+                    this.createKeyboardPlayer();
+                }
+
+                if (Keyboard.buttons[13]) {
+                    this.titleUi.hide();
+                    this.gameUi.show();
+                    this.state = 'game';
+                }
+
+                this.titleUi.render();
+
                 break;
             }
             case 'game': {
@@ -98,6 +125,7 @@ class Game {
                 while (p--) {
                     this.players[p].loop(deltaTime, currentTime);
                 }
+                this.gameUi.render();
                 break;
             }
         }
