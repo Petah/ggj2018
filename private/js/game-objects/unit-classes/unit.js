@@ -1,14 +1,20 @@
 const MoveableGameObject = require("./moveable-game-object")
 const Weapon = require("./weapon")
+const Team = require("./../../team")
 
 module.export = class Unit {
-    constructor(team
-        , teamColor
-        , weaponArray) {
+    constructor(
+        x,
+        y,
+        direction,
+        sprite,
+        xVelocity,
+        yVelocity,
+        team,
+        teamColor,
+        weaponArray) {
+        super(x, y, direction, sprite, xVelocity, yVelocity);
         this.team        = team;
-        this.x           = x;
-        this.y           = y;
-        this.sprite      = sprite;
         this.teamColor   = teamColor;
         this.weaponArray = weaponArray;
     }
