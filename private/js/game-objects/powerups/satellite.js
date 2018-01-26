@@ -1,16 +1,15 @@
 const GameObject = require('../game-object');
-const SatelliteDish = require('private/js/game-objects/powerups/satellite');
 const collision = require("../../utilities/collision");
-const Satellite = require('satellite');
 
-class SatellitePart extends GameObject {
+module.exports = class Satellite extends GameObject{
     constructor(
         game,
         x,
         y,
         direction,
         sprite,
-        collisionRadius
+        collisionRadius,
+        owningTeam
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.game = game;
@@ -19,7 +18,13 @@ class SatellitePart extends GameObject {
         this.direction = direction;
         this.sprite = sprite;
         this.collisionRadius = collisionRadius;
-        this.type = 'SatellitePart';
+        this.owningTeam = owningTeam;
+
+        this.timeToSteal = 5000;
+        this.timeToHold = 30000;
+        this.holdId = 0;
+        this.type = 'SatelliteDish';
+        this.hold(this.owningTeam);
     }
 
     loop(deltaTime, currentTime) {
@@ -38,17 +43,27 @@ class SatellitePart extends GameObject {
     }
 
     onCollisionWithUnit(unit) {
-        if (unit.team.satelliteParts++ === Satellite.REQUIRED_PARTS) {
-            new SatelliteDish(this.game,
-                this.x,
-                this.y,
-                this.direction,
-                'satellite-sprite-path',
-                this.collisionRadius,
-                unit.team);
-        } else {
-            console.log('Collected another part');
+        if (unit.team !== this.owningTeam) {
+            console.log('Stealing satellite!');
+            clearTimeout(this.holdId);
+            setTimeout(() => {
+                this.owningTeam = unit.team;
+                this.hold(this.owningTeam);
+            }, this.timeToSteal);
         }
-        //destroy()?? dont wanna render anymore
     }
-}
+
+    hold(team) {
+        this.holdId = setTimeout(() => {
+            if (team === this.owningTeam) {
+                this.explode();
+            }
+        }, this.timeToHold)
+    }
+
+    explode() {
+        //var runinsOfNorthKorea = launchNuclearMissileFromUSAUsingDonaldTrumpsCreds();
+    }
+};
+
+Satellite.REQUIRED_PARTS = 4;

@@ -1,16 +1,15 @@
 const GameObject = require('../game-object');
-const SatelliteDish = require('private/js/game-objects/powerups/satellite');
 const collision = require("../../utilities/collision");
-const Satellite = require('satellite');
 
-class SatellitePart extends GameObject {
+class BulletHell extends GameObject {
     constructor(
         game,
         x,
         y,
         direction,
         sprite,
-        collisionRadius
+        collisionRadius,
+        duration,
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.game = game;
@@ -19,7 +18,8 @@ class SatellitePart extends GameObject {
         this.direction = direction;
         this.sprite = sprite;
         this.collisionRadius = collisionRadius;
-        this.type = 'SatellitePart';
+        this.duration = duration;
+        this.type = 'BulletHell';
     }
 
     loop(deltaTime, currentTime) {
@@ -38,17 +38,12 @@ class SatellitePart extends GameObject {
     }
 
     onCollisionWithUnit(unit) {
-        if (unit.team.satelliteParts++ === Satellite.REQUIRED_PARTS) {
-            new SatelliteDish(this.game,
-                this.x,
-                this.y,
-                this.direction,
-                'satellite-sprite-path',
-                this.collisionRadius,
-                unit.team);
-        } else {
-            console.log('Collected another part');
-        }
+        let currentFireRate = unit.weapon.fireRate;
+        unit.weapon.fireRate = 1;
+
+        setTimeout(() => {
+            unit.weapon.fireRate = currentFireRate;
+        }, this.duration);
         //destroy()?? dont wanna render anymore
     }
 }
