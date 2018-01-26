@@ -5,6 +5,8 @@ const assets = {
     4: '/images/projectile.png',
     5: '/images/collector-front-1.png',
     6: '/images/collector-front-1.png',
+    7: '/images/bg-tiled-bacteria.jpg',
+    8: '/images/bg-tiled-stones.jpg',
 };
 
 class Renderer {
@@ -139,8 +141,9 @@ class Renderer {
             this.renderer.stage.addChild(this.layers.foreground);
 
             // Init background
-            let texture = PIXI.Texture.fromImage(assets['3']);
-            this.sprites.background = new PIXI.extras.TilingSprite(texture, 7680, 4896);
+            let texture = PIXI.Texture.fromImage(assets[8]);
+            this.sprites.background = new PIXI.extras.TilingSprite(texture, 15360, 9792);
+            this.sprites.background.setTransform(-7680, -4896);
             this.layers.background.addChild(this.sprites.background);
 
             window.addEventListener('resize', this.resizeViewport.bind(this));
