@@ -3,6 +3,7 @@ class AudioBuffer {
         this.context = context;
         this.urls = [
             '/sounds/shoot.wav',
+            '/sounds/button.wav',
         ];
         this.buffer = [];
     }
@@ -50,7 +51,6 @@ class Audio {
         let bufferedSound = this.getBuffer().getSoundByIndex(soundId);
         if (!bufferedSound) {
             console.error(`Could not find sound with index "${soundId}".`);
-
             return null;
         }
 

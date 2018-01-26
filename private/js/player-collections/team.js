@@ -12,6 +12,8 @@ class Team {
             this.xSpawnLocation = xSpawnLocation;
             this.ySpawnLocation = ySpawnLocation;
             this.spawnDirection = spawnDirection;
+
+            this.satelliteParts = 0;
     }
 
     getTeamColor() {
