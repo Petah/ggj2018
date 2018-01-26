@@ -29,7 +29,8 @@ class Renderer {
             return null;
         }
 
-        this.renderer.stage.setTransform((this.renderer.stage.x + xPos), (this.renderer.stage.y + yPos));
+        this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
+        this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
     }
 
     resizeViewport() {
