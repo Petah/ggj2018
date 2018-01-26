@@ -12,4 +12,8 @@ module.exports = class GameObject {
         this.direction = direction;
         this.collisionRadius = this.collisionRadius;
     }
+
+    loop(deltaTime, currentTime) {
+
+    }
 }

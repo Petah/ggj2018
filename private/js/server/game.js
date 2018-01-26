@@ -1,5 +1,6 @@
 const logger = require('./logger')(__filename);
 const Server = require('./server');
+const GameObject = require('../game-objects/game-object');
 
 module.exports = class Game {
     constructor() {
@@ -11,7 +12,7 @@ module.exports = class Game {
         this.server.start();
 
         this.gameObjects = [
-
+            new GameObject(10, 10, 0, 1),
         ];
 
         let lastSecond = 0;

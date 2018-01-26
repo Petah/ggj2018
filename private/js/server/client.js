@@ -43,6 +43,7 @@ module.exports = class Client {
                 updates.push([
                     this.game.gameObjects[i].x,
                     this.game.gameObjects[i].y,
+                    this.game.gameObjects[i].direction,
                     this.game.gameObjects[i].sprite,
                 ]);
             }

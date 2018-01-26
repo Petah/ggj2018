@@ -19,7 +19,12 @@ class Client {
 
         // Listen for messages
         this.socket.addEventListener('message', (event) => {
-            console.log('Message from server ', event.data);
+            const message = JSON.parse(event.data);
+            switch (message.type) {
+                case 'update': {
+                    console.log('Update', message.data);
+                }
+            }
         });
     }
 }
