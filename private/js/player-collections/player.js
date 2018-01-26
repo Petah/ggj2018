@@ -9,11 +9,19 @@ class Player {
     }
 
     initializeUnit() {
+        // This is a temp unit
+
         let singleUnit = new KamikazeUnit(
             this.team.xSpawnLocation,
             this.team.ySpawnLocation,
             this.team.spawnDirection,
+            0,
+            0,
+            this.team,
+            this.team.getTeamColor()
             );
-        thsi.unitArray.add()
+
+        this.unitArray.add(singleUnit);
     }
+
 }
