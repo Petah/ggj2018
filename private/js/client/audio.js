@@ -1,99 +1,93 @@
+class AudioBuffer {
+    constructor(context) {
+        this.context = context;
+        this.urls = [
+            '/sounds/shoot.wav',
+        ];
+        this.buffer = [];
+    }
+
+    loadSound(url, index) {
+        let request = new XMLHttpRequest();
+        let thisBuffer = this;
+
+        request.open('get', url, true);
+        request.responseType = 'arraybuffer';
+        request.onload = function () {
+            thisBuffer.context.decodeAudioData(request.response, function (buffer) {
+                thisBuffer.buffer[index] = buffer;
+            });
+        };
+        request.send();
+    }
+
+    loadAll() {
+        this.urls.forEach((url, index) => {
+            this.loadSound(url, index);
+        });
+    }
+
+    getSoundByIndex(index) {
+        console.log(`Getting sound with index "${index}"`);
+
+        return this.buffer[index];
+    }
+
+};
+
 class Audio {
     constructor() {
-        this.clips = {
-            shoot: '../public/sounds/shoot.wav',
-            //die: '../public/sounds/die.wav'
-        };
-
-        this.sources = {};
         this.context = null;
-        this.bufferLoader = null;
+        this.buffer = null;
     }
 
     init() {
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        this.context = new AudioContext();
+        this.getGainNode().connect(this.getContext().destination);
+        this.getBuffer().loadAll();
+    }
 
-        try {
-            this.bufferLoader = new BufferLoader(
-                this.context,
-                this.clips.values(),
-                this.finishedLoading
-            );
+    play(soundId) {
+        let bufferedSound = this.getBuffer().getSoundByIndex(soundId);
+        if (!bufferedSound) {
+            console.error(`Could not find sound with index "${soundId}".`);
 
-            this.bufferLoader.load();
-        } catch (e) {
-            alert('Web Audio API unsupported');
+            return null;
         }
 
-        console.log('Audio loaded')
+        this.source = this.getContext().createBufferSource();
+        this.source.buffer = bufferedSound;
+        this.source.connect(this.getGainNode());
+        this.source.start(0);
     }
 
-    finishedLoading(bufferList) {
-        let i = 0;
-        while (i < bufferList.length) {
-            let source = this.context.createBufferSource();
-            source.buffer = bufferList[i];
-            source.connect(context.destination);
-            this.sources[this.clips.keys()[i]] = source;
+    stop() {
+        this.gainNode.gain.exponentialRampToValueAtTime(0.001, this.getContext().currentTime + 0.5);
+        this.source.stop(this.getContext().currentTime + 0.5);
+    }
 
-            console.log('Loaded clip:' + this.clips.keys()[i]);
+    getGainNode() {
+        if (!this.gainNode) {
+            this.gainNode = this.getContext().createGain();
         }
 
-        this.play('shoot');
+        return this.gainNode;
     }
 
-    play(name) {
-        let source = this.sources[name];
-        source.start(0);
+    getContext() {
+        if (!this.context) {
+            let AudioContext = window.AudioContext || window.webkitAudioContext;
+            
+            this.context = new AudioContext();
+        }
 
-        console.log('Played clip:' + name);
-    }
-}
-
-class BufferLoader {
-    constructor(context, urlList, callback) {
-        this.context = context;
-        this.urlList = urlList;
-        this.onload = callback;
-        this.bufferList = [];
-        this.loadCount = 0;
+        return this.context;
     }
 
-    loadBuffer(url, index) {
-        let request = new XMLHttpRequest();
-        request.open("GET", url, true);
-        request.responseType = "arraybuffer";
+    getBuffer() {
+        if (!this.buffer) {
+            this.buffer = new AudioBuffer(this.getContext());
+        }
 
-        let loader = this;
-
-        request.onload = function () {
-            loader.context.decodeAudioData(
-                request.response,
-                function (buffer) {
-                    if (!buffer) {
-                        alert('error decoding file data: ' + url);
-                        return;
-                    }
-                    loader.bufferList[index] = buffer;
-                    if (++loader.loadCount === loader.urlList.length)
-                        loader.onload(loader.bufferList);
-                },
-                function (error) {
-                    console.error('decodeAudioData error', error);
-                }
-            );
-        };
-
-        request.onerror = function () {
-            alert('BufferLoader: XHR error');
-        };
-
-        request.send();
-    };
-
-    load() {
-        for (let i = 0; i < this.urlList.length; ++i)
-            this.loadBuffer(this.urlList[i], i);
+        return this.buffer;
     }
-}
+};

@@ -51,4 +51,9 @@ module.export = class Unit extends MovableGameObject{
     showDeathAnimation() {
 
     }
+
+    getSprite() {
+        console.log("Failed to gather sprite, non-overriden method");
+        return null;
+    }
 }

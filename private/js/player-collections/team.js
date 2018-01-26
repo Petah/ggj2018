@@ -13,4 +13,8 @@ class Team {
             this.ySpawnLocation = ySpawnLocation;
             this.spawnDirection = spawnDirection;
     }
+
+    getTeamColor() {
+        return this.color;
+    }
 }
