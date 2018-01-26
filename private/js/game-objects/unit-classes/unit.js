@@ -1,6 +1,7 @@
 const MoveableGameObject = require("./moveable-game-object")
 const Weapon = require("./weapon")
 const Team = require("./../../team")
+const Projectile = require("./../projectile")
 
 module.export = class Unit extends MoveableGameObject{
 
@@ -13,7 +14,8 @@ module.export = class Unit extends MoveableGameObject{
         yVelocity,
         team,
         teamColor,
-        weaponArray) {
+        weaponArray,
+        health) {
         super(x, y, direction, sprite, xVelocity, yVelocity);
         this.team        = team;
         this.teamColor   = teamColor;
@@ -33,5 +35,9 @@ module.export = class Unit extends MoveableGameObject{
                     this.currentTime);
             }
         }
+    }
+
+    getHurt(projectile) {
+        this.health -= projectile.damage;
     }
 }
