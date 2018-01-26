@@ -1,0 +1,26 @@
+{
+  "name": "ggj18",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "http-server",
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/PetahNZ/ggj18.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/PetahNZ/ggj18#readme",
+  "dependencies": {
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-expect-file": "0.0.7",
+    "gulp-sass": "^3.1.0",
+    "http-server": "^0.11.1"
+  }
+}
