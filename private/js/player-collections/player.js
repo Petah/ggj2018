@@ -1,33 +1,12 @@
-const KamikazeUnit = require("../game-objects/unit-classes/kamikaze-unit");
-const Team = require("./team");
+const MissileUnit = require("../game-objects/unit-classes/missile-unit");
 
 module.exports = class Player {
-    constructor(game, playerNumber, team) {
+    constructor(game) {
         this.game = game;
-        this.playerNumber = playerNumber;
-        this.team = team;
-        this.unitArray = [];
-        this.initializeUnit();
+        this.units = [];
+
+        const unit = new MissileUnit(this.game, 500, 500, 0, 2, 0, 0);
+        this.units.push(unit);
+        this.game.gameObjects.push(unit);
     }
-
-    initializeUnit() {
-        // This is a temp unit
-
-        let singleUnit = new KamikazeUnit(
-            this.game,
-            300,
-            100,
-            180,
-            1,
-            2,
-            2,
-            this.team,
-            "red"
-            );
-
-        this.unitArray.push(singleUnit);
-        this.game.gameObjects.push(singleUnit);
-    }
-
-
 }

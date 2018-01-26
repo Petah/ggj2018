@@ -12,19 +12,20 @@ module.exports = class KamikazeUnit extends Unit {
         xVelocity,
         yVelocity,
         team,
-        teamColor) {
-            super(
-                game,
-                x,
-                y,
-                direction,
-                sprite,
-                xVelocity,
-                yVelocity,
-                team,
-                teamColor,
-                );
-        let weaponArray = [];
+        teamColor
+    ) {
+        super(
+            game,
+            x,
+            y,
+            direction,
+            sprite,
+            xVelocity,
+            yVelocity,
+            team,
+            teamColor,
+        );
+        this.type = 'KamikazeUnit';
     }
 
     attack() {

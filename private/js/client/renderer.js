@@ -15,40 +15,37 @@ class Renderer {
     }
 
     cameraZoomAbsolute(zoom) {
-        if (!zoom) {
-            return null;
-        }
+        // if (!zoom) {
+        //     return null;
+        // }
 
-        this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoom, zoom);
+        // this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoom, zoom);
     }
 
     cameraZoomRelative(zoomFactor) {
-        if (!zoomFactor) {
-            return null;
-        }
+        // if (!zoomFactor) {
+        //     return null;
+        // }
 
-        let zoomX = this.renderer.stage.scale.x + zoomFactor;
-        let zoomY = this.renderer.stage.scale.y + zoomFactor;
-        this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
+        // let zoomX = this.renderer.stage.scale.x + zoomFactor;
+        // let zoomY = this.renderer.stage.scale.y + zoomFactor;
+        // this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
     }
 
-    cameraPanAbsolute(xPos, yPos) {
-        if (!xPos || !yPos) {
-            return null;
-        }
-
-        this.layers.foreground.setTransform(xPos, yPos);
-        this.layers.background.setTransform((xPos * 0.1), (yPos * 0.1));
+    cameraPanAbsolute(x, y) {
+        // this.layers.foreground.setTransform(x, y);
+        // this.layers.background.setTransform(0, 0);
+        // this.layers.background.setTransform(-x, -y);
     }
 
-    cameraPanRelative(xPos, yPos) {
-        if (!xPos || !yPos) {
-            return null;
-        }
+    // cameraPanRelative(xPos, yPos) {
+    //     if (!xPos || !yPos) {
+    //         return null;
+    //     }
 
-        this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
-        this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
-    }
+    //     this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
+    //     this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
+    // }
 
     resizeViewport() {
         this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);

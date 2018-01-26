@@ -15,7 +15,7 @@ gulp.task('default', () => {
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('public'))
 
-    gulp.src('private/js/client/*.js')
+    gulp.src('private/js/client/**/*.js')
         .pipe(babel({
             presets: ['env']
         }))
