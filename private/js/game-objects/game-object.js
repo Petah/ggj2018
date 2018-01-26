@@ -3,11 +3,13 @@ module.exports = class GameObject {
         x,
         y,
         direction,
-        sprite
+        sprite,
+        collisionRadius
     ){
         this.x = x;
         this.y = y;
         this.sprite = sprite;
         this.direction = direction;
+        this.collisionRadius = this.collisionRadius;
     }
 }

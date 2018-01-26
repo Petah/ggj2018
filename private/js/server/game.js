@@ -1,48 +1,56 @@
-const WebSocket = require('ws');
-
-const wss = new WebSocket.Server({
-    port: 8081,
- });
-
-wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
-  });
-
-  ws.send('something');
-});
+const logger = require('./logger')(__filename);
+const Server = require('./server');
 
 module.exports = class Game {
+    constructor() {
+        this.server = new Server(this);
+    }
+
     start() {
-        console.log('Game start');
+        logger.log('Game start');
+        this.server.start();
 
-        this.gameObjects = [];
+        this.gameObjects = [
 
+        ];
+
+        let lastSecond = 0;
         let previousTime = 0;
+        let updates = 0;
         const gameLoop = () => {
             const hrTime = process.hrtime();
-            const currentTime = hrTime[0] * 1000000 + hrTime[1] / 1000;
+            const currentTime = hrTime[0] + hrTime[1] / 1000000000;
             const deltaTime = currentTime - previousTime;
             previousTime = currentTime;
-            this.loop(deltaTime);
+            updates++;
+
+            if (lastSecond <= currentTime - 1) {
+                lastSecond = currentTime;
+                logger.log('UPS', updates);
+                updates = 0;
+            }
+
+            this.loop(deltaTime, currentTime);
             this.id = setImmediate(gameLoop);
         };
         this.id = setImmediate(gameLoop);
     }
 
     stop() {
-        console.log('');
-        console.log('Game stop');
+        logger.log('');
+        logger.log('Game stop');
+        this.server.stop();
 
         clearImmediate(this.id);
         this.id = null;
     }
 
-    loop(deltaTime) {
+    loop(deltaTime, currentTime) {
         // process.stdout.write('.');
         let i = this.gameObjects.length;
         while (i--) {
-            this.gameObjects[i].loop(deltaTime);
+            this.gameObjects[i].loop(deltaTime, currentTime);
         }
+        this.server.loop(deltaTime, currentTime);
     }
 }
