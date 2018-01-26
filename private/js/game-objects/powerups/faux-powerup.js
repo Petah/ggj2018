@@ -21,7 +21,7 @@ class FauxPowerUp extends GameObject {
         this.collisionRadius = collisionRadius;
         this.duration = duration;
         this.healthDecrease = healthDecrease;
-        this.type = 'FauxPowerup';
+        this.type = 'FauxPowerUp';
     }
 
     loop(deltaTime, currentTime) {

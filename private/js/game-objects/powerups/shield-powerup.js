@@ -21,7 +21,7 @@ class ShieldPowerUp extends GameObject {
         this.collisionRadius = collisionRadius;
         this.duration = duration;
         this.healthIncrease = healthIncrease;
-        this.type = 'ShieldPowerup';
+        this.type = 'ShieldPowerUp';
     }
 
     loop(deltaTime, currentTime) {

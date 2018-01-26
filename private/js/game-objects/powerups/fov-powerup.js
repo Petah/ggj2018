@@ -23,7 +23,7 @@ class FOVPowerUp extends GameObject {
         this.increase = increase;
         this.timeElapsed = 0;
         this.isActive = false;
-        this.type = 'FOVPowerup';
+        this.type = 'FOVPowerUp';
     }
 
     loop(deltaTime, currentTime) {
