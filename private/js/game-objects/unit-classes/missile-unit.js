@@ -41,13 +41,11 @@ module.exports = class MissileUnit extends Unit {
             this.sprite = 7;
         } else if (this.direction >= 45 && this.direction <= 135) {
             // Down
-            this.sprite = 9;
+            this.sprite = 5;
         } else {
             // Right
             this.sprite = 8;
         }
-
-        console.log(this.sprite);
 
         // const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
         // let i = collisions.length;

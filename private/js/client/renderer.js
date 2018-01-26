@@ -15,7 +15,6 @@ const assets = {
     800: '/images/bg-tiled-stones.jpg',
 };
 
-
 class Renderer {
     constructor(width = null, height = null, options = {}) {
         this.sprites = {};
@@ -23,6 +22,11 @@ class Renderer {
         this.width = width || document.body.clientWidth;
         this.height = height || document.body.clientHeight;
         this.options = options;
+
+        this.textures = {};
+        for (let key in assets) {
+            this.textures[key] = PIXI.Texture.fromImage(assets[key]);
+        }
     }
 
     cameraZoomAbsolute(zoom) {
@@ -48,13 +52,13 @@ class Renderer {
         this.layers.background.setTransform(-x, -y);
     }
 
-    // cameraPanRelative(xPos, yPos) {
-    //     if (!xPos || !yPos) {
+    // cameraPanRelative(x, y) {
+    //     if (!x || !y) {
     //         return null;
     //     }
 
-    //     this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
-    //     this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
+    //     this.layers.foreground.setTransform((this.layers.foreground.x + x), (this.layers.foreground.y + y));
+    //     this.layers.background.setTransform((this.layers.background.x + (x * 0.1)), (this.layers.background.y + (y * 0.1)));
     // }
 
     resizeViewport() {
@@ -75,11 +79,12 @@ class Renderer {
         return this.sprites[id];
     }
 
-    createSprite(id, assetPath, xPos = 0, yPos = 0, anchor = 0.5, layer = 'foreground') {
-        const sprite = PIXI.Sprite.fromImage(assetPath);
+    createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
+        console.log(this.textures[spriteAsset]);
+        const sprite = new PIXI.Sprite(this.textures[spriteAsset]);
         sprite.anchor.set(0.5);
-        sprite.x = xPos;
-        sprite.y = yPos;
+        sprite.x = x;
+        sprite.y = y;
 
         switch (layer) {
             case 'background': {
@@ -97,13 +102,14 @@ class Renderer {
 
     moveSprite(id, x, y, direction, spriteAsset) {
         if (!this.sprites[id]) {
-            this.sprites[id] = this.createSprite(id, assets[spriteAsset], x, y);
+            this.sprites[id] = this.createSprite(id, spriteAsset, x, y);
             return;
         }
 
         this.sprites[id].x = x;
         this.sprites[id].y = y;
         this.sprites[id].rotation = direction * Math.PI / 180;
+        this.sprites[id].texture = this.textures[spriteAsset];
     }
 
     getWidth() {
