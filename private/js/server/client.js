@@ -67,6 +67,7 @@ module.exports = class Client {
             }
         }
         this.send('update', {
+            // @Todo
             renderer: {
                 x: 0,
                 y: 0,
