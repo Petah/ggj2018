@@ -50,6 +50,6 @@ class Satellite extends GameObject{
     }
 
     explode() {
-
+        launchNuclearMissileFromUSAUsingDonaldTrumpsCreds();
     }
 }
