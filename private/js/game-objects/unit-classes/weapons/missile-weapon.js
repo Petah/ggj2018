@@ -1,8 +1,12 @@
 const Weapon = require("./weapon");
-const Projectile = require("./projectiles/projectile");
+const MissileProjectile = require("./projectiles/missile-projectile");
 
 module.exports = class MissileLauncher extends Weapon {
-    constructor(game, x, y, direction, sprite) {
-        
+    constructor(game, unit) {
+        super(game, unit)
+    }
+
+    spawnProjectile(x, y, direction) {
+        this.game.gameObjects.push(new MissileProjectile(this.game, x, y, this.unit.direction));
     }
 }

@@ -29,8 +29,5 @@ module.exports = class Player {
         this.game.gameObjects.push(singleUnit);
     }
 
-    triggerSpawn(){
-
-    }
 
 }

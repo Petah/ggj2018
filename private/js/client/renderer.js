@@ -2,6 +2,7 @@ const assets = {
     1: '/images/bunny.png',
     2: '/images/ship.png',
     3: '/images/background_nebula.jpg',
+    4: '/images/projectile.png',
 };
 
 class Renderer {
@@ -13,8 +14,26 @@ class Renderer {
         this.options = options;
     }
 
+    cameraZoom(zoomFactor) {
+        if (!zoomFactor) {
+            return null;
+        }
+
+        let zoomX = this.renderer.stage.scale.x + zoomFactor;
+        let zoomY = this.renderer.stage.scale.y + zoomFactor;
+        this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
+    }
+
+    cameraPan(xPos, yPos) {
+        if (!xPos || !yPos) {
+            return null;
+        }
+
+        this.renderer.stage.setTransform((this.renderer.stage.x + xPos), (this.renderer.stage.y + yPos));
+    }
+
     resizeViewport() {
-        this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);        
+        this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);
     }
 
     getSprites() {
@@ -94,7 +113,7 @@ class Renderer {
         if (!this.renderer) {
             this.renderer = new PIXI.Application(this.getWidth(), this.getHeight(), this.getOptions());
 
-            // Init layers            
+            // Init layers
             this.layers.background = new PIXI.Container();
             this.renderer.stage.addChild(this.layers.background);
 
@@ -103,7 +122,7 @@ class Renderer {
 
             // Init background
             let texture = PIXI.Texture.fromImage(assets['3']);
-            this.sprites.background = new PIXI.extras.TilingSprite(texture, 1920, 1080);
+            this.sprites.background = new PIXI.extras.TilingSprite(texture, 3840, 2160);
             this.layers.background.addChild(this.sprites.background);
 
             window.addEventListener('resize', this.resizeViewport.bind(this));

@@ -10,6 +10,7 @@ class Client {
         this.leftDown = false;
         this.rightDown = false;
         this.spawnDown = false;
+        this.shootDown = false;
 
         this.bind();
 
@@ -43,9 +44,14 @@ class Client {
             }
             switch (message.type) {
                 case 'update': {
-                    let i = message.data.length;
+                    let i = message.data.updates.length;
                     while (i--) {
-                        renderer.moveSprite(...message.data[i]);
+                        renderer.moveSprite(...message.data.updates[i]);
+                    }
+
+                    if (message.data.renderer) {
+                        renderer.cameraPan(message.data.renderer.x, message.data.renderer.y);
+                        renderer.cameraZoom(message.data.renderer.zoom);
                     }
                 }
             }
