@@ -3,14 +3,16 @@ console.log('Main');
 
 class Client {
     connect() {
+        this.socketReady = false;
+        this.upDown = false;
+        this.downDown = false;
+        this.leftDown = false;
+        this.rightDown = false;
+
         this.bind();
-        this.move = {
-            x: 0,
-            y: 0,
-        }
 
         // Create WebSocket connection.
-        this.socket = new WebSocket('ws://127.0.0.1:8081');
+        this.socket = new WebSocket('ws://' + location.hostname + ':8081');
 
         const gameContainer = document.getElementById('game');
         const renderer = new Renderer();
@@ -18,6 +20,7 @@ class Client {
 
         // Connection opened
         this.socket.addEventListener('open', (event) => {
+            this.socketReady = true;
             this.send('view', {
                 x: 0,
                 y: 0,
@@ -45,10 +48,30 @@ class Client {
     }
 
     send(type, data) {
-        this.socket.send(JSON.stringify({
-            type: type,
-            data: data,
-        }));
+        if (this.socketReady) {
+            this.socket.send(JSON.stringify({
+                type: type,
+                data: data,
+            }));
+        }
+    }
+
+    move() {
+        const move = {
+            x: 0,
+            y: 0,
+        };
+        if (this.upDown) {
+            move.y = -1;
+        } else if (this.downDown) {
+            move.y = 1;
+        }
+        if (this.leftDown) {
+            move.x = -1;
+        } else if (this.rightDown) {
+            move.x = 1;
+        }
+        this.send('move', move);
     }
 
     bind() {
@@ -56,26 +79,23 @@ class Client {
             // event.ctrlKey
             switch (event.which) {
                 case 38: { // Up
-                    this.move.y = -1;
-                    this.send('move', this.move);
+                    this.upDown = true;
                     break;
                 }
                 case 40: { // Down
-                    this.move.y = 1;
-                    this.send('move', this.move);
+                    this.downDown = true;
                     break;
                 }
                 case 37: { // Left
-                    this.move.x = -1;
-                    this.send('move', this.move);
+                    this.leftDown = true;
                     break;
                 }
                 case 39: { // Right
-                    this.move.x = 1;
-                    this.send('move', this.move);
+                    this.rightDown = true;
                     break;
                 }
             }
+            this.move();
             // console.log(event.which);
         });
 
@@ -83,26 +103,23 @@ class Client {
             // event.ctrlKey
             switch (event.which) {
                 case 38: { // Up
-                    this.move.y = 0;
-                    this.send('move', this.move);
+                    this.upDown = false;
                     break;
                 }
                 case 40: { // Down
-                    this.move.y = 0;
-                    this.send('move', this.move);
+                    this.downDown = false;
                     break;
                 }
                 case 37: { // Left
-                    this.move.x = 0;
-                    this.send('move', this.move);
+                    this.leftDown = false;
                     break;
                 }
                 case 39: { // Right
-                    this.move.x = 0;
-                    this.send('move', this.move);
+                    this.rightDown = false;
                     break;
                 }
             }
+            this.move();
             // console.log(event.which);
         });
     }

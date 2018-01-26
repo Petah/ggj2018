@@ -10,7 +10,7 @@ module.exports = class Client {
         this.id = id;
         this.nextUpdate = 0;
 
-        this.speed = 20;
+        this.speed = 200;
         this.unit = new MovableGameObject(this, 10, 10, 0, 1, 10, 10);
         this.game.gameObjects.push(this.unit);
 

@@ -2,11 +2,12 @@ const logger = require('./logger')(__filename);
 const WebSocket = require('ws');
 const Client = require('./client');
 
+let nextId = 1;
+
 module.exports = class Server {
     constructor(game) {
         this.game = game;
         this.clients = [];
-        this.nextId = 0;
     }
 
     start() {
@@ -18,13 +19,18 @@ module.exports = class Server {
 
         this.server.on('connection', (webSocketClient) => {
             logger.log('Server connection');
-            const id = this.nextId++;
+            const id = nextId++;
             const client = new Client(this.game, this.server, webSocketClient, id);
             this.clients.push(client);
 
             webSocketClient.on('close', () => {
                 logger.log('Server disconnect');
-                this.clients = this.clients.filter(client => client.id == id);
+                this.removeClient(id);
+            });
+
+            webSocketClient.on('error', (error) => {
+                logger.log('Server error');
+                this.removeClient(id);
             });
         });
 
@@ -46,5 +52,9 @@ module.exports = class Server {
                 this.clients[i].loop(deltaTime, currentTime);
             }
         }
+    }
+
+    removeClient(id) {
+        this.clients = this.clients.filter(client => client.id != id);
     }
 }
