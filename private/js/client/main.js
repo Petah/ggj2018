@@ -56,7 +56,7 @@ class Client {
         }
     }
 
-    move() {
+    updateInput() {
         const move = {
             x: 0,
             y: 0,
@@ -71,7 +71,10 @@ class Client {
         } else if (this.rightDown) {
             move.x = 1;
         }
-        this.send('move', move);
+        this.send('updateInput', {
+            move: move,
+            shoot: this.shootDown,
+        });
     }
 
     bind() {
@@ -94,8 +97,12 @@ class Client {
                     this.rightDown = true;
                     break;
                 }
+                case 32: { // Space
+                    this.shootDown = true;
+                    break;
+                }
             }
-            this.move();
+            this.updateInput();
             // console.log(event.which);
         });
 
@@ -118,8 +125,12 @@ class Client {
                     this.rightDown = false;
                     break;
                 }
+                case 32: { // Space
+                    this.shootDown = false;
+                    break;
+                }
             }
-            this.move();
+            this.updateInput();
             // console.log(event.which);
         });
     }

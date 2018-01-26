@@ -34,9 +34,9 @@ module.exports = class Client {
                     break;
                 }
 
-                case 'move': {
-                    this.unit.xVelocity = message.data.x * this.speed;
-                    this.unit.yVelocity = message.data.y * this.speed;
+                case 'updateInput': {
+                    this.unit.xVelocity = message.data.move.x * this.speed;
+                    this.unit.yVelocity = message.data.move.y * this.speed;
                 }
             }
         });
