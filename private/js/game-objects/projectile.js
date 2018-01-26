@@ -16,4 +16,8 @@ class Projectile extends MoveableGameObject{
             this.range = range;
             this.areaOfEffect = areaOfEffect;
         }
+
+    onCollision(unit) {
+        
+    }
 }

@@ -3,6 +3,7 @@ const Weapon = require("./weapon")
 const Team = require("./../../team")
 
 module.export = class Unit {
+
     constructor(
         x,
         y,
@@ -19,15 +20,17 @@ module.export = class Unit {
         this.weaponArray = weaponArray;
     }
 
-    attack(enemyX, enemyY) {
-        let distance = Math.hypot(this.x, enemyX, this.y, enemyY);
-
-        let oneWeaponInRange = false;
+    attack(destinationX, destinationY) {
         let i = this.weaponArray.length;
+
         while(i--) {
             let weapon = this.weaponArray[i];
-            if(weapon.range > distance) {
-                weapon.fire(this.x, this.y, enemyX, enemyY);
+            if(weapon.lastShotTime + weapon.fireRate < this.currentTime) {
+                weapon.fire(this.x,
+                    this.y,
+                    destinationX,
+                    destinationY,
+                    this.currentTime);
             }
         }
     }
