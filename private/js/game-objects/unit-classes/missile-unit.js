@@ -33,12 +33,28 @@ module.exports = class MissileUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
-        let i = collisions.length;
-        while (i--) {
-            if (collisions[i].id != this.id) {
-                // collision
-            }
+        if (this.direction >= 225 && this.direction <= 315) {
+            // Up
+            this.sprite = 6;
+        } else if (this.direction >= 135 && this.direction <= 225) {
+            // Left
+            this.sprite = 7;
+        } else if (this.direction >= 45 && this.direction <= 135) {
+            // Down
+            this.sprite = 9;
+        } else {
+            // Right
+            this.sprite = 8;
         }
+
+        console.log(this.sprite);
+
+        // const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        // let i = collisions.length;
+        // while (i--) {
+        //     if (collisions[i].id != this.id) {
+        //         // collision
+        //     }
+        // }
     }
 }

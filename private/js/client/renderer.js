@@ -4,7 +4,13 @@ const assets = {
     3: '/images/background_nebula.jpg',
     4: '/images/projectile.png',
     5: '/images/collector-front-1.png',
-    6: '/images/collector-front-1.png',
+    6: '/images/collector-back-1.png',
+    7: '/images/collector-left-1.png',
+    8: '/images/collector-right-1.png',
+    9: '/images/collector-front-2.png',
+    10: '/images/collector-back-2.png',
+    11: '/images/collector-left-2.png',
+    12: '/images/collector-right-2.png',
 };
 
 class Renderer {
