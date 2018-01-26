@@ -19,6 +19,7 @@ module.exports = class Unit extends MovableGameObject{
         this.team        = team;
         this.teamColor   = teamColor;
         this.weaponArray = weaponArray;
+        this.health = health;
         this.type = 'Unit';
     }
 
