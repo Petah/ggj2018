@@ -1,4 +1,5 @@
 const logger = require('./logger')(__filename);
+const WebSocket = require('ws');
 const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
 const KamikazeUnit = require('../game-objects/unit-classes/kamikaze-unit');
@@ -30,6 +31,10 @@ module.exports = class Client {
             // logger.log('Client message', message);
             switch (message.type) {
                 case 'view': {
+                    this.game.reset();
+                }
+
+                case 'view': {
                     logger.log('Client view', message.data);
                     this.view.x = message.data.x;
                     this.view.y = message.data.y;
@@ -40,8 +45,7 @@ module.exports = class Client {
 
                 case 'updateInput': {
                     const player = this.players[message.data.id];
-                    player.units[0].xVelocity = message.data.move.x * this.speed;
-                    player.units[0].yVelocity = message.data.move.y * this.speed;
+                    player.units[0].accelerate(message.data.move.x, message.data.move.y);
                     if (message.data.shoot) {
                         player.units[0].attack(10, 10);
                     }
@@ -59,6 +63,9 @@ module.exports = class Client {
     }
 
     loop(deltaTime, currentTime) {
+        this.view.x = this.game.gameObjects[0] ? this.game.gameObjects[0].x - this.view.width / 2 : 0;
+        this.view.y = this.game.gameObjects[0] ? this.game.gameObjects[0].y - this.view.height / 2 : 0;
+
         const updates = [];
         let i = this.game.gameObjects.length;
         while (i--) {
@@ -72,15 +79,15 @@ module.exports = class Client {
                     this.game.gameObjects[i].id,
                     this.game.gameObjects[i].x,
                     this.game.gameObjects[i].y,
-                    this.game.gameObjects[i].direction,
+                    0,
                     this.game.gameObjects[i].sprite,
                 ]);
             }
         }
         this.send('update', {
             renderer: {
-                x: this.game.gameObjects[0] ? this.game.gameObjects[0].x : 0,
-                y: this.game.gameObjects[0] ? this.game.gameObjects[0].y : 0,
+                x: this.view.x,
+                y: this.view.y,
                 zoom: 1,
             },
             updates: updates,
@@ -89,6 +96,10 @@ module.exports = class Client {
     }
 
     send(type, data) {
+        if (this.webSocketClient.readyState !== WebSocket.OPEN) {
+            logger.log('Socket not ready')
+            return;
+        }
         this.webSocketClient.send(JSON.stringify({
             type: type,
             data: data,

@@ -54,4 +54,9 @@ module.exports = class Game {
         }
         this.server.loop(deltaTime, currentTime);
     }
+
+    reset() {
+        logger.log('Game reset');
+        this.gameObjects = [];
+    }
 }

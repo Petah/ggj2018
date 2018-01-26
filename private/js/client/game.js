@@ -3,9 +3,13 @@ class Game {
         this.client = new Client();
         this.client.connect();
 
+        this.state = 'title';
         this.started = false;
 
         this.players = [];
+
+        this.titleUi = new TitleUi(this);
+        this.gameUi = new GameUi(this);
     }
 
     start() {
@@ -43,45 +47,86 @@ class Game {
         this.started = false;
     }
 
-    createPlayer(gamepadIndex) {
+    createGamepadPlayer(gamepadIndex) {
         let found = false;
         let p = this.players.length;
         while (p--) {
-            if (this.players[p].gamepadIndex == gamepadIndex) {
+            if (this.players[p].input.gamepadIndex == gamepadIndex) {
                 return;
             }
         }
-        console.log('Creating player');
+        console.log('Creating gamepad player');
         const player = new Player(this);
-        player.gamepadIndex = gamepadIndex;
+        const input = new Gamepad(this, player, gamepadIndex);
+        player.input = input;
+        this.players.push(player);
+    }
+
+    createKeyboardPlayer() {
+        let p = this.players.length;
+        while (p--) {
+            if (this.players[p].keyboard) {
+                return;
+            }
+        }
+        console.log('Creating keyboard player');
+        const player = new Player(this);
+        const input = new Keyboard(this, player);
+        player.keyboard = true;
+        player.input = input;
         this.players.push(player);
     }
 
     loop(deltaTime, currentTime) {
         this.gamepads = navigator.getGamepads();
-        let i = this.gamepads.length;
-        while (i--) {
-            if (!this.gamepads[i]) {
-                continue;
+        switch (this.state) {
+            case 'title': {
+                let i = this.gamepads.length;
+                while (i--) {
+                    if (this.gamepads[i]) {
+                        // for (let b = 0; b < this.gamepads[i].buttons.length; b++) {
+                        //     if (this.gamepads[i].buttons[b].pressed) {
+                        //         console.log(b);
+                        //     }
+                        // }
+                        // console.log(this.gamepads[i].buttons[0].value);
+                        // console.log(this.gamepads[i].axes[0]);
+
+                        // A
+                        if (this.gamepads[i].buttons[0].pressed) {
+                            this.createGamepadPlayer(i);
+                        }
+
+                        // Start
+                        if (this.gamepads[i].buttons[9] && this.gamepads[i].buttons[9].pressed) {
+                            this.titleUi.hide();
+                            this.gameUi.show();
+                            this.state = 'game';
+                        }
+                    }
+                }
+
+                if (Keyboard.buttons[32]) {
+                    this.createKeyboardPlayer();
+                }
+
+                if (Keyboard.buttons[13]) {
+                    this.titleUi.hide();
+                    this.gameUi.show();
+                    this.state = 'game';
+                }
+
+                this.titleUi.render();
+
+                break;
             }
-
-            // Start
-            if (this.gamepads[i].buttons[9].pressed) {
-                this.createPlayer(i);
+            case 'game': {
+                let p = this.players.length;
+                while (p--) {
+                    this.players[p].loop(deltaTime, currentTime);
+                }
+                break;
             }
-
-            // for (let b = 0; b < this.gamepads[i].buttons.length; b++) {
-            //     if (this.gamepads[i].buttons[b].pressed) {
-            //         console.log(b);
-            //     }
-            // }
-            // console.log(this.gamepads[i].buttons[0].value);
-            // console.log(this.gamepads[i].axes[0]);
-        }
-
-        let p = this.players.length;
-        while (p--) {
-            this.players[p].loop(deltaTime, currentTime);
         }
     }
 }

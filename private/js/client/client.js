@@ -16,6 +16,8 @@ class Client {
         // Connection opened
         this.socket.addEventListener('open', (event) => {
             this.socketReady = true;
+            this.send('reset', {
+            });
             this.send('view', {
                 x: 0,
                 y: 0,
@@ -39,6 +41,7 @@ class Client {
                     while (i--) {
                         renderer.moveSprite(...message.data.updates[i]);
                     }
+                    renderer.cullSprites(message.data.updates);
 
                     if (message.data.renderer) {
                         renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
@@ -50,7 +53,7 @@ class Client {
     }
 
     send(type, data) {
-        if (this.socketReady) {
+        if (this.socket.readyState === WebSocket.OPEN) {
             this.socket.send(JSON.stringify({
                 type: type,
                 data: data,
