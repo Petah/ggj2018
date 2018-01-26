@@ -1,4 +1,4 @@
-const GameObject = require("./game-object")
+const MoveableGameObject = require("./moveable-game-object")
 
 module.export = class Unit {
     constructor(team
