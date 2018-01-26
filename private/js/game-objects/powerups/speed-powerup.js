@@ -21,6 +21,8 @@ class SpeedPowerup extends GameObject {
         this.collisionRadius = collisionRadius;
         this.duration = duration;
         this.speedIncrease = speedIncrease;
+        this.timeElapsed = 0;
+        this.isActive = false;
         this.type = 'SpeedPowerup';
     }
 
@@ -32,21 +34,30 @@ class SpeedPowerup extends GameObject {
             if (collisions[i].id !== this.id) {
                 switch(collisions[i].type) {
                     case 'Unit':
-                        this.onCollisionWithUnit(collisions[i]);
+                        var unit = collisions[i];
+                        this.onCollisionWithUnit(unit);
                         break;
                 }
             }
         }
+
+        if (isActive) {
+            this.timeElapsed+=deltaTime;
+            if (this.timeElapsed >= this.duration) {
+                unit.xVelocity -= this.speedIncrease;
+                unit.yVelocity -= this.speedIncrease;
+                this.isActive = false;
+            }
+        }
+
     }
 
     onCollisionWithUnit(unit) {
-        unit.xVelocity += this.speedIncrease;
-        unit.yVelocity += this.speedIncrease;
-
-        setTimeout(() => {
-            unit.xVelocity -= this.speedIncrease;
-            unit.yVelocity -= this.speedIncrease;
-        }, this.duration);
+        if (!this.isActive) {
+            this.isActive = true;
+            unit.xVelocity += this.speedIncrease;
+            unit.yVelocity += this.speedIncrease;
+        }
         //destroy()?? dont wanna render anymore
     }
 }
