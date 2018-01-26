@@ -14,6 +14,15 @@ class Unit {
     }
 
     attack(enemyX, enemyY) {
-        
+        let distance = Math.hypot(this.x, enemyX, this.y, enemyY);
+
+        let oneWeaponInRange = false;
+        let i = this.weaponArray.length;
+        while(i--) {
+            let weapon = this.weaponArray[i];
+            if(weapon.range > distance) {
+                weapon.fire(this.x, this.y, enemyX, enemyY);
+            }
+        }
     }
 }
