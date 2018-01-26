@@ -45,6 +45,10 @@ module.export = class Unit extends MovableGameObject{
     }
 
     onDie() {
-        
+        this.showDeathAnimation();
+    }
+
+    showDeathAnimation() {
+
     }
 }
