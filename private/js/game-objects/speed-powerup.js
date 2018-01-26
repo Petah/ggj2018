@@ -1,14 +1,14 @@
 const GameObject = require('./game-object');
-const SatelliteDish = require('satellite-dish');
 
-class SatellitePart extends GameObject {
+class SpeedPowerup extends GameObject {
     constructor(
         game,
         x,
         y,
         direction,
         sprite,
-        collisionRadius
+        collisionRadius,
+        duration
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.game = game;
@@ -20,15 +20,15 @@ class SatellitePart extends GameObject {
     }
 
     onCollisionWithUnit(unit) {
-        if (unit.team.satelliteParts++ === 4) {
-            new SatelliteDish(this.game,
-                this.x,
-                this.y,
-                this.direction,
-                'satellite-sprite-path',
-                this.collisionRadius,
-                unit.team);
-        }
+        let increase = 5;
+
+        unit.xVelocity += increase;
+        unit.yVelocity += increase;
+
+        setTimeout(() => {
+            unit.xVelocity -= increase;
+            unit.yVelocity -= increase;
+        }, this.duration);
 
         //destroy()?? dont wanna render anymore
     }
