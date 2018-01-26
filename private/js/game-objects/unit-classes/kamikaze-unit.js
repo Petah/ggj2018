@@ -1,4 +1,6 @@
-class KamikazeUnit extends Unit {
+const Unit = require("./unit")
+
+module.export = class KamikazeUnit extends Unit {
     
     attack() {
         

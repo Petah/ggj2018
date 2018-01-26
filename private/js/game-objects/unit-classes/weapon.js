@@ -1,4 +1,4 @@
-class Weapon {
+module.export = class Weapon {
     constructor(damage
         , range
         , fireRate
