@@ -3,6 +3,7 @@ module.exports = class Weapon {
         fireRate
         , projectile) {
             this.fireRate = fireRate;
+            this.projectile = projectile;
             this.lastShotTime = 0;
     }
 

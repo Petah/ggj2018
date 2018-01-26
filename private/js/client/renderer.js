@@ -1,14 +1,20 @@
 const assets = {
     1: '/images/bunny.png',
+    2: '/images/ship.png',
+    3: '/images/background_nebula.jpg',
 };
 
 class Renderer {
-    constructor(width = 1270, height = 720, options = {}) {
+    constructor(width = null, height = null, options = {}) {
         this.sprites = {};
         this.layers = {};
-        this.width = width;
-        this.height = height;
+        this.width = width || document.body.clientWidth;
+        this.height = height || document.body.clientHeight;
         this.options = options;
+    }
+
+    resizeViewport() {
+        this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);        
     }
 
     getSprites() {
@@ -51,6 +57,7 @@ class Renderer {
 
         this.sprites[id].x = x;
         this.sprites[id].y = y;
+        this.sprites[id].rotation = direction * Math.PI / 180;
     }
 
     getWidth() {
@@ -86,6 +93,20 @@ class Renderer {
     getRenderer() {
         if (!this.renderer) {
             this.renderer = new PIXI.Application(this.getWidth(), this.getHeight(), this.getOptions());
+
+            // Init layers            
+            this.layers.background = new PIXI.Container();
+            this.renderer.stage.addChild(this.layers.background);
+
+            this.layers.foreground = new PIXI.Container();
+            this.renderer.stage.addChild(this.layers.foreground);
+
+            // Init background
+            let texture = PIXI.Texture.fromImage(assets['3']);
+            this.sprites.background = new PIXI.extras.TilingSprite(texture, 1920, 1080);
+            this.layers.background.addChild(this.sprites.background);
+
+            window.addEventListener('resize', this.resizeViewport.bind(this));
         }
 
         return this.renderer;
@@ -96,20 +117,10 @@ class Renderer {
     }
 
     getBackground() {
-        if (!this.layers.background) {
-            this.layers.background = new PIXI.Container();
-            this.getRenderer().stage.addChild(this.layers.background);
-        }
-
         return this.layers.background;
     }
 
     getForeground() {
-        if (!this.layers.foreground) {
-            this.layers.foreground = new PIXI.Container();
-            this.getRenderer().stage.addChild(this.layers.foreground);
-        }
-
         return this.layers.foreground;
     }
 }

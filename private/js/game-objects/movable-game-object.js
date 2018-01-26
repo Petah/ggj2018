@@ -1,4 +1,5 @@
 const GameObject = require('./game-object');
+const math = require('../utilities/math');
 
 module.exports = class extends GameObject {
     constructor(
@@ -16,12 +17,12 @@ module.exports = class extends GameObject {
     }
 
     loop(deltaTime, currentTime) {
+        this.oldX = this.x;
+        this.oldY = this.y;
         this.x += this.xVelocity * deltaTime;
         this.y += this.yVelocity * deltaTime;
-        // this.testFire();
+        if (this.oldX != this.x || this.oldY != this.y) {
+            this.direction = math.pointDirection(this.oldX, this.oldY, this.x, this.y);
+        }
     }
-
-    // testFire(){
-    //     new Projectile(this.game,this.x,this.y,10,-10,2);
-    // }
 }

@@ -1,8 +1,14 @@
 const Weapon = require("./weapon");
-const Projectile = require("./projectiles/projectile");
+const KamikazeProjectile = require("./projectiles/kamikaze-projectile");
 
 module.exports = class KamikazeWeapon extends Weapon {
-    constructor() {
-        super(100)
+    constructor(game, x, y ,direction, sprite) {
+        let projectile = new KamikazeProjectile(game,x,y,direction,sprite);
+
+        super(100, projectile);
+    }
+
+    fire(direction) {
+        // Spawn projectiles
     }
 }
