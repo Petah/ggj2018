@@ -66,11 +66,12 @@ module.exports = class Client {
                 ]);
             }
         }
+        
         this.send('update', {
             // @Todo
             renderer: {
-                x: 0,
-                y: 0,
+                x: this.game.gameObjects[0].x,
+                y: this.game.gameObjects[0].y,
                 zoom: 0,
             },
             updates: updates,

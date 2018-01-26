@@ -48,7 +48,7 @@ class Client {
                     while (i--) {
                         renderer.moveSprite(...message.data.updates[i]);
                     }
-
+                    console.log(message.data.renderer);
                     if (message.data.renderer) {
                         renderer.cameraPan(message.data.renderer.x, message.data.renderer.y);
                         renderer.cameraZoom(message.data.renderer.zoom);
