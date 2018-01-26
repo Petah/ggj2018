@@ -1,6 +1,6 @@
 const logger = require('./logger')(__filename);
 const Server = require('./server');
-const GameObject = require('../game-objects/game-object');
+const MovableGameObject = require('../game-objects/movable-game-object');
 
 module.exports = class Game {
     constructor() {
@@ -12,11 +12,12 @@ module.exports = class Game {
         this.server.start();
 
         this.gameObjects = [
-            new GameObject(10, 10, 0, 1),
+            new MovableGameObject(10, 10, 0, 1, 0.01, 0.01),
         ];
 
         let lastSecond = 0;
-        let previousTime = 0;
+        const hrTimeInit = process.hrtime();
+        let previousTime = hrTimeInit[0] + hrTimeInit[1] / 1000000000;
         let updates = 0;
         const gameLoop = () => {
             const hrTime = process.hrtime();

@@ -1,7 +1,7 @@
-const MoveableGameObject = require("./moveable-game-object")
+const MovableGameObject = require("./movable-game-object")
 const Unit = require("./unit-classes/unit")
 
-class Projectile extends MoveableGameObject{
+class Projectile extends MovableGameObject{
 
     constructor(
         x,

@@ -34,7 +34,6 @@ module.exports = class Client {
         const updates = [];
         let i = this.game.gameObjects.length;
         while (i--) {
-            logger.log(this.game.gameObjects[i], this.view);
             if (
                 this.game.gameObjects[i].x > this.view.x &&
                 this.game.gameObjects[i].x < this.view.x + this.view.width &&
