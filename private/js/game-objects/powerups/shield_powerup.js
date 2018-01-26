@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-class Satellite extends GameObject{
+class ShieldPowerup extends GameObject {
     constructor(
         game,
         x,
@@ -9,7 +9,8 @@ class Satellite extends GameObject{
         direction,
         sprite,
         collisionRadius,
-        owningTeam
+        duration,
+        healthIncrease
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.game = game;
@@ -18,13 +19,9 @@ class Satellite extends GameObject{
         this.direction = direction;
         this.sprite = sprite;
         this.collisionRadius = collisionRadius;
-        this.owningTeam = owningTeam;
-
-        this.timeToSteal = 5000;
-        this.timeToHold = 30000;
-        this.holdId = 0;
-        this.type = 'SatelliteDish';
-        this.hold(this.owningTeam);
+        this.duration = duration;
+        this.healthIncrease = healthIncrease;
+        this.type = 'ShieldPowerup';
     }
 
     loop(deltaTime, currentTime) {
@@ -43,25 +40,6 @@ class Satellite extends GameObject{
     }
 
     onCollisionWithUnit(unit) {
-        if (unit.team !== this.owningTeam) {
-            console.log('Stealing satellite!');
-            clearTimeout(this.holdId);
-            setTimeout(() => {
-                this.owningTeam = unit.team;
-                this.hold(this.owningTeam);
-            }, this.timeToSteal);
-        }
-    }
-
-    hold(team) {
-        this.holdId = setTimeout(() => {
-            if (team === this.owningTeam) {
-                this.explode();
-            }
-        }, this.timeToHold)
-    }
-
-    explode() {
-        launchNuclearMissileFromUSAUsingDonaldTrumpsCreds();
+        unit.health += this.healthIncrease;
     }
 }
