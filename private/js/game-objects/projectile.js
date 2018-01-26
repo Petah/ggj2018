@@ -1,5 +1,6 @@
 const MovableGameObject = require("./movable-game-object")
 const Unit = require("./unit-classes/unit");
+const collision = require("./../utilities/collision");
 
 class Projectile extends MovableGameObject{
 
@@ -15,11 +16,15 @@ class Projectile extends MovableGameObject{
         range,
         areaOfEffect,
         damageSprite) {
-            super(game, x, y, direction, sprite, xVelocity, yVelocity);
+            super(game,x, y, direction, sprite, xVelocity, yVelocity);
             this.damage = damage;
             this.range = range;
             this.areaOfEffect = areaOfEffect;
             this.travelledDistance = 0;
+    }
+
+    loop(deltaTime, currentTime) {
+        super(deltaTime, currentTime);
     }
 
     move(deltaTime) {
@@ -47,4 +52,5 @@ class Projectile extends MovableGameObject{
     onCollisionWithNonDamageableGameObject(gameObject) {
         this.showDamageAnimation();
     }
+    
 }
