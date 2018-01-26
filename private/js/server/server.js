@@ -21,7 +21,6 @@ module.exports = class Server {
             const id = this.nextId++;
             const client = new Client(this.game, this.server, webSocketClient, id);
             this.clients.push(client);
-            webSocketClient.send('test');
 
             webSocketClient.on('close', () => {
                 logger.log('Server disconnect');

@@ -1,3 +1,7 @@
+const assets = {
+    1: '/images/bunny.png',
+};
+
 class Renderer {
     constructor(width = 1270, height = 720, options = {}) {
         this.sprites = {};
@@ -21,32 +25,32 @@ class Renderer {
         return this.sprites[id];
     }
 
-    addSprite(id, assetPath, xPos = 0, yPos = 0, anchor = 0.5, layer = 'foreground') {
-        this.sprites[id] = PIXI.Sprite.fromImage(assetPath);
-        this.sprites[id].anchor.set(0.5);
-        this.sprites[id].x = xPos;
-        this.sprites[id].y = yPos;
+    createSprite(id, assetPath, xPos = 0, yPos = 0, anchor = 0.5, layer = 'foreground') {
+        const sprite = PIXI.Sprite.fromImage(assetPath);
+        sprite.anchor.set(0.5);
+        sprite.x = xPos;
+        sprite.y = yPos;
 
         switch (layer) {
             case 'background': {
-                this.getBackground().addChild(this.sprites[id]);
+                this.getBackground().addChild(sprite);
             }
             case 'foreground': {
-                this.getForeground().addChild(this.sprites[id]);
+                this.getForeground().addChild(sprite);
             }
         }
 
-        return this.sprites[id];
+        return sprite;
     }
 
-    updateSprite(id, xPos, yPos) {
-        let sprite = this.getSprite(id);
-        if (!sprite) {
-            return null;
+    moveSprite(id, x, y, direction, spriteAsset) {
+        if (!this.sprites[id]) {
+            this.sprites[id] = this.createSprite(id, assets[spriteAsset], x, y);
+            return;
         }
 
-        sprite.x = xPos;
-        sprite.y = yPos;
+        this.sprites[id].x = x;
+        this.sprites[id].y = y;
     }
 
     getWidth() {

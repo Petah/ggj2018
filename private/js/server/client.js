@@ -41,6 +41,7 @@ module.exports = class Client {
                 this.game.gameObjects[i].y < this.view.y + this.view.height
             ) {
                 updates.push([
+                    this.game.gameObjects[i].id,
                     this.game.gameObjects[i].x,
                     this.game.gameObjects[i].y,
                     this.game.gameObjects[i].direction,

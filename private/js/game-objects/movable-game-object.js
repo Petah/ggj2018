@@ -2,6 +2,7 @@ const GameObject = require('./game-object');
 
 module.exports = class extends GameObject {
     constructor(
+        game,
         x,
         y,
         direction,
@@ -9,7 +10,7 @@ module.exports = class extends GameObject {
         xVelocity,
         yVelocity
     ) {
-        super(x, y, direction, sprite);
+        super(game, x, y, direction, sprite);
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
     }

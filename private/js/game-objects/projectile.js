@@ -4,6 +4,7 @@ const Unit = require("./unit-classes/unit");
 class Projectile extends MovableGameObject{
 
     constructor(
+        game,
         x,
         y,
         direction,
@@ -14,7 +15,7 @@ class Projectile extends MovableGameObject{
         range,
         areaOfEffect,
         damageSprite) {
-            super(x, y, direction, sprite, xVelocity, yVelocity);
+            super(game, x, y, direction, sprite, xVelocity, yVelocity);
             this.damage = damage;
             this.range = range;
             this.areaOfEffect = areaOfEffect;
