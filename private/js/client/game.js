@@ -83,7 +83,7 @@ class Game {
                         this.titleUi.render();
 
                         // Start
-                        if (this.gamepads[i].buttons[9].pressed) {
+                        if (this.gamepads[i].buttons[9] && this.gamepads[i].buttons[9].pressed) {
                             this.titleUi.hide();
                             this.gameUi.show();
                             this.state = 'game';
