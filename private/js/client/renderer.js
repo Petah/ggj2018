@@ -76,10 +76,12 @@ class Renderer {
 
         switch (layer) {
             case 'background': {
-                this.getBackground().addChild(sprite);
+                this.layers.background.addChild(sprite);
+                break;
             }
             case 'foreground': {
-                this.getForeground().addChild(sprite);
+                this.layers.foreground.addChild(sprite);
+                break;
             }
         }
 
