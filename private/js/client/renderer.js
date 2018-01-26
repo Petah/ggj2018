@@ -14,7 +14,15 @@ class Renderer {
         this.options = options;
     }
 
-    cameraZoom(zoomFactor) {
+    cameraZoomAbsolute(zoom) {
+        if (!zoom) {
+            return null;
+        }
+
+        this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoom, zoom);
+    }
+
+    cameraZoomRelative(zoomFactor) {
         if (!zoomFactor) {
             return null;
         }
@@ -24,7 +32,16 @@ class Renderer {
         this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
     }
 
-    cameraPan(xPos, yPos) {
+    cameraPanAbsolute(xPos, yPos) {
+        if (!xPos || !yPos) {
+            return null;
+        }
+
+        this.layers.foreground.setTransform(xPos, yPos);
+        this.layers.background.setTransform((xPos * 0.1), (yPos * 0.1));
+    }
+
+    cameraPanRelative(xPos, yPos) {
         if (!xPos || !yPos) {
             return null;
         }
@@ -123,7 +140,7 @@ class Renderer {
 
             // Init background
             let texture = PIXI.Texture.fromImage(assets['3']);
-            this.sprites.background = new PIXI.extras.TilingSprite(texture, 3840, 2160);
+            this.sprites.background = new PIXI.extras.TilingSprite(texture, 7680, 4896);
             this.layers.background.addChild(this.sprites.background);
 
             window.addEventListener('resize', this.resizeViewport.bind(this));

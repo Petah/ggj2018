@@ -50,8 +50,8 @@ class Client {
                     }
 
                     if (message.data.renderer) {
-                        renderer.cameraPan(message.data.renderer.x, message.data.renderer.y);
-                        renderer.cameraZoom(message.data.renderer.zoom);
+                        renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
+                        renderer.cameraZoomAbsolute(message.data.renderer.zoom);
                     }
                 }
             }
