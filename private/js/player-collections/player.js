@@ -1,27 +1,31 @@
-const Unit = require("./unit-classes/unit");
-const KamikazeUnit = require("./unit-classes/kamikaze-unit");
+const KamikazeUnit = require("../game-objects/unit-classes/kamikaze-unit");
 const Team = require("./team");
 
-class Player {
-    constructor(unitArray, team) {
-        this.unitArray = unitArray;
+module.exports = class Player {
+    constructor(game, team) {
+        this.game = game;
         this.team = team;
+        this.unitArray = [];
+        this.initializeUnit();
     }
 
     initializeUnit() {
         // This is a temp unit
 
         let singleUnit = new KamikazeUnit(
-            this.team.xSpawnLocation,
-            this.team.ySpawnLocation,
-            this.team.spawnDirection,
-            0,
-            0,
+            this.game,
+            300,
+            100,
+            180,
+            1,
+            2,
+            2,
             this.team,
-            this.team.getTeamColor()
+            "red"
             );
 
-        this.unitArray.add(singleUnit);
+        this.unitArray.push(singleUnit);
+        this.game.gameObjects.push(singleUnit);
     }
 
 }

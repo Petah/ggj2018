@@ -21,6 +21,7 @@ class Client {
         // Connection opened
         this.socket.addEventListener('open', (event) => {
             this.socketReady = true;
+            this.send('createPlayer',{});
             this.send('view', {
                 x: 0,
                 y: 0,
@@ -47,6 +48,8 @@ class Client {
                 }
             }
         });
+
+
     }
 
     send(type, data) {

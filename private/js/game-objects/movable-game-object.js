@@ -18,5 +18,10 @@ module.exports = class extends GameObject {
     loop(deltaTime, currentTime) {
         this.x += this.xVelocity * deltaTime;
         this.y += this.yVelocity * deltaTime;
+        // this.testFire();
     }
+
+    // testFire(){
+    //     new Projectile(this.game,this.x,this.y,10,-10,2);
+    // }
 }
