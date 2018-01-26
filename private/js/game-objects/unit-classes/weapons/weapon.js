@@ -1,4 +1,4 @@
-module.export = class Weapon {
+module.exports = class Weapon {
     constructor(
         fireRate
         , projectile) {
@@ -7,6 +7,6 @@ module.export = class Weapon {
     }
 
     fire(currentX, currentY, destinationX, destinationY, currentTime) {
-        
+
     }
 }

@@ -1,11 +1,10 @@
 const MovableGameObject = require("../movable-game-object")
-
 const Team = require("../../player-collections/team");
 
-
-module.export = class Unit extends MovableGameObject{
+module.exports = class Unit extends MovableGameObject{
 
     constructor(
+        game,
         x,
         y,
         direction,
@@ -16,7 +15,7 @@ module.export = class Unit extends MovableGameObject{
         teamColor,
         weaponArray,
         health) {
-        super(x, y, direction, sprite, xVelocity, yVelocity);
+        super(game, x, y, direction, sprite, xVelocity, yVelocity);
         this.team        = team;
         this.teamColor   = teamColor;
         this.weaponArray = weaponArray;

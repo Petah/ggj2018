@@ -1,6 +1,7 @@
 const logger = require('./logger')(__filename);
 const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
+const KamikazeUnit = require('../game-objects/unit-classes/kamikaze-unit');
 
 module.exports = class Client {
     constructor(game, server, webSocketClient, id) {
@@ -11,7 +12,7 @@ module.exports = class Client {
         this.nextUpdate = 0;
 
         this.speed = 200;
-        this.unit = new MovableGameObject(this, 10, 10, 0, 1, 10, 10);
+        this.unit = new KamikazeUnit(this.game, 10, 10, 0, 1, 10, 10);
         this.game.gameObjects.push(this.unit);
 
         this.view = {
@@ -37,6 +38,9 @@ module.exports = class Client {
                 case 'updateInput': {
                     this.unit.xVelocity = message.data.move.x * this.speed;
                     this.unit.yVelocity = message.data.move.y * this.speed;
+                    if (message.data.shoot) {
+                        this.unit.attack(10, 10);
+                    }
                 }
             }
         });

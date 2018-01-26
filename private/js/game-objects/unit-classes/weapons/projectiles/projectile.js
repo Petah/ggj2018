@@ -1,8 +1,8 @@
-const MovableGameObject = require("./movable-game-object")
-const Unit = require("./unit-classes/unit");
-const collision = require("./../utilities/collision");
+const MovableGameObject = require("../../../movable-game-object")
+const Unit = require("../../unit");
+const collision = require("../../../../utilities/collision");
 
-class Projectile extends MovableGameObject{
+module.exports = class Projectile extends MovableGameObject{
     constructor(
         game,
         x,
@@ -15,7 +15,7 @@ class Projectile extends MovableGameObject{
         range,
         areaOfEffect,
         damageSprite) {
-            super(game,x, y, direction, sprite, xVelocity, yVelocity);
+            super(game, x, y, direction, sprite, xVelocity, yVelocity);
             this.damage = damage;
             this.range = range;
             this.areaOfEffect = areaOfEffect;

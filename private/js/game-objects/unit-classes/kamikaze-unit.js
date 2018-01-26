@@ -1,38 +1,36 @@
 const Unit = require("./unit");
+const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
 
-module.export = class KamikazeUnit extends Unit {
+module.exports = class KamikazeUnit extends Unit {
     constructor(
+        game,
         x,
         y,
         direction,
+        sprite,
         xVelocity,
         yVelocity,
         team,
         teamColor) {
-            let weaponArray = new Weapon[];
-
-
-            super(x, 
-                y, 
-                direction, 
-                this.getSprite(), 
-                xVelocity, 
-                yVelocity, 
-                team, 
+            super(
+                game,
+                x,
+                y,
+                direction,
+                sprite,
+                xVelocity,
+                yVelocity,
+                team,
                 teamColor,
                 );
-
+        let weaponArray = [];
     }
-    
+
     attack() {
-        
+        this.game.gameObjects.push(new KamikazeProjectile(this.game, this.x, this.y));
     }
 
     onDie() {
         this.attack();
-    }
-
-    getSprite() {
-        return "https://photos-images.active.com/file/1/154/1541810/optimized/653e5de8-d28a-4fe2-921f-e48309bea30c.png";
     }
 }
