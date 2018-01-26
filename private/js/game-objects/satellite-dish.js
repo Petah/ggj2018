@@ -36,9 +36,10 @@ class Satellite extends GameObject{
     onCollisionWithUnit(unit) {
         if (unit.team !== this.owningTeam) {
             console.log('Stealing satellite!');
+            clearTimeout(this.holdId);
             this.stealId = setTimeout(() => {
-                clearTimeout(this.holdId);
                 this.owningTeam = unit.team;
+                this.hold(this.owningTeam);
             }, this.timeToSteal);
         }
     }
@@ -46,7 +47,6 @@ class Satellite extends GameObject{
     hold(team) {
         this.holdId = setTimeout(() => {
             if (team === this.owningTeam) {
-                clearTimeout(this.stealId);
                 this.explode();
             }
         }, this.timeToHold)
