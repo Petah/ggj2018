@@ -1,8 +1,10 @@
 const MoveableGameObject = require("./moveable-game-object")
+const Unit = require("./unit-classes/unit")
 
 class Projectile extends MoveableGameObject{
 
-    constructor(x,
+    constructor(
+        x,
         y,
         direction,
         sprite,
@@ -10,14 +12,14 @@ class Projectile extends MoveableGameObject{
         yVelocity,
         damage,
         range,
-        areaOfEffect) {
+        areaOfEffect,
+        damageSprite) {
             super(x, y, direction, sprite, xVelocity, yVelocity);
             this.damage = damage;
             this.range = range;
             this.areaOfEffect = areaOfEffect;
             this.travelledDistance = 0;
-        }
-
+    }
 
     move(deltaTime) {
         deltaX = (xVelocity * deltaTime);
@@ -25,14 +27,23 @@ class Projectile extends MoveableGameObject{
         this.travelledDistance += Math.hypot(this.x, (this.x + deltaX), this.y, ((this.y + deltaY)));
 
         if(travelledDistance > range) {
-            onCollision();
+            onCollisionWithNonDamageableGameObject(null);
+        } else {
+            this.x += (xVelocity * deltaTime);
+            this.y += (yVelocity * deltaTime);
         }
-
-        this.x += (xVelocity * deltaTime);
-        this.y += (yVelocity * deltaTime);
     }
 
-    onCollision(unit) {
+    showDamageAnimation() {
+        // poo.init();
+    }
 
+    onCollisionWithUnit(unit) {
+        unit.getHurt(this);
+        this.showDamageAnimation();
+    }
+
+    onCollisionWithNonDamageableGameObject(gameObject) {
+        this.showDamageAnimation();
     }
 }
