@@ -66,7 +66,14 @@ module.exports = class Client {
                 ]);
             }
         }
-        this.send('update', updates);
+        this.send('update', {
+            renderer: {
+                x: 0,
+                y: 0,
+                zoom: 0,
+            },
+            updates: updates,
+        });
         this.nextUpdate = currentTime + 0.016;
     }
 

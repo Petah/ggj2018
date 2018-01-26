@@ -15,12 +15,20 @@ class Renderer {
     }
 
     cameraZoom(zoomFactor) {
+        if (!zoomFactor) {
+            return null;
+        }
+
         let zoomX = this.renderer.stage.scale.x + zoomFactor;
         let zoomY = this.renderer.stage.scale.y + zoomFactor;
         this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
     }
 
     cameraPan(xPos, yPos) {
+        if (!xPos || !yPos) {
+            return null;
+        }
+
         this.renderer.stage.setTransform((this.renderer.stage.x + xPos), (this.renderer.stage.y + yPos));
     }
 
