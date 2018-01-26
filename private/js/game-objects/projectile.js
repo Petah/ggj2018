@@ -15,9 +15,24 @@ class Projectile extends MoveableGameObject{
             this.damage = damage;
             this.range = range;
             this.areaOfEffect = areaOfEffect;
+            this.travelledDistance = 0;
         }
 
+
+    move(deltaTime) {
+        deltaX = (xVelocity * deltaTime);
+        deltaY = (yVelocity * deltaTime);
+        this.travelledDistance += Math.hypot(this.x, (this.x + deltaX), this.y, ((this.y + deltaY)));
+
+        if(travelledDistance > range) {
+            onCollision();
+        }
+
+        this.x += (xVelocity * deltaTime);
+        this.y += (yVelocity * deltaTime);
+    }
+
     onCollision(unit) {
-        
+
     }
 }
