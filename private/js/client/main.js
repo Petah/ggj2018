@@ -31,18 +31,20 @@ class Client {
 
         // Listen for messages
         this.socket.addEventListener('message', (event) => {
+            let message;
             try {
-                const message = JSON.parse(event.data);
-                switch (message.type) {
-                    case 'update': {
-                        let i = message.data.length;
-                        while (i--) {
-                            renderer.moveSprite(...message.data[i]);
-                        }
-                    }
-                }
+                message = JSON.parse(event.data);
             } catch (e) {
                 console.log('Invalid message', event.data);
+                return;
+            }
+            switch (message.type) {
+                case 'update': {
+                    let i = message.data.length;
+                    while (i--) {
+                        renderer.moveSprite(...message.data[i]);
+                    }
+                }
             }
         });
     }

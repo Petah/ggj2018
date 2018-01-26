@@ -27,7 +27,7 @@ module.exports = class KamikazeUnit extends Unit {
     }
 
     attack() {
-        this.game.gameObjects.push(new KamikazeProjectile(this.game, this.x, this.y));
+        this.game.gameObjects.push(new KamikazeProjectile(this.game, this.x, this.y, 0, 1));
     }
 
     onDie() {

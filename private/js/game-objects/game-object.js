@@ -9,6 +9,9 @@ module.exports = class GameObject {
         sprite,
         collisionRadius
     ){
+        if (!sprite) {
+            throw new Error('Invalid sprite');
+        }
         this.id = nextId++;
         this.game = game;
         this.x = x;
