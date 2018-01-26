@@ -10,5 +10,16 @@
     <body>
         GGJ18
         <script src="ggj18.js"></script>
+        <script>
+            var renderer = new Renderer();
+            document.body.appendChild(renderer.getView());
+
+            // Add bunny
+            var bunny = renderer.addSprite(1, '/assets/img/bunny.png', 400, 300);
+            setInterval(() => {
+                bunny.x = bunny.x + 1;
+                bunny.y = bunny.y + 1;
+            }, 20);
+        </script>
     </body>
 </html>
