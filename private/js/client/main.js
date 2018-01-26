@@ -1,4 +1,5 @@
 
+
 console.log('Main');
 
 class Client {
@@ -8,6 +9,7 @@ class Client {
         this.downDown = false;
         this.leftDown = false;
         this.rightDown = false;
+        this.spawnDown = false;
 
         this.bind();
 
@@ -79,6 +81,7 @@ class Client {
         this.send('updateInput', {
             move: move,
             shoot: this.shootDown,
+            spawn: this.spawnDown
         });
     }
 
@@ -105,6 +108,9 @@ class Client {
                 case 32: { // Space
                     this.shootDown = true;
                     break;
+                }
+                case 80: { // P
+                    this.spawnDown = true;
                 }
             }
             this.updateInput();
@@ -133,6 +139,9 @@ class Client {
                 case 32: { // Space
                     this.shootDown = false;
                     break;
+                }
+                case 80: { // P
+                    this.spawnDown = false;
                 }
             }
             this.updateInput();

@@ -43,11 +43,16 @@ module.exports = class Client {
                     if (message.data.shoot) {
                         this.unit.attack(10, 10);
                     }
+                    if(message.data.spawn){
+                        this.players[0].triggerSpawn();
+                    }
+                    break;
                 }
                 case 'createPlayer': {
-                    let newPlayer = new Player(this.game,0);
+                    let newPlayer = new Player(this.game,this.players.length,0);
                     this.players.push(newPlayer);
                     console.log("created player");
+                    break;
                 }
             }
         });

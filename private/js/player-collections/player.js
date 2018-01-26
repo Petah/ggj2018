@@ -2,8 +2,9 @@ const KamikazeUnit = require("../game-objects/unit-classes/kamikaze-unit");
 const Team = require("./team");
 
 module.exports = class Player {
-    constructor(game, team) {
+    constructor(game, playerNumber, team) {
         this.game = game;
+        this.playerNumber = playerNumber;
         this.team = team;
         this.unitArray = [];
         this.initializeUnit();
@@ -26,6 +27,10 @@ module.exports = class Player {
 
         this.unitArray.push(singleUnit);
         this.game.gameObjects.push(singleUnit);
+    }
+
+    triggerSpawn(){
+
     }
 
 }
