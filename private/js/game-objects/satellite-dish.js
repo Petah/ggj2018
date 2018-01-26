@@ -22,10 +22,7 @@ class Satellite extends GameObject{
 
         this.timeToSteal = 5000;
         this.timeToHold = 30000;
-
-        this.stealId = 0;
         this.holdId = 0;
-
         this.hold(this.owningTeam);
     }
 
@@ -37,7 +34,7 @@ class Satellite extends GameObject{
         if (unit.team !== this.owningTeam) {
             console.log('Stealing satellite!');
             clearTimeout(this.holdId);
-            this.stealId = setTimeout(() => {
+            setTimeout(() => {
                 this.owningTeam = unit.team;
                 this.hold(this.owningTeam);
             }, this.timeToSteal);
