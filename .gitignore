@@ -2,6 +2,7 @@
 
 node_modules
 bower_components
+public/vendor.js
 public/ggj18.js
 
 \.idea/

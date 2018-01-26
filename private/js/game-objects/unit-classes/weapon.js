@@ -1,18 +1,12 @@
 module.export = class Weapon {
-    constructor(damage
-        , range
-        , fireRate
-        , areaOfEffect
-        , projectileSpeed
+    constructor(
+        fireRate
         , projectile) {
-            this.damage = damage;
-            this.range = range;
             this.fireRate = fireRate;
-            this.areaOfEffect = areaOfEffect;
-            this.projectileSpeed = projectileSpeed;
+            this.lastShotTime = 0;
     }
 
-    fire(currentX, currentY, destinationX, destinationY) {
+    fire(currentX, currentY, destinationX, destinationY, currentTime) {
         
     }
 }
