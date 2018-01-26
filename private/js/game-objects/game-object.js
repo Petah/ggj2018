@@ -18,7 +18,7 @@ module.exports = class GameObject {
         this.y = y;
         this.sprite = sprite;
         this.direction = direction;
-        this.collisionRadius = this.collisionRadius;
+        this.collisionRadius = 10;
     }
 
     loop(deltaTime, currentTime) {
