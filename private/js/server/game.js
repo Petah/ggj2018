@@ -20,18 +20,18 @@ module.exports = class Game {
         let updates = 0;
         const gameLoop = () => {
             const hrTime = process.hrtime();
-            const currentTime = hrTime[0] + hrTime[1] / 1000000000;
-            const deltaTime = currentTime - previousTime;
-            previousTime = currentTime;
+            this.currentTime = hrTime[0] + hrTime[1] / 1000000000;
+            const deltaTime = this.currentTime - previousTime;
+            previousTime = this.currentTime;
             updates++;
 
-            if (lastSecond <= currentTime - 1) {
-                lastSecond = currentTime;
+            if (lastSecond <= this.currentTime - 1) {
+                lastSecond = this.currentTime;
                 logger.log('UPS', updates);
                 updates = 0;
             }
 
-            this.loop(deltaTime, currentTime);
+            this.loop(deltaTime, this.currentTime);
             this.id = setImmediate(gameLoop);
         };
         this.id = setImmediate(gameLoop);

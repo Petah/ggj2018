@@ -2,6 +2,7 @@ const assets = {
     1: '/images/bunny.png',
     2: '/images/ship.png',
     3: '/images/background_nebula.jpg',
+    4: '/images/projectile.png',
 };
 
 class Renderer {
@@ -14,7 +15,7 @@ class Renderer {
     }
 
     resizeViewport() {
-        this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);        
+        this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);
     }
 
     getSprites() {
@@ -94,7 +95,7 @@ class Renderer {
         if (!this.renderer) {
             this.renderer = new PIXI.Application(this.getWidth(), this.getHeight(), this.getOptions());
 
-            // Init layers            
+            // Init layers
             this.layers.background = new PIXI.Container();
             this.renderer.stage.addChild(this.layers.background);
 

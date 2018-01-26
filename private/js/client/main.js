@@ -8,6 +8,7 @@ class Client {
         this.downDown = false;
         this.leftDown = false;
         this.rightDown = false;
+        this.shootDown = false;
 
         this.bind();
 
@@ -41,6 +42,7 @@ class Client {
             switch (message.type) {
                 case 'update': {
                     let i = message.data.length;
+                    console.log(message.data.length);
                     while (i--) {
                         renderer.moveSprite(...message.data[i]);
                     }
