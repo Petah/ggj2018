@@ -2,9 +2,11 @@ const logger = require('./logger')(__filename);
 const Server = require('./server');
 const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
-const BulletHellPowerUp = require('../powerups/bullet-hell-powerup');
-const FOVPowerUp = require('../powerups/fov-powerup');
-const FauxPowerUp = require('../powerups/faux-powerup')
+const BulletHellPowerUp = require('../game-objects/powerups/bullet-hell-powerup');
+const FOVPowerUp = require('../game-objects/powerups//fov-powerup');
+const FauxPowerUp = require('../game-objects/powerups/faux-powerup');
+const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
+const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
 
 module.exports = class Game {
     constructor() {
@@ -61,7 +63,7 @@ module.exports = class Game {
         }
         this.server.loop(deltaTime, currentTime);
 
-        if(Math.round(currentTime) % 15 == 0) {
+        if(Math.round(currentTime) % 30 == 0) {
             this.spawnPowerUp();
         }
     }

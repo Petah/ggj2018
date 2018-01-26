@@ -23,7 +23,7 @@ class SpeedPowerUp extends GameObject {
         this.speedIncrease = speedIncrease;
         this.timeElapsed = 0;
         this.isActive = false;
-        this.type = 'SpeedPowerup';
+        this.type = 'SpeedPowerUp';
     }
 
     loop(deltaTime, currentTime) {
