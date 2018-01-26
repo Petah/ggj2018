@@ -12,7 +12,7 @@ module.exports = class Client {
         this.nextUpdate = 0;
 
         this.speed = 200;
-        this.unit = new KamikazeUnit(this.game, 10, 10, 0, 1, 10, 10);
+        this.unit = new KamikazeUnit(this.game, 10, 10, 0, 2, 10, 10);
         this.game.gameObjects.push(this.unit);
 
         this.view = {

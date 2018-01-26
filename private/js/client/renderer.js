@@ -1,5 +1,6 @@
 const assets = {
     1: '/images/bunny.png',
+    2: '/images/ship.png'
 };
 
 class Renderer {
@@ -51,6 +52,7 @@ class Renderer {
 
         this.sprites[id].x = x;
         this.sprites[id].y = y;
+        this.sprites[id].rotation = direction * Math.PI / 180;
     }
 
     getWidth() {

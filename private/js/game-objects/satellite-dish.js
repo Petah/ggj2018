@@ -22,10 +22,7 @@ class Satellite extends GameObject{
 
         this.timeToSteal = 5000;
         this.timeToHold = 30000;
-
-        this.stealId = 0;
         this.holdId = 0;
-
         this.hold(this.owningTeam);
     }
 
@@ -36,9 +33,10 @@ class Satellite extends GameObject{
     onCollisionWithUnit(unit) {
         if (unit.team !== this.owningTeam) {
             console.log('Stealing satellite!');
-            this.stealId = setTimeout(() => {
-                clearTimeout(this.holdId);
+            clearTimeout(this.holdId);
+            setTimeout(() => {
                 this.owningTeam = unit.team;
+                this.hold(this.owningTeam);
             }, this.timeToSteal);
         }
     }
@@ -46,13 +44,12 @@ class Satellite extends GameObject{
     hold(team) {
         this.holdId = setTimeout(() => {
             if (team === this.owningTeam) {
-                clearTimeout(this.stealId);
                 this.explode();
             }
         }, this.timeToHold)
     }
 
     explode() {
-
+        launchNuclearMissileFromUSAUsingDonaldTrumpsCreds();
     }
 }

@@ -1,5 +1,6 @@
 const Unit = require("./unit");
 const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
+const collision = require("../../utilities/collision");
 
 module.exports = class KamikazeUnit extends Unit {
     constructor(
@@ -32,5 +33,16 @@ module.exports = class KamikazeUnit extends Unit {
 
     onDie() {
         this.attack();
+    }
+
+    loop(deltaTime, currentTime) {
+        super.loop(deltaTime, currentTime);
+        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        let i = collisions.length;
+        while (i--) {
+            if (collisions[i].id != this.id) {
+                // collision
+            }
+        }
     }
 }

@@ -1,14 +1,15 @@
-module.exports = (self, others) => {
-    // if (self.dead) {
-    //     return;
-    // }
-    for (let i = 0; i < others.length; i++) {
-        // if (self.owner && self.owner.id == others[i].id) {
-        //     continue;
-        // }
-        collisionDistance = pointDistance(self.x, self.y, others[i].x, others[i].y);
-        if (collisionDistance < self.collisionRadius || others[i].collisionRadius) {
-            return true;
+const math = require('./math');
+
+module.exports = {
+    getCollisions: (game, x, y, collisionRadius) => {
+        const result = [];
+        let i = game.gameObjects.length;
+        while (i--) {
+            const distance = math.pointDistance(x, y, game.gameObjects[i].x, game.gameObjects[i].y);
+            if (distance < collisionRadius) {
+                result.push(game.gameObjects[i]);
+            }
         }
-    }
+        return result;
+    },
 };
