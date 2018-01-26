@@ -3,6 +3,7 @@ const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
 const KamikazeUnit = require('../game-objects/unit-classes/kamikaze-unit');
 const MissileUnit = require('../game-objects/unit-classes/missile-unit');
+const Player = require('../player-collections/player');
 
 module.exports = class Client {
     constructor(game, server, webSocketClient, id) {
@@ -12,9 +13,10 @@ module.exports = class Client {
         this.id = id;
         this.nextUpdate = 0;
 
+        this.players = {};
         this.speed = 200;
-        this.unit = new MissileUnit(this.game, 500, 500, 0, 2, 0, 0);
-        this.game.gameObjects.push(this.unit);
+        // this.unit = new MissileUnit(this.game, 500, 500, 0, 2, 0, 0);
+        // this.game.gameObjects.push(this.unit);
 
         this.view = {
             x: 0,
@@ -37,11 +39,20 @@ module.exports = class Client {
                 }
 
                 case 'updateInput': {
-                    this.unit.xVelocity = message.data.move.x * this.speed;
-                    this.unit.yVelocity = message.data.move.y * this.speed;
+                    const player = this.players[message.data.id];
+                    player.units[0].xVelocity = message.data.move.x * this.speed;
+                    player.units[0].yVelocity = message.data.move.y * this.speed;
                     if (message.data.shoot) {
-                        this.unit.attack(10, 10);
+                        player.units[0].attack(10, 10);
                     }
+                    break;
+                }
+
+                case 'createPlayer': {
+                    logger.log('Create player', message.data);
+                    const player = new Player(this.game)
+                    this.players[message.data.id] = player;
+                    break;
                 }
             }
         });
@@ -67,11 +78,10 @@ module.exports = class Client {
             }
         }
         this.send('update', {
-            // @Todo
             renderer: {
-                x: 0,
-                y: 0,
-                zoom: 0,
+                x: this.game.gameObjects[0] ? this.game.gameObjects[0].x : 0,
+                y: this.game.gameObjects[0] ? this.game.gameObjects[0].y : 0,
+                zoom: 1,
             },
             updates: updates,
         });

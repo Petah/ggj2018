@@ -14,24 +14,38 @@ class Renderer {
         this.options = options;
     }
 
-    cameraZoom(zoomFactor) {
-        if (!zoomFactor) {
-            return null;
-        }
+    cameraZoomAbsolute(zoom) {
+        // if (!zoom) {
+        //     return null;
+        // }
 
-        let zoomX = this.renderer.stage.scale.x + zoomFactor;
-        let zoomY = this.renderer.stage.scale.y + zoomFactor;
-        this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
+        // this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoom, zoom);
     }
 
-    cameraPan(xPos, yPos) {
-        if (!xPos || !yPos) {
-            return null;
-        }
+    cameraZoomRelative(zoomFactor) {
+        // if (!zoomFactor) {
+        //     return null;
+        // }
 
-        this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
-        this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
+        // let zoomX = this.renderer.stage.scale.x + zoomFactor;
+        // let zoomY = this.renderer.stage.scale.y + zoomFactor;
+        // this.renderer.stage.setTransform(this.renderer.stage.x, this.renderer.stage.y, zoomX, zoomY);
     }
+
+    cameraPanAbsolute(x, y) {
+        // this.layers.foreground.setTransform(x, y);
+        // this.layers.background.setTransform(0, 0);
+        // this.layers.background.setTransform(-x, -y);
+    }
+
+    // cameraPanRelative(xPos, yPos) {
+    //     if (!xPos || !yPos) {
+    //         return null;
+    //     }
+
+    //     this.layers.foreground.setTransform((this.layers.foreground.x + xPos), (this.layers.foreground.y + yPos));
+    //     this.layers.background.setTransform((this.layers.background.x + (xPos * 0.1)), (this.layers.background.y + (yPos * 0.1)));
+    // }
 
     resizeViewport() {
         this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);
@@ -59,10 +73,12 @@ class Renderer {
 
         switch (layer) {
             case 'background': {
-                this.getBackground().addChild(sprite);
+                this.layers.background.addChild(sprite);
+                break;
             }
             case 'foreground': {
-                this.getForeground().addChild(sprite);
+                this.layers.foreground.addChild(sprite);
+                break;
             }
         }
 
@@ -123,7 +139,7 @@ class Renderer {
 
             // Init background
             let texture = PIXI.Texture.fromImage(assets['3']);
-            this.sprites.background = new PIXI.extras.TilingSprite(texture, 3840, 2160);
+            this.sprites.background = new PIXI.extras.TilingSprite(texture, 7680, 4896);
             this.layers.background.addChild(this.sprites.background);
 
             window.addEventListener('resize', this.resizeViewport.bind(this));
