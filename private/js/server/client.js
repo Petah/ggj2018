@@ -49,7 +49,7 @@ module.exports = class Client {
             }
         }
         this.send('update', updates);
-        this.nextUpdate = currentTime + 1;
+        this.nextUpdate = currentTime + 0.016;
     }
 
     send(type, data) {

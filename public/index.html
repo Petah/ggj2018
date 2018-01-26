@@ -14,18 +14,6 @@
         <script>
             const client = new Client();
             client.connect();
-            console.log(client);
-
-            var gameContainer = document.getElementById('game');
-            var renderer = new Renderer();
-            gameContainer.appendChild(renderer.getView());
-
-            // Add bunny
-            var bunny = renderer.addSprite(1, '/images/bunny.png', 400, 300);
-            setInterval(() => {
-                bunny.x = bunny.x + 1;
-                bunny.y = bunny.y + 1;
-            }, 20);
         </script>
     </body>
 </html>

@@ -12,7 +12,7 @@ module.exports = class Game {
         this.server.start();
 
         this.gameObjects = [
-            new MovableGameObject(10, 10, 0, 1, 0.01, 0.01),
+            new MovableGameObject(10, 10, 0, 1, 10, 10),
         ];
 
         let lastSecond = 0;
