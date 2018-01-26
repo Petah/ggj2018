@@ -1,4 +1,6 @@
 const logger = require('./logger')(__filename);
+const MovableGameObject = require('../game-objects/movable-game-object');
+const Unit = require('../game-objects/unit-classes/unit');
 
 module.exports = class Client {
     constructor(game, server, webSocketClient, id) {
@@ -8,6 +10,7 @@ module.exports = class Client {
         this.id = id;
         this.nextUpdate = 0;
 
+        this.speed = 20;
         this.unit = new MovableGameObject(this, 10, 10, 0, 1, 10, 10);
         this.game.gameObjects.push(this.unit);
 
@@ -28,6 +31,12 @@ module.exports = class Client {
                     this.view.y = message.data.y;
                     this.view.width = message.data.width;
                     this.view.height = message.data.height;
+                    break;
+                }
+
+                case 'move': {
+                    this.unit.xVelocity = message.data.x * this.speed;
+                    this.unit.yVelocity = message.data.y * this.speed;
                 }
             }
         });

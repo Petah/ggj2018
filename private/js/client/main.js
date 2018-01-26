@@ -4,6 +4,10 @@ console.log('Main');
 class Client {
     connect() {
         this.bind();
+        this.move = {
+            x: 0,
+            y: 0,
+        }
 
         // Create WebSocket connection.
         this.socket = new WebSocket('ws://127.0.0.1:8081');
@@ -52,27 +56,50 @@ class Client {
             // event.ctrlKey
             switch (event.which) {
                 case 38: { // Up
-                    this.send('move', {
-                        y: -1,
-                    });
+                    this.move.y = -1;
+                    this.send('move', this.move);
                     break;
                 }
                 case 40: { // Down
-                    this.send('move', {
-                        y: 1,
-                    });
+                    this.move.y = 1;
+                    this.send('move', this.move);
                     break;
                 }
                 case 37: { // Left
-                    this.send('move', {
-                        x: -1,
-                    });
+                    this.move.x = -1;
+                    this.send('move', this.move);
                     break;
                 }
                 case 39: { // Right
-                    this.send('move', {
-                        x: 1,
-                    });
+                    this.move.x = 1;
+                    this.send('move', this.move);
+                    break;
+                }
+            }
+            // console.log(event.which);
+        });
+
+        document.addEventListener('keyup', (event) => {
+            // event.ctrlKey
+            switch (event.which) {
+                case 38: { // Up
+                    this.move.y = 0;
+                    this.send('move', this.move);
+                    break;
+                }
+                case 40: { // Down
+                    this.move.y = 0;
+                    this.send('move', this.move);
+                    break;
+                }
+                case 37: { // Left
+                    this.move.x = 0;
+                    this.send('move', this.move);
+                    break;
+                }
+                case 39: { // Right
+                    this.move.x = 0;
+                    this.send('move', this.move);
                     break;
                 }
             }
