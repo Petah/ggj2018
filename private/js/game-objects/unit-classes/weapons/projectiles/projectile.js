@@ -3,7 +3,6 @@ const Unit = require("./unit-classes/unit");
 const collision = require("./../utilities/collision");
 
 class Projectile extends MovableGameObject{
-
     constructor(
         game,
         x,
@@ -24,7 +23,6 @@ class Projectile extends MovableGameObject{
     }
 
     loop(deltaTime, currentTime) {
-        super(deltaTime, currentTime);
     }
 
     move(deltaTime) {
@@ -52,5 +50,5 @@ class Projectile extends MovableGameObject{
     onCollisionWithNonDamageableGameObject(gameObject) {
         this.showDamageAnimation();
     }
-    
+
 }
