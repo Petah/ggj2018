@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="ggj18.css">
     </head>
     <body>
+        <div id="game"></div>
         <script src="vendor.js"></script>
         <script src="ggj18.js"></script>
         <script>
@@ -15,8 +16,9 @@
             client.connect();
             console.log(client);
 
+            var gameContainer = document.getElementById('game');
             var renderer = new Renderer();
-            document.body.appendChild(renderer.getView());
+            gameContainer.appendChild(renderer.getView());
 
             // Add bunny
             var bunny = renderer.addSprite(1, '/images/bunny.png', 400, 300);
