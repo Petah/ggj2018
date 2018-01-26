@@ -40,8 +40,7 @@ module.exports = class Client {
 
                 case 'updateInput': {
                     const player = this.players[message.data.id];
-                    player.units[0].xVelocity = message.data.move.x * this.speed;
-                    player.units[0].yVelocity = message.data.move.y * this.speed;
+                    player.units[0].accelerate(message.data.move.x, message.data.move.y);
                     if (message.data.shoot) {
                         player.units[0].attack(10, 10);
                     }
@@ -79,8 +78,8 @@ module.exports = class Client {
         }
         this.send('update', {
             renderer: {
-                x: this.game.gameObjects[0] ? this.game.gameObjects[0].x : 0,
-                y: this.game.gameObjects[0] ? this.game.gameObjects[0].y : 0,
+                x: this.game.gameObjects[0] ? this.game.gameObjects[0].x - this.view.width / 2 : 0,
+                y: this.game.gameObjects[0] ? this.game.gameObjects[0].y - this.view.height / 2 : 0,
                 zoom: 1,
             },
             updates: updates,

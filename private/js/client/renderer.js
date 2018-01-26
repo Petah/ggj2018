@@ -33,8 +33,8 @@ class Renderer {
     }
 
     cameraPanAbsolute(x, y) {
-        // this.layers.foreground.setTransform(x, y);
-        // this.layers.background.setTransform(0, 0);
+        this.layers.foreground.setTransform(-x, -y);
+        this.layers.background.setTransform(-x, -y);
         // this.layers.background.setTransform(-x, -y);
     }
 

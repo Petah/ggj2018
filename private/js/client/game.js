@@ -3,9 +3,13 @@ class Game {
         this.client = new Client();
         this.client.connect();
 
+        this.state = 'title';
         this.started = false;
 
         this.players = [];
+
+        this.titleUi = new TitleUi(this);
+        this.gameUi = new GameUi(this);
     }
 
     start() {
@@ -59,29 +63,43 @@ class Game {
 
     loop(deltaTime, currentTime) {
         this.gamepads = navigator.getGamepads();
-        let i = this.gamepads.length;
-        while (i--) {
-            if (!this.gamepads[i]) {
-                continue;
+        switch (this.state) {
+            case 'title': {
+                let i = this.gamepads.length;
+                while (i--) {
+                    if (this.gamepads[i]) {
+                        // for (let b = 0; b < this.gamepads[i].buttons.length; b++) {
+                        //     if (this.gamepads[i].buttons[b].pressed) {
+                        //         console.log(b);
+                        //     }
+                        // }
+                        // console.log(this.gamepads[i].buttons[0].value);
+                        // console.log(this.gamepads[i].axes[0]);
+
+                        // A
+                        if (this.gamepads[i].buttons[0].pressed) {
+                            this.createPlayer(i);
+                        }
+                        this.titleUi.render();
+
+                        // Start
+                        if (this.gamepads[i].buttons[9].pressed) {
+                            this.titleUi.hide();
+                            this.gameUi.show();
+                            this.state = 'game';
+                        }
+                    }
+                }
+
+                break;
             }
-
-            // Start
-            if (this.gamepads[i].buttons[9].pressed) {
-                this.createPlayer(i);
+            case 'game': {
+                let p = this.players.length;
+                while (p--) {
+                    this.players[p].loop(deltaTime, currentTime);
+                }
+                break;
             }
-
-            // for (let b = 0; b < this.gamepads[i].buttons.length; b++) {
-            //     if (this.gamepads[i].buttons[b].pressed) {
-            //         console.log(b);
-            //     }
-            // }
-            // console.log(this.gamepads[i].buttons[0].value);
-            // console.log(this.gamepads[i].axes[0]);
-        }
-
-        let p = this.players.length;
-        while (p--) {
-            this.players[p].loop(deltaTime, currentTime);
         }
     }
 }
