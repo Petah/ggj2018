@@ -10,7 +10,6 @@ class BulletHell extends GameObject {
         sprite,
         collisionRadius,
         duration,
-        speedIncrease
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.game = game;
@@ -20,7 +19,6 @@ class BulletHell extends GameObject {
         this.sprite = sprite;
         this.collisionRadius = collisionRadius;
         this.duration = duration;
-        this.speedIncrease = speedIncrease;
         this.type = 'BulletHell';
     }
 
@@ -40,11 +38,11 @@ class BulletHell extends GameObject {
     }
 
     onCollisionWithUnit(unit) {
+        let currentFireRate = unit.weapon.fireRate;
         unit.weapon.fireRate = 1;
 
         setTimeout(() => {
-            unit.xVelocity -= this.speedIncrease;
-            unit.yVelocity -= this.speedIncrease;
+            unit.weapon.fireRate = currentFireRate;
         }, this.duration);
         //destroy()?? dont wanna render anymore
     }
