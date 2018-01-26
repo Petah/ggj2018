@@ -2,7 +2,7 @@ const logger = require('./logger')(__filename);
 const MovableGameObject = require('../game-objects/movable-game-object');
 const Unit = require('../game-objects/unit-classes/unit');
 const KamikazeUnit = require('../game-objects/unit-classes/kamikaze-unit');
-const Player = require('../player-collections/player');
+const MissileUnit = require('../game-objects/unit-classes/missile-unit');
 
 module.exports = class Client {
     constructor(game, server, webSocketClient, id) {
@@ -11,10 +11,9 @@ module.exports = class Client {
         this.webSocketClient = webSocketClient;
         this.id = id;
         this.nextUpdate = 0;
-        this.players = [];
 
         this.speed = 200;
-        this.unit = new KamikazeUnit(this.game, 10, 10, 0, 2, 10, 10);
+        this.unit = new MissileUnit(this.game, 500, 500, 0, 2, 0, 0);
         this.game.gameObjects.push(this.unit);
 
         this.view = {
@@ -26,7 +25,7 @@ module.exports = class Client {
 
         this.webSocketClient.on('message', (message) => {
             message = JSON.parse(message);
-            logger.log('Client message', message);
+            // logger.log('Client message', message);
             switch (message.type) {
                 case 'view': {
                     logger.log('Client view', message.data);
@@ -43,16 +42,6 @@ module.exports = class Client {
                     if (message.data.shoot) {
                         this.unit.attack(10, 10);
                     }
-                    if(message.data.spawn){
-                        this.players[0].triggerSpawn();
-                    }
-                    break;
-                }
-                case 'createPlayer': {
-                    let newPlayer = new Player(this.game,this.players.length,0);
-                    this.players.push(newPlayer);
-                    console.log("created player");
-                    break;
                 }
             }
         });
@@ -77,7 +66,15 @@ module.exports = class Client {
                 ]);
             }
         }
-        this.send('update', updates);
+        this.send('update', {
+            // @Todo
+            renderer: {
+                x: 0,
+                y: 0,
+                zoom: 0,
+            },
+            updates: updates,
+        });
         this.nextUpdate = currentTime + 0.016;
     }
 
