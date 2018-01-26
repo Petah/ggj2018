@@ -39,6 +39,16 @@ class Renderer {
         return this.sprites[id];
     }
 
+    updateSprite(id, xPos, yPos) {
+        let sprite = this.getSprite(id);
+        if (!sprite) {
+            return null;
+        }
+
+        sprite.x = xPos;
+        sprite.y = yPos;
+    }
+
     getWidth() {
         return this.width;
     }
