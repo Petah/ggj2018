@@ -1,9 +1,9 @@
-const MoveableGameObject = require("./moveable-game-object")
-const Weapon = require("./weapon")
-const Team = require("./../../team")
-const Projectile = require("./../projectile")
+const MovableGameObject = require("./Movable-game-object");
+const Weapon = require("./weapon");
+const Team = require("./../../team");
+const Projectile = require("./../projectile");
 
-module.export = class Unit extends MoveableGameObject{
+module.export = class Unit extends MovableGameObject{
 
     constructor(
         x,
@@ -39,5 +39,12 @@ module.export = class Unit extends MoveableGameObject{
 
     getHurt(projectile) {
         this.health -= projectile.damage;
+        if(this.health < 1) {
+            this.onDie();
+        }
+    }
+
+    onDie() {
+        
     }
 }

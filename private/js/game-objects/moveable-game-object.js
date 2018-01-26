@@ -1,4 +1,4 @@
-const GameObject = require("../game-object")
+const GameObject = require("../game-object");
 
 module.exports = class extends GameObject{
     constructor(

@@ -1,7 +1,7 @@
-const MoveableGameObject = require("./moveable-game-object")
-const Unit = require("./unit-classes/unit")
+const MovableGameObject = require("./Movable-game-object");
+const Unit = require("./unit-classes/unit");
 
-class Projectile extends MoveableGameObject{
+class Projectile extends MovableGameObject{
 
     constructor(
         x,
@@ -29,8 +29,8 @@ class Projectile extends MoveableGameObject{
         if(travelledDistance > range) {
             onCollisionWithNonDamageableGameObject(null);
         } else {
-            this.x += (xVelocity * deltaTime);
-            this.y += (yVelocity * deltaTime);
+            this.x += (this.xVelocity * deltaTime);
+            this.y += (this.yVelocity * deltaTime);
         }
     }
 
