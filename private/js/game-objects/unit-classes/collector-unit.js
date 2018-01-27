@@ -267,7 +267,6 @@ module.exports = class CollectorUnit extends Unit {
                 }
             }
         }
-        console.log(targets);
     }
 
 }
