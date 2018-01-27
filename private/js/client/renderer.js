@@ -1,8 +1,8 @@
 const assets = {
     1: '/images/placeholder.png',
-    2: '/images/placeholder.png',
-    3: '/images/placeholder.jpg',
-    4: '/images/placeholder.png',
+    2: '/images/placeholder2.png',
+    3: '/images/placeholder3.jpg',
+    4: '/images/placeholder4.png',
 
     5: '/images/collector-front-1.png',
     6: '/images/collector-back-1.png',

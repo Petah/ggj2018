@@ -37,7 +37,7 @@ module.exports = class Game {
         const gameLoop = () => {
             const hrTime = process.hrtime();
             this.currentTime = hrTime[0] + hrTime[1] / 1000000000;
-            const deltaTime = this.currentTime - previousTime;
+            this.deltaTime = this.currentTime - previousTime;
             previousTime = this.currentTime;
             updates++;
 
@@ -48,7 +48,7 @@ module.exports = class Game {
             }
 
             this.collisionCheck();
-            this.loop(deltaTime, this.currentTime);
+            this.loop(this.deltaTime, this.currentTime);
             if (this.gameObjectsToRemove.length > 0) {
                 logger.log('Remove', this.gameObjectsToRemove);
                 this.gameObjects = this.gameObjects.filter(gameObject => this.gameObjectsToRemove.indexOf(gameObject.id) === -1);
@@ -125,10 +125,10 @@ module.exports = class Game {
         let i = 0;
         while (i < 4) {
             i++;
-            let xPos = -4800 + Math.random() * (4800 * 2);
-            let yPos = -1620 + Math.random() * (1620 * 2);
-            this.gameObjects.push(new SatellitePart(this, xPos, yPos, 0, 1, 5));
-            console.log('spawing part at: ' + xPos + ' ' + yPos);
+            let x = Math.random() * this.mapWidth;
+            let y = Math.random() * this.mapHeight;
+            this.gameObjects.push(new SatellitePart(this, x, y));
+            console.log('spawing part at: ' + x + ' ' + y);
         }
     }
 

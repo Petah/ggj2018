@@ -48,9 +48,7 @@ module.exports = class Client {
                     }
                     if (player && player.unit) {
                         player.unit.accelerate(message.data.move.x, message.data.move.y);
-                        if (message.data.shoot) {
-                            player.unit.attack(10, 10);
-                        }
+                        player.unit.shooting = message.data.shoot;
                     }
                     break;
                 }

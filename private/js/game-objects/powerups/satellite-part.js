@@ -5,11 +5,9 @@ module.exports = class SatellitePart extends GameObject {
         game,
         x,
         y,
-        direction,
-        sprite,
-        collisionRadius
     ) {
-        super(game, x, y, direction, sprite, collisionRadius);
+        super(game, x, y, 0, 1, 5);
         this.type = 'SatellitePart';
+        this.layer = 'map';
     }
 }

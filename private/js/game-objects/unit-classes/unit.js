@@ -18,9 +18,7 @@ module.exports = class Unit extends MovableGameObject {
         this.moving = false;
         this.powerUp = null;
         this.powerUpTime = 0;
-    }
-
-    attack(direction) {
+        this.shooting = false;
     }
 
     getHurt(projectile) {
