@@ -20,7 +20,7 @@ module.exports = class Unit extends MovableGameObject {
         this.powerUpTime = 0;
         this.shooting = false;
     }
-
+    
     getHurt(projectile) {
         // this.health -= projectile.damage;
         // if (this.health < 1) {
