@@ -55,17 +55,29 @@ const assets = {
 
 const animations = {
     5: [
-        '/animations/collector-front-0.png',
-        '/animations/collector-front-1.png',
-        '/animations/collector-front-2.png',
-        '/animations/collector-front-3.png',
-        '/animations/collector-front-4.png',
-        '/animations/collector-front-5.png',
-        '/animations/collector-front-6.png',
-        '/animations/collector-front-7.png',
-        '/animations/collector-front-8.png',
-        '/animations/collector-front-9.png',
-    ]
+        '/animations/collector-front-walk-1.png',
+        '/animations/collector-front-walk-2.png',
+    ],
+    9: [
+        '/animations/collector-front-walk-1.png',
+        '/animations/collector-front-walk-2.png',
+    ],
+    11: [
+        '/animations/collector-side-left-0.png',
+        '/animations/collector-side-left-1.png',
+        '/animations/collector-side-left-2.png',
+        '/animations/collector-side-left-3.png',
+        '/animations/collector-side-left-4.png',
+        '/animations/collector-side-left-5.png',
+    ],
+    12: [
+        '/animations/collector-side-0.png',
+        '/animations/collector-side-1.png',
+        '/animations/collector-side-2.png',
+        '/animations/collector-side-3.png',
+        '/animations/collector-side-4.png',
+        '/animations/collector-side-5.png',
+    ],
 };
 
 class Renderer {
@@ -156,6 +168,7 @@ class Renderer {
 
         sprite.anchor.set(0.5);
         sprite.animationId = null;
+        sprite.stillId = null;
         sprite.animationSpeed = 0.25;
         sprite.x = x;
         sprite.y = y;
@@ -163,6 +176,8 @@ class Renderer {
         if (this.animations[spriteAsset]) {
             sprite.animationId = spriteAsset;
             sprite.play();
+        } else {
+            sprite.stillId = spriteAsset;
         }
 
         switch (layer) {
@@ -179,7 +194,7 @@ class Renderer {
         return sprite;
     }
 
-    moveSprite(id, x, y, direction, spriteAsset) {
+    moveSprite(id, x, y, direction, spriteAsset, moving) {
         if (!this.sprites[id]) {
             this.sprites[id] = this.createSprite(id, spriteAsset, x, y);
             return;
@@ -189,17 +204,20 @@ class Renderer {
         this.sprites[id].y = y;
 
         let currentAnimationId = this.sprites[id].animationId;
-        if (this.animations[spriteAsset]) {
+        if (moving && this.animations[spriteAsset]) {
             if (currentAnimationId === spriteAsset) {
                 return null;
             }
 
             this.sprites[id].textures = this.animations[spriteAsset];
             this.sprites[id].animationId = spriteAsset;
+            this.sprites[id].stillId = null;
             this.sprites[id].play();
         } else {
             this.sprites[id].textures = [this.textures[spriteAsset]];
             this.sprites[id].animationId = null;
+            this.sprites[id].stillId = spriteAsset;
+            this.sprites[id].stop();
         }
     }
 

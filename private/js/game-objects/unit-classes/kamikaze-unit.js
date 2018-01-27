@@ -6,6 +6,10 @@ const sprites = {
     down: [20, 30],
     left: [22, 32],
     right: [23, 33],
+    upMove: [],
+    downMove: [],
+    leftMove: [],
+    rightMove: [],
 };
 
 module.exports = class KamikazeUnit extends Unit {
