@@ -14,9 +14,7 @@ const assets = {
     11: '/images/collector-left-2.png',
     12: '/images/collector-right-2.png',
 
-    700: '/images/bg-tiled-bacteria.jpg',
-    700: '/images/sand.png',
-    800: '/images/bg-tiled-stones.jpg',
+    700: '/images/bg-tiled-stones.jpg',
 };
 
 const animations = {
