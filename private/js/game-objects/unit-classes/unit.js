@@ -69,7 +69,7 @@ module.exports = class Unit extends MovableGameObject {
     }
 
     setSprite(velocity, stillSprites, movingSprites) {
-        if (velocity === 0) {
+        if (velocity < 100.00) {
             this.moving = false;
             this.sprite = stillSprites[this.team.id];
         } else {
