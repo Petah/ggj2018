@@ -2,6 +2,10 @@ const logger = require('./logger')(__filename);
 const Server = require('./server');
 const MovableGameObject = require('../game-objects/movable-game-object');
 const BulletHellPowerUp = require('../game-objects/powerups/bullet-hell-powerup');
+const FOVPowerUp = require('../game-objects/powerups/fov-powerup');
+const FauxPowerUp = require('../game-objects/powerups/faux-powerup');
+const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
+const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
 const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
 
@@ -63,6 +67,10 @@ module.exports = class Game {
             this.gameObjects[g].loop(deltaTime, currentTime);
         }
         this.server.loop(deltaTime, currentTime);
+
+        if(Math.round(currentTime) % 20 === 0) {
+            this.spawnPowerUp();
+        }
     }
 
     reset() {
@@ -108,15 +116,15 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
-        let xDistFromCenter = Math.random() * (this.mapWidth * 0.8);
-        let yDistFromCenter = Math.random() * (this.mapHeight * 0.8);
+        let xLocation = Math.random() * (this.mapWidth * 0.8);
+        let yLocation = Math.random() * (this.mapHeight * 0.8);
 
         let randomPowerUp = Math.random();
 
         if (randomPowerUp <= 0.2) {
             this.gameObjects.push(new BulletHellPowerUp(this,
-                this.mapWidth / 2,
-                this.mapHeight / 2,
+                xLocation,
+                yLocation,
                 0,
                 3,
                 30,
@@ -124,8 +132,8 @@ module.exports = class Game {
         } else if (randomPowerUp <= 0.4) {
             this.gameObjects.push(new FOVPowerUp(
                 this,
-                this.mapWidth / 2,
-                this.mapHeight / 2,
+                xLocation,
+                yLocation,
                 0,
                 3,
                 30,
@@ -133,8 +141,8 @@ module.exports = class Game {
         } else if (randomPowerUp <= 0.6) {
             this.gameObjects.push(new ShieldPowerUp(
                 this,
-                this.mapWidth / 2,
-                this.mapHeight / 2,
+                xLocation,
+                yLocation,
                 0,
                 3,
                 30,
@@ -143,8 +151,8 @@ module.exports = class Game {
         } else if (randomPowerUp <= 0.8) {
             this.gameObjects.push(new SpeedPowerUp(
                 this,
-                this.mapWidth / 2,
-                this.mapHeight / 2,
+                xLocation,
+                yLocation,
                 0,
                 3,
                 30,
@@ -153,8 +161,8 @@ module.exports = class Game {
         } else {
             this.gameObjects.push(new FauxPowerUp(
                 this,
-                this.mapWidth / 2,
-                this.mapHeight / 2,
+                xLocation,
+                yLocation,
                 0,
                 3,
                 30,
