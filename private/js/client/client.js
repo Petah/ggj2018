@@ -51,6 +51,7 @@ class Client {
                         renderer.moveSprite(...message.data.updates[i]);
                     }
                     renderer.cullSprites(message.data.updates);
+                    renderer.sortSprites();
 
                     if (message.data.renderer) {
                         renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);

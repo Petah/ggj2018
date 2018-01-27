@@ -1,12 +1,15 @@
 const Unit = require("./unit");
 const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
-const collision = require("../../utilities/collision");
 
 const sprites = {
     up: [21, 31],
     down: [20, 30],
     left: [22, 32],
     right: [23, 33],
+    upMove: [],
+    downMove: [],
+    leftMove: [],
+    rightMove: [],
 };
 
 module.exports = class KamikazeUnit extends Unit {
@@ -49,13 +52,5 @@ module.exports = class KamikazeUnit extends Unit {
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
-
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
-        let i = collisions.length;
-        while (i--) {
-            if (collisions[i].id != this.id) {
-                // collision
-            }
-        }
     }
 }

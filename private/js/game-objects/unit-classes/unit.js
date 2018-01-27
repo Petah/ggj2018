@@ -1,6 +1,5 @@
 const MovableGameObject = require("../movable-game-object")
 const Team = require("../../player-collections/team");
-const collision = require("../../utilities/collision");
 
 module.exports = class Unit extends MovableGameObject {
     constructor(
@@ -16,6 +15,7 @@ module.exports = class Unit extends MovableGameObject {
         super(game, x, y, direction, sprite, xVelocity, yVelocity);
         this.type = 'Unit';
         this.team = team;
+        this.moving = false;
     }
 
     attack(direction) {
@@ -45,7 +45,7 @@ module.exports = class Unit extends MovableGameObject {
 
     loop(deltaTime, currentTime){
         super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while(i--){
             if(collisions[i].id == this.id || (collisions[i].unit && (collisions[i].unit.id == this.id))){
@@ -58,13 +58,27 @@ module.exports = class Unit extends MovableGameObject {
     }
     updateSprite(sprites) {
         if (this.direction >= 230 && this.direction <= 320) {
-            this.sprite = sprites.up[this.team.id];
+            this.setSprite(this.yVelocity, sprites.up, sprites.upMove);
         } else if (this.direction >= 140 && this.direction <= 230) {
-            this.sprite = sprites.left[this.team.id];
+            this.setSprite(this.xVelocity, sprites.left, sprites.leftMove);
         } else if (this.direction >= 50 && this.direction <= 140) {
-            this.sprite = sprites.down[this.team.id];
+            this.setSprite(this.yVelocity, sprites.down, sprites.downMove);
         } else {
-            this.sprite = sprites.right[this.team.id];
+            this.setSprite(this.xVelocity, sprites.right, sprites.rightMove);
+        }
+    }
+
+    setSprite(velocity, stillSprites, movingSprites) {
+        if (velocity === 0) {
+            this.moving = false;
+            this.sprite = stillSprites[this.team.id];
+        } else {
+            this.moving = true;
+            if (movingSprites && movingSprites[this.team.id]) {
+                this.sprite = movingSprites[this.team.id];
+            } else {
+                this.sprite = stillSprites[this.team.id];
+            }
         }
     }
 

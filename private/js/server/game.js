@@ -8,6 +8,7 @@ const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
 const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
 const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
+const math = require('../utilities/math');
 
 module.exports = class Game {
     constructor() {
@@ -15,10 +16,13 @@ module.exports = class Game {
         this.teamAmount = 2;
         this.teams = [];
         this.gameObjects = [];
-
-        this.mapWidth = 10000;
-        this.mapHeight = 10000;
         this.gameObjectsToRemove = [];
+
+        this.mapWidth = 2000;
+        this.mapHeight = 2000;
+
+        this.powerUpCooldown = 0;
+        this.collisions = {};
     }
 
     start() {
@@ -42,6 +46,7 @@ module.exports = class Game {
                 updates = 0;
             }
 
+            this.collisionCheck();
             this.loop(deltaTime, this.currentTime);
             if(this.gameObjectsToRemove.length >0){
                 console.log(this.gameObjectsToRemove);
@@ -75,8 +80,9 @@ module.exports = class Game {
         }
         this.server.loop(deltaTime, currentTime);
 
-        if(Math.round(currentTime) % 20 === 0) {
-            // this.spawnPowerUp();
+        this.powerUpCooldown -= deltaTime;
+        if (this.powerUpCooldown <= 0) {
+            this.spawnPowerUp();
         }
     }
 
@@ -92,13 +98,13 @@ module.exports = class Game {
     initTeams() {
         let t = this.teamAmount;
         while (t--) {
-	        let x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
-	        let y;
-	        if (t <= 2) {
-	            y =  (this.mapHeight * 0.05);
-	        } else {
-	            y = ((this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
-	        }
+            let x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
+            let y;
+            if (t <= 2) {
+                y = (this.mapHeight * 0.05);
+            } else {
+                y = ((this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
+            }
             const spawner = new Spawner(
                 this,
                 x,
@@ -123,6 +129,8 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
+        console.log('spawnPowerUp');
+        this.powerUpCooldown = 1;
         let xLocation = Math.random() * (this.mapWidth * 0.8);
         let yLocation = Math.random() * (this.mapHeight * 0.8);
 
@@ -187,5 +195,28 @@ module.exports = class Game {
             x,
             y,
         });
+    }
+
+    collisionCheck() {
+        this.collisions = {};
+        let g = this.gameObjects.length;
+        while (g--) {
+            this.collisions[this.gameObjects[g].id] = this.checkCollision(this.gameObjects[g]);
+        }
+    }
+
+    checkCollision(gameObject) {
+        const result = [];
+        let i = this.gameObjects.length;
+        while (i--) {
+            if (gameObject.id === this.gameObjects[i].id) {
+                continue;
+            }
+            const distance = math.pointDistance(gameObject.x, gameObject.y, this.gameObjects[i].x, this.gameObjects[i].y);
+            if (distance < gameObject.collisionRadius + this.gameObjects[i].collisionRadius) {
+                result.push(this.gameObjects[i]);
+            }
+        }
+        return result;
     }
 }

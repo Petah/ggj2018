@@ -1,5 +1,4 @@
 const GameObject = require('../game-object');
-const collision = require("../../utilities/collision");
 
 module.exports = class FOVPowerUp extends GameObject {
     constructor(
@@ -18,30 +17,6 @@ module.exports = class FOVPowerUp extends GameObject {
         this.timeElapsed = 0;
         this.isActive = false;
         this.type = 'FOVPowerUp';
-    }
-
-    loop(deltaTime, currentTime) {
-        super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
-        let i = collisions.length;
-        while (i--) {
-            if (collisions[i].id !== this.id) {
-                switch(collisions[i].type) {
-                    case 'Unit':
-                        var unit = collisions[i];
-                        this.onCollisionWithUnit(collisions[i]);
-                        break;
-                }
-            }
-        }
-
-        if (this.isActive) {
-            this.timeElapsed += deltaTime;
-            if (this.timeElapsed >= this.duration) {
-                //zoom camera back in
-                this.isActive = false;
-            }
-        }
     }
 
     onCollisionWithUnit(unit) {
