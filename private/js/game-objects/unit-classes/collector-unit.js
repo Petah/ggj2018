@@ -1,6 +1,6 @@
 const logger = require('../../server/logger')(__filename);
 const Unit = require("./unit");
-const SatelliteStack = require('../../game-objects/powerups/satellite-stack')
+const SatelliteStack = require('../satellite-stack')
 
 const sprites = {
     up: [6, 10],
@@ -38,8 +38,6 @@ module.exports = class CollectorUnit extends Unit {
         this.hasPart = false;
         this.part = null;
         this.canPickUpPart = false;
-        this.canAddToStack = false;
-        this.canStealFromStack = false;
         this.timeToSteal = 3;
         this.timeToHold = 20;
         this.timeElapsed = 0;

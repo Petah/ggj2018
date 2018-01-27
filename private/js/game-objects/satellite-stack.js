@@ -1,5 +1,4 @@
-const GameObject = require('../game-object');
-const Satellite = require('./satellite');
+const GameObject = require('./game-object');
 
 const sprites = {
     antenna: 200,
@@ -27,8 +26,6 @@ class SatelliteStack extends GameObject {
     ) {
         super(game, x, y, 0, 2, 5);
         this.team = team;
-        this.currentSize = 0;
-        this.maxSize = Satellite.REQUIRED_PARTS;
         this.type = 'SatelliteStack';
         this.layer = 'map';
         this.parts = {};
