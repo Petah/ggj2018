@@ -7,8 +7,8 @@ module.exports = class SatellitePart extends GameObject {
         y,
         number,
     ) {
-        console.log('---------',200 + number);
         super(game, x, y, 0, 200 + number, 5);
+        console.log('###########', x, y, 0, 200 + number);
         this.type = 'SatellitePart';
         this.layer = 'map';
     }

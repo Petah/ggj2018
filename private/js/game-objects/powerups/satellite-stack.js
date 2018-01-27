@@ -44,9 +44,14 @@ module.exports = class SatelliteStack extends GameObject {
             this.sprite = sprites.antennaFramePlaced;
         } else if (this.parts[sprites.dish] && this.parts[sprites.frame]) {
             this.sprite = sprites.dishFramePlaced;
-        } else {
-            this.sprite = sprite;
+        } else if (this.parts[sprites.antenna]) {
+            this.sprite = sprites.antennaPlaced;
+        } else if (this.parts[sprites.dish]) {
+            this.sprite = sprites.dishPlaced;
+        } else if (this.parts[sprites.frame]) {
+            this.sprite = sprites.framePlaced;
         }
+        console.log('#############', this.sprite);
 
         // if (this.currentSize++ === this.maxSize) {
         //     this.game.gameObjects.push(new Satellite(this.game,

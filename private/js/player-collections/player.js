@@ -20,7 +20,7 @@ module.exports = class Player {
         let objectsLength = this.game.gameObjects.length;
         while(objectsLength--) {
             let object = this.game.gameObjects[objectsLength];
-            if(object.type !== undefined 
+            if(object.type !== undefined
                 && object.type.indexOf("Satellite") !== -1) {
                 let objectX = object.x;
                 let objectY = object.y;
@@ -31,8 +31,7 @@ module.exports = class Player {
                 }
             }
         }
-        
+
         let direction = Math.pointDirection(x, y, objectX, objectY);
-        //console.log("Direction of closest Satellite parts: " + direction);
     }
 }
