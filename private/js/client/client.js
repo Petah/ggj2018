@@ -2,6 +2,10 @@
 console.log('Main');
 
 class Client {
+    constructor(game) {
+        this.game = game;
+    }
+
     connect() {
         this.socketReady = false;
         // this.bind();
