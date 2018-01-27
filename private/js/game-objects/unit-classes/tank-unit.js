@@ -44,12 +44,4 @@ module.exports = class TankUnit extends Unit {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
     }
-
-    updateSprite(sprites) {
-        if (this.direction >= 181) {
-            this.sprite = sprites.up[this.team.id];
-        } else {
-            this.sprite = sprites.down[this.team.id];
-        }
-    }
 }

@@ -127,12 +127,12 @@ const animations = {
 
     // Tank
     60: [
-        '/animations/tank-front-0.png',
         '/animations/tank-front-1.png',
+        '/animations/tank-front-2.png',
     ],
     61: [
-        '/animations/tank-back-0.png',
         '/animations/tank-back-1.png',
+        '/animations/tank-back-2.png',
     ],
     62: [
         '/animations/tank-left-1.png',
@@ -143,12 +143,12 @@ const animations = {
         '/animations/tank-right-2.png',
     ],
     70: [
-        '/animations/tank2-front-0.png',
         '/animations/tank2-front-1.png',
+        '/animations/tank2-front-2.png',
     ],
     71: [
-        '/animations/tank2-back-0.png',
         '/animations/tank2-back-1.png',
+        '/animations/tank2-back-2.png',
     ],
     72: [
         '/animations/tank2-left-1.png',
