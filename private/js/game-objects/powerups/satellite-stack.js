@@ -1,20 +1,38 @@
 const GameObject = require('../game-object');
-const SatelliteDish = require('private/js/game-objects/powerups/satellite');
 const collision = require("../../utilities/collision");
 const Satellite = require('satellite');
 
-class SatellitePart extends GameObject {
-    constructor(
-        game,
-        x,
-        y,
-        direction,
-        sprite,
-        collisionRadius
-    ) {
+class SatelliteStack extends GameObject {
+    constructor(game,
+                x,
+                y,
+                direction,
+                sprite,
+                collisionRadius,
+                team) {
         super(game, x, y, direction, sprite, collisionRadius);
+        this.currentSize = 0;
+        this.maxSize = 0;
+        this.team = team;
         this.type = 'SatellitePart';
     }
+
+    addPart(team) {
+        if (this.currentSize++ === this.maxSize) {
+            new Satellite(this.game,
+                this.x,
+                this.y,
+                this.direction,
+                'satellite-sprite-path',
+                this.collisionRadius,
+                team);
+        }
+    }
+
+    removePart() {
+        this.currentSize--;
+    }
+
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
@@ -22,7 +40,7 @@ class SatellitePart extends GameObject {
         let i = collisions.length;
         while (i--) {
             if (collisions[i].id !== this.id) {
-                switch(collisions[i].type) {
+                switch (collisions[i].type) {
                     case 'Unit':
                         this.onCollisionWithUnit(collisions[i]);
                         break;
@@ -30,18 +48,4 @@ class SatellitePart extends GameObject {
             }
         }
     }
-
-    onCollisionWithUnit(unit) {
-        // if (unit.team.satelliteParts++ === Satellite.REQUIRED_PARTS) {
-        //     new SatelliteDish(this.game,
-        //         this.x,
-        //         this.y,
-        //         this.direction,
-        //         'satellite-sprite-path',
-        //         this.collisionRadius,
-        //         unit.team);
-        // } else {
-        //     console.log('Collected another part');
-        // }
-        //destroy()?? dont wanna render anymore
-    }
+}
