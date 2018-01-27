@@ -19,6 +19,7 @@ module.exports = class Team {
         this.createUnit(new MissileUnit(this.game, 500 + id * 100, 600, 0, 2, 0, 0, this));
         this.createUnit(new KamikazeUnit(this.game, 500 + id * 100, 700, 0, 2, 0, 0, this));
         this.createUnit(new TankUnit(this.game, 500 + id * 100, 800, 0, 2, 0, 0, this));
+            this.hasPart = false;
     }
 
     createUnit(unit) {
@@ -32,7 +33,6 @@ module.exports = class Team {
     }
 
     nextUnit(player, force) {
-        console.log(player.nextUnitCooldown);
         if (force || player.nextUnitCooldown <= 0) {
             player.nextUnitCooldown = 1;
             player.unit = this.units[this.nextUnitIndex];

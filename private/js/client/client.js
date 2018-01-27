@@ -2,6 +2,10 @@
 console.log('Main');
 
 class Client {
+    constructor(game) {
+        this.game = game;
+    }
+
     connect() {
         this.socketReady = false;
         // this.bind();
@@ -47,7 +51,13 @@ class Client {
                         renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
                         renderer.cameraZoomAbsolute(message.data.renderer.zoom);
                     }
+                    break;
                 }
+                case 'hud': {
+                    this.game.gameUi.data = message.data;
+                    break;
+                }
+
             }
         });
     }

@@ -13,12 +13,6 @@ module.exports = class FauxPowerUp extends GameObject {
         healthDecrease
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-        this.sprite = sprite;
-        this.collisionRadius = collisionRadius;
         this.duration = duration;
         this.healthDecrease = healthDecrease;
         this.type = 'FauxPowerUp';

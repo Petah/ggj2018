@@ -11,6 +11,9 @@ module.exports = class Game {
         this.teamAmount = 2;
         this.teams = [];
         this.gameObjects = [];
+
+        this.mapWidth = 10000;
+        this.mapHeight = 10000;
     }
 
     start() {
@@ -90,13 +93,15 @@ module.exports = class Game {
 
         console.log("TeamValue: " + teamValue + "x: " + x, "y: " + y);
 
-        this.gameObjects.push(new Spawner(this),
+        this.gameObjects.push(new Spawner(
+            this,
             x,
             y,
             0,
             1, // Sprite
             30,
-            this.teams[teamValue]);
+            this.teams[teamValue],
+        ));
     }
 
     initializeMapObjects() {
