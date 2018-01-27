@@ -224,6 +224,19 @@ class Renderer {
         //     0xFFFFFF,
         // ]);
 
+
+        let container = new PIXI.ParticleContainer();
+
+        for (let i = 0; i < 100; ++i)
+        {
+            let sprite = new PIXI.Sprite(this.textures[101]);
+            container.addChild(sprite);
+        }
+        this.renderer.stage.addChild(container);
+
+
+        // this.particles = new Particles(this, this.layers.foreground);
+
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);
     }
@@ -313,9 +326,6 @@ class Renderer {
         let currentAnimationId = this.sprites[id].animationId;
         if (moving) {
             this.movingSprite = id;
-        }
-        if (this.movingSprite === id) {
-            console.log('moving sprite', spriteAsset, moving);
         }
 
         if (moving && this.animations[spriteAsset]) {
