@@ -98,7 +98,7 @@ class Game {
                         }
 
                         // Start
-                        if (this.gamepads[i].buttons[9] && this.gamepads[i].buttons[9].pressed) {
+                        if (this.players.length > 0 && this.gamepads[i].buttons[9] && this.gamepads[i].buttons[9].pressed) {
                             this.titleUi.hide();
                             this.gameUi.show();
                             this.state = 'game';
@@ -110,7 +110,7 @@ class Game {
                     this.createKeyboardPlayer();
                 }
 
-                if (Keyboard.buttons[13]) {
+                if (this.players.length > 0 && Keyboard.buttons[13]) {
                     this.titleUi.hide();
                     this.gameUi.show();
                     this.state = 'game';

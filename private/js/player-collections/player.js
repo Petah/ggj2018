@@ -8,4 +8,8 @@ module.exports = class Player {
         // this.units.push(unit);
         // this.game.gameObjects.push(unit);
     }
+
+    loop(deltaTime, currentTime) {
+        this.nextUnitCooldown -= deltaTime;
+    }
 }

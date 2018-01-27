@@ -50,10 +50,14 @@ module.exports = class Game {
     }
 
     loop(deltaTime, currentTime) {
-        // process.stdout.write('.');
-        let i = this.gameObjects.length;
-        while (i--) {
-            this.gameObjects[i].loop(deltaTime, currentTime);
+        let t = this.teams.length;
+        while (t--) {
+            this.teams[t].loop(deltaTime, currentTime);
+        }
+
+        let g = this.gameObjects.length;
+        while (g--) {
+            this.gameObjects[g].loop(deltaTime, currentTime);
         }
         this.server.loop(deltaTime, currentTime);
     }
@@ -70,7 +74,7 @@ module.exports = class Game {
     initTeams() {
         let i = this.teamAmount;
         while (i--) {
-            this.teams.push(new Team(this));
+            this.teams.push(new Team(this, i));
             this.createSpawnerForTeam(i);
         }
     }
@@ -92,8 +96,8 @@ module.exports = class Game {
 
     initializeMapObjects() {
         this.gameObjects.push(new BulletHellPowerUp(this,
-            this.mapWidth/2,
-            this.mapHeight/2,
+            this.mapWidth / 2,
+            this.mapHeight / 2,
             0,
             3,
             30,
@@ -101,15 +105,15 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
-        let xDistFromCenter = Math.random() * (this.mapWidth  * 0.8);
+        let xDistFromCenter = Math.random() * (this.mapWidth * 0.8);
         let yDistFromCenter = Math.random() * (this.mapHeight * 0.8);
 
         let randomPowerUp = Math.random();
 
         if (randomPowerUp <= 0.2) {
             this.gameObjects.push(new BulletHellPowerUp(this,
-                this.mapWidth/2,
-                this.mapHeight/2,
+                this.mapWidth / 2,
+                this.mapHeight / 2,
                 0,
                 3,
                 30,
@@ -117,8 +121,8 @@ module.exports = class Game {
         } else if (randomPowerUp <= 0.4) {
             this.gameObjects.push(new FOVPowerUp(
                 this,
-                this.mapWidth/2,
-                this.mapHeight/2,
+                this.mapWidth / 2,
+                this.mapHeight / 2,
                 0,
                 3,
                 30,
@@ -126,8 +130,8 @@ module.exports = class Game {
         } else if (randomPowerUp <= 0.6) {
             this.gameObjects.push(new ShieldPowerUp(
                 this,
-                this.mapWidth/2,
-                this.mapHeight/2,
+                this.mapWidth / 2,
+                this.mapHeight / 2,
                 0,
                 3,
                 30,
@@ -136,8 +140,8 @@ module.exports = class Game {
         } else if (randomPowerUp <= 0.8) {
             this.gameObjects.push(new SpeedPowerUp(
                 this,
-                this.mapWidth/2,
-                this.mapHeight/2,
+                this.mapWidth / 2,
+                this.mapHeight / 2,
                 0,
                 3,
                 30,
@@ -146,12 +150,20 @@ module.exports = class Game {
         } else {
             this.gameObjects.push(new FauxPowerUp(
                 this,
-                this.mapWidth/2,
-                this.mapHeight/2,
+                this.mapWidth / 2,
+                this.mapHeight / 2,
                 0,
                 3,
                 30,
                 10));
         }
+    }
+
+    playAudioAtPoint(audioClip, x, y) {
+        this.server.send('playAudioAtPoint', {
+            audioClip,
+            x,
+            y,
+        });
     }
 }
