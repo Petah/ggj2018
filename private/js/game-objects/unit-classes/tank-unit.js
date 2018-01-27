@@ -1,4 +1,5 @@
 const Unit = require("./unit");
+const TankWeapon = require('./weapons/tank-weapon');
 
 const sprites = {
     up: [61, 71],
@@ -32,7 +33,7 @@ module.exports = class TankUnit extends Unit {
             yVelocity,
             team,
         );
-        // this.weapon = new TankWeapon(this.game, this);
+        this.weapon = new TankWeapon(this.game, this);
         this.health = 100;
         this.collisionRadius = 80;
         this.type = 'unit';

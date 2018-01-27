@@ -19,8 +19,9 @@ module.exports = class Unit extends MovableGameObject {
     }
 
     attack(direction) {
+        this.weapon.attack(direction);
     }
-
+    
     getHurt(projectile) {
         // this.health -= projectile.damage;
         // if (this.health < 1) {
@@ -52,6 +53,7 @@ module.exports = class Unit extends MovableGameObject {
                 continue;
             }
             if(collisions[i].type == 'projectile'){
+                console.log(collisions[i].unit + ' ' + this.id);
                 this.getHurt(collisions[i]);
             }
         }
@@ -69,7 +71,7 @@ module.exports = class Unit extends MovableGameObject {
     }
 
     setSprite(velocity, stillSprites, movingSprites) {
-        if (velocity < 100.00) {
+        if (velocity === 0) {
             this.moving = false;
             this.sprite = stillSprites[this.team.id];
         } else {

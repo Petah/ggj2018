@@ -1,5 +1,4 @@
 const Unit = require("./unit");
-const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
 const MissileWeapon = require("./weapons/missile-weapon");
 
 const sprites = {
@@ -41,9 +40,7 @@ module.exports = class MissileUnit extends Unit {
         this.subType = 'missile';
     }
 
-    attack(direction) {
-        this.weapon.attack(direction);
-    }
+
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
