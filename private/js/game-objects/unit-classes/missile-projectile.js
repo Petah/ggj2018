@@ -32,10 +32,10 @@ module.exports = class MissileProjectile extends MovableGameObject {
 
         while (i--) {
             if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.unit.team.id) {
-                collisions[i].getHurt(this, 1);
+                collisions[i].getHurt(this, Math.random());
                 this.game.removeGameObject(this);
             } else if (collisions[i].type === 'Unit' && collisions[i].team.id === this.unit.team.id && collisions[i].id !== this.unit.id) {
-                collisions[i].getHurt(this, -0.5);
+                collisions[i].getHurt(this, -(Math.random() / 2));
                 this.game.removeGameObject(this);
             } else if (collisions[i].type === 'Collidable') {
                 this.game.removeGameObject(this);

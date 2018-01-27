@@ -44,6 +44,18 @@ module.exports = class TankUnit extends Unit {
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
+
+        if (this.shooting) {
+            const collisions = this.game.collisions[this.id];
+            let c = collisions.length;
+            while (c--) {
+                if (collisions[c].type === 'Unit' && collisions[c].team.id !== this.team.id) {
+                    const direction = math.pointDirection(this.x, this.y, collisions[c].x, collisions[c].y);
+                    collisions[c].accelerate(math.lengthDirX(1000, direction), math.lengthDirY(1000, direction));
+                    collisions[c].getHurt(this, Math.random());
+                }
+            }
+        }
     }
 
     ai() {
