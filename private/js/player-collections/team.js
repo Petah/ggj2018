@@ -23,10 +23,10 @@ module.exports = class Team {
         this.satelliteParts = 0;
         this.units = [];
 
-        this.createUnit(new CollectorUnit(this.game, 500, 500, 0, 2, 0, 0));
-        this.createUnit(new MissileUnit(this.game, 500, 600, 0, 2, 0, 0));
-        this.createUnit(new KamikazeUnit(this.game, 500, 700, 0, 2, 0, 0));
-        this.createUnit(new TankUnit(this.game, 500, 800, 0, 2, 0, 0));
+        this.createUnit(new CollectorUnit(this.game, 500, 500, 0, 2, 0, 0, this));
+        this.createUnit(new MissileUnit(this.game, 500, 600, 0, 2, 0, 0, this));
+        this.createUnit(new KamikazeUnit(this.game, 500, 700, 0, 2, 0, 0, this));
+        this.createUnit(new TankUnit(this.game, 500, 800, 0, 2, 0, 0, this));
     }
 
     createUnit(unit) {

@@ -9,7 +9,7 @@ module.exports = class CollectorUnit extends Unit {
         sprite,
         xVelocity,
         yVelocity,
-        player,
+        team,
     ) {
         super(
             game,
@@ -19,7 +19,7 @@ module.exports = class CollectorUnit extends Unit {
             2,
             xVelocity,
             yVelocity,
-            player,
+            team,
         );
         this.health = 10;
     }

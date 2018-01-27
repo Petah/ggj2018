@@ -10,11 +10,11 @@ module.exports = class Unit extends MovableGameObject {
         sprite,
         xVelocity,
         yVelocity,
-        player,
+        team,
     ) {
         super(game, x, y, direction, sprite, xVelocity, yVelocity);
         this.type = 'Unit';
-        this.player = player;
+        this.team = team;
     }
 
     attack(direction) {

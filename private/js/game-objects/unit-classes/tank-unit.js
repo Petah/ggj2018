@@ -9,7 +9,7 @@ module.exports = class TankUnit extends Unit {
         sprite,
         xVelocity,
         yVelocity,
-        player,
+        team,
     ) {
         super(
             game,
@@ -19,7 +19,7 @@ module.exports = class TankUnit extends Unit {
             1,
             xVelocity,
             yVelocity,
-            player,
+            team,
         );
         // this.weapon = new TankWeapon(this.game, this);
         this.health = 100;

@@ -12,7 +12,7 @@ module.exports = class MissileUnit extends Unit {
         sprite,
         xVelocity,
         yVelocity,
-        player,
+        team,
     ) {
         super(
             game,
@@ -22,7 +22,7 @@ module.exports = class MissileUnit extends Unit {
             5,
             xVelocity,
             yVelocity,
-            player,
+            team,
         );
         this.weapon = new MissileWeapon(this.game, this);
     }
