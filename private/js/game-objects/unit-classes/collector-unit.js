@@ -35,10 +35,10 @@ module.exports = class CollectorUnit extends Unit {
         );
         this.health = 10;
         this.hasPart = false;
+        this.part = null;
         this.canPickUpPart = false;
         this.canAddToStack = false;
         this.canStealFromStack = false;
-
         this.timeToSteal = 3000;
         this.timeElapsed = 0;
         this.isStealing = false;
@@ -65,7 +65,6 @@ module.exports = class CollectorUnit extends Unit {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
 
-        this.part = null;
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
 
@@ -77,6 +76,7 @@ module.exports = class CollectorUnit extends Unit {
                 switch(collisions[i].type) {
                     case 'SatellitePart':
                         this.canPickUpPart = true;
+                        this.part = collisions[i];
                         noPartCollision = false;
                     case 'SatelliteStack':
                         stack = collisions[i];
@@ -93,6 +93,7 @@ module.exports = class CollectorUnit extends Unit {
 
         if (noPartCollision) {
             this.canPickUpPart = false;
+            this.part = null;
         }
 
         if (noStackCollision) {
@@ -120,6 +121,8 @@ module.exports = class CollectorUnit extends Unit {
     pickupPart() {
         this.hasPart = true;
         this.canPickUpPart = false;
+        this.game.removeGameObject(this.part);
+        this.part = null;
     }
 
     placePart() {
