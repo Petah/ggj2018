@@ -55,6 +55,7 @@ class SatelliteStack extends GameObject {
         if (this.parts[sprites.antenna] && this.parts[sprites.dish] && this.parts[sprites.frame]) {
             this.sprite = sprites.complete;
             this.isFullStack = true;
+            this.game.playAudioAtPoint('radar', this.x, this.y);
         } else if (this.parts[sprites.antenna] && this.parts[sprites.dish]) {
             this.sprite = sprites.antennaDishPlaced;
         } else if (this.parts[sprites.antenna] && this.parts[sprites.frame]) {
@@ -69,6 +70,8 @@ class SatelliteStack extends GameObject {
             this.sprite = sprites.framePlaced;
         }
     }
+
+
 }
 
 SatelliteStack.sprites = sprites;
