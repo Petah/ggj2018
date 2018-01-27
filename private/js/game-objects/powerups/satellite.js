@@ -19,8 +19,6 @@ module.exports = class Satellite extends GameObject{
         this.isHolding = true;
         this.isStealing = false;
         this.type = 'SatelliteDish';
-
-        this.hold(this.owningTeam);
     }
 
     loop(deltaTime, currentTime) {

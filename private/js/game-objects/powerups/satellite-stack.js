@@ -8,12 +8,10 @@ class SatelliteStack extends GameObject {
                 y,
                 direction,
                 sprite,
-                collisionRadius,
-                team) {
+                collisionRadius) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.currentSize = 0;
         this.maxSize = 0;
-        this.team = team;
         this.type = 'SatellitePart';
     }
 
@@ -42,7 +40,6 @@ class SatelliteStack extends GameObject {
             if (collisions[i].id !== this.id) {
                 switch (collisions[i].type) {
                     case 'Unit':
-                        this.onCollisionWithUnit(collisions[i]);
                         break;
                 }
             }
