@@ -6,7 +6,7 @@ class AudioBuffer {
             'pickup-1': '/sounds/pickup-1.ogg',
             'pickup-2': '/sounds/pickup-2.ogg',
             'shoot-1': '/sounds/shoot-1.ogg',
-            'shoot-1': '/sounds/shoot-2.ogg',
+            'shoot-2': '/sounds/shoot-2.ogg',
             'button': '/sounds/button.ogg',
         };
         this.buffer = [];
@@ -110,7 +110,7 @@ class Audio {
     getContext() {
         if (!this.context) {
             let AudioContext = window.AudioContext || window.webkitAudioContext;
-            
+
             this.context = new AudioContext();
         }
 
@@ -128,7 +128,7 @@ class Audio {
     getRandomId(length = 8) {
         let randomId = '';
         let characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        
+
         for (var i = 0; i < length; i++) {
             randomId += characterSet.charAt(Math.floor(Math.random() * characterSet.length));
         }

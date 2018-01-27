@@ -141,4 +141,12 @@ module.exports = class Game {
                 10));
         }
     }
+
+    playAudioAtPoint(audioClip, x, y) {
+        this.server.send('playAudioAtPoint', {
+            audioClip,
+            x,
+            y,
+        });
+    }
 }
