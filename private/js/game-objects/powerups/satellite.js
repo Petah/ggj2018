@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-module.exports = class Satellite extends GameObject{
+Satellite = class extends GameObject{
     constructor(
         game,
         x,
@@ -18,38 +18,30 @@ module.exports = class Satellite extends GameObject{
         this.timeElapsed = 0;
         this.isHolding = true;
         this.isStealing = false;
-        this.type = 'SatelliteDish';
-
-        this.hold(this.owningTeam);
+        this.type = 'Satellite';
     }
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+
         let i = collisions.length;
-        let allSameTeam = true;
+        let noCollisions = true;
+        let unit;
 
-        while(i--){
-            if (collisions[i].team !== this.owningTeam) {
-                allSameTeam = false;
-            }
-        }
-
-        i = collisions.length;
-        if (i === 1 || allSameTeam) {
-            while (i--) {
-                if (collisions[i].id !== this.id) {
-                    switch (collisions[i].type) {
-                        case 'Unit':
-                            var unit = collisions[i];
-                            this.onCollisionWithUnit(collisions[i]);
-                            break;
-                    }
+        while (i--) {
+            if (collisions[i].id !== this.id) {
+                switch (collisions[i].type) {
+                    case 'CollectorUnit':
+                        noCollisions = false;
+                        unit = collisions[i];
+                        this.onCollisionWithUnit(unit);
+                        break;
                 }
             }
         }
 
-        if (collisions.length === 0) {
+        if (noCollisions) {
             this.isStealing = false;
             this.isHolding = false;
             this.timeElapsed = 0;
@@ -68,13 +60,13 @@ module.exports = class Satellite extends GameObject{
         if (this.isHolding) {
             this.timeElapsed += deltaTime;
             if (this.timeElapsed >= this.timeToHold) {
-                this.destroyNearestEnemy();
+                this.game.win(this.owningTeam);
                 this.timeElapsed = 0;
                 this.isHolding = false;
             }
         }
-
     }
+
 
     onCollisionWithUnit(unit) {
         if (unit.team !== this.owningTeam) {
@@ -92,3 +84,5 @@ module.exports = class Satellite extends GameObject{
 };
 
 Satellite.REQUIRED_PARTS = 4;
+
+module.exports = Satellite;

@@ -21,7 +21,7 @@ module.exports = class Team {
         this.createUnit(new MissileUnit(this.game, spawner.x + 100, spawner.y, 0, 2, 0, 0, this));
         this.createUnit(new KamikazeUnit(this.game, spawner.x, spawner.y - 100, 0, 2, 0, 0, this));
         this.createUnit(new TankUnit(this.game, spawner.x, spawner.y + 100, 0, 2, 0, 0, this));
-        this.hasPart = false;
+        this.satelliteStack = null;
     }
 
     createUnit(unit) {
@@ -50,6 +50,27 @@ module.exports = class Team {
         let p = this.players.length;
         while (p--) {
             this.players[p].loop(deltaTime, currentTime);
+        }
+
+        this.ai();
+
+    }
+
+    ai() {
+        let u = this.units.length;
+        while (u--) {
+            let found = false;
+            let p = this.players.length;
+            while (p--) {
+                if (this.players[p].unit.id == this.units[u].id) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                this.units[u].ai();
+            }
         }
     }
 }
