@@ -119,7 +119,7 @@ module.exports = class CollectorUnit extends Unit {
                     this.accelerate(0, 0);
                     this.timeToHold -= deltaTime;
                     if (this.timeToHold <= 0) {
-                        console.log('held!!! ' + this.team + ' wins!');
+                        console.log('held!!! team' + this.team.id + ' wins!');
                         this.game.reset();
                     }
                     break;
@@ -215,23 +215,34 @@ module.exports = class CollectorUnit extends Unit {
 
     onDie() {
         super.onDie();
-        //TODO: Game over coz yo collecti boi ded
-
+        //TODO: yo collecti boi ded
     }
 
     ai() {
         // this.accelerate(0, 1);
-        const target = this.findTargets();
-        const direction = math.pointDirection(this.x,this.y,target.x,target.y);
-        const len = math.pointDistance(this.x,this.y, target.x,target.y);
-        this.accelerate(math.lengthDirX(len,direction),math.lengthDirY(len,direction));
+        if(this.canCollect() || this.canPlace() || this.canSteal() || this.canHold()){
+            console.log('collecti boi doin da shootz');
+            this.shooting = true;
+            this.accelerate(0,0);
+        }else {
+            this.shooting = false;
+            const target = this.findTargets();
+            if(target){
+                const direction = math.pointDirection(this.x,this.y,target.x,target.y);            
+                this.accelerate(math.lengthDirX(1000,direction),math.lengthDirY(1000,direction));            
+            }    
+        }
     }
     
     findTargets(){
         let targets = [];
         let i = this.game.gameObjects.length;
+        this.shooting = false;
+        if(this.hasPart){
+            return this.team.satelliteStack;
+        }
         while(i--){
-            if(this.game.gameObjects[i].type == 'SatellitePart'){
+            if(this.game.gameObjects[i].type === 'SatellitePart'){
                 targets.push(this.game.gameObjects[i]);
             }
         }
@@ -245,8 +256,14 @@ module.exports = class CollectorUnit extends Unit {
                     target = potentialTarget;
                 }
             }
-            console.log('Aquired Target ' + target);
             return target;
+        }else{
+            i = this.game.gameObjects.length;
+            while(i--){
+                if(this.game.gameObjects[i].type === 'SatelliteStack' && this.game.gameObjects[i].team != this.team){
+                    return this.game.gameObjects[i];
+                }
+            }
         }
         console.log(targets);
     }
