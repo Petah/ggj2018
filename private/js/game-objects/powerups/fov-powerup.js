@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-class FOVPowerup extends GameObject {
+module.exports = class FOVPowerUp extends GameObject {
     constructor(
         game,
         x,
@@ -23,7 +23,7 @@ class FOVPowerup extends GameObject {
         this.increase = increase;
         this.timeElapsed = 0;
         this.isActive = false;
-        this.type = 'FOVPowerup';
+        this.type = 'FOVPowerUp';
     }
 
     loop(deltaTime, currentTime) {

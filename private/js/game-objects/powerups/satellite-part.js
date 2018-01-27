@@ -3,7 +3,7 @@ const SatelliteDish = require('private/js/game-objects/powerups/satellite');
 const collision = require("../../utilities/collision");
 const Satellite = require('satellite');
 
-class SatellitePart extends GameObject {
+module.exports = class SatellitePart extends GameObject {
     constructor(
         game,
         x,

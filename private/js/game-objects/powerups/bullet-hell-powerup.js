@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-class BulletHell extends GameObject {
+module.exports = class BulletHellPowerUp extends GameObject {
     constructor(
         game,
         x,
@@ -19,7 +19,9 @@ class BulletHell extends GameObject {
         this.sprite = sprite;
         this.collisionRadius = collisionRadius;
         this.duration = duration;
-        this.type = 'BulletHell';
+        this.type = 'BulletHellPowerUp';
+
+        this.startTime = -1;
     }
 
     loop(deltaTime, currentTime) {
@@ -31,9 +33,14 @@ class BulletHell extends GameObject {
                 switch(collisions[i].type) {
                     case 'Unit':
                         this.onCollisionWithUnit(collisions[i]);
+                        this.startTime = currentTime;
                         break;
                 }
             }
+        }
+
+        if(this.startTime + this.duration >= currentTime) {
+
         }
     }
 

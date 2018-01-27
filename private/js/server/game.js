@@ -62,12 +62,76 @@ module.exports = class Game {
         this.teams = [];
 
         this.initTeams();
+        this.initializeMapObjects();
     }
 
     initTeams() {
         let i = this.teamAmount;
         while (i--) {
             this.teams.push(new Team(this));
+        }
+    }
+    
+    initializeMapObjects() {
+        this.gameObjects.push(new BulletHellPowerUp(this,
+            this.mapWidth/2,
+            this.mapHeight/2,
+            0,
+            3,
+            30,
+            5));
+    }
+
+    spawnPowerUp() {
+        let xDistFromCenter = Math.random() * (this.mapWidth  * 0.8);
+        let yDistFromCenter = Math.random() * (this.mapHeight * 0.8);
+
+        let randomPowerUp = Math.random();
+
+        if (randomPowerUp <= 0.2) {
+            this.gameObjects.push(new BulletHellPowerUp(this,
+                this.mapWidth/2,
+                this.mapHeight/2,
+                0,
+                3,
+                30,
+                5));
+        } else if (randomPowerUp <= 0.4) {
+            this.gameObjects.push(new FOVPowerUp(
+                this,
+                this.mapWidth/2,
+                this.mapHeight/2,
+                0,
+                3,
+                30,
+                10));
+        } else if (randomPowerUp <= 0.6) {
+            this.gameObjects.push(new ShieldPowerUp(
+                this,
+                this.mapWidth/2,
+                this.mapHeight/2,
+                0,
+                3,
+                30,
+                10));
+        } else if (randomPowerUp <= 0.8) {
+            this.gameObjects.push(new SpeedPowerUp(
+                this,
+                this.mapWidth/2,
+                this.mapHeight/2,
+                0,
+                3,
+                30,
+                10));
+        } else {
+            this.gameObjects.push(new FauxPowerUp(
+                this,
+                this.mapWidth/2,
+                this.mapHeight/2,
+                0,
+                3,
+                30,
+                10));
         }
     }
 }

@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-class FauxPowerup extends GameObject {
+module.exports = class FauxPowerUp extends GameObject {
     constructor(
         game,
         x,
@@ -21,7 +21,7 @@ class FauxPowerup extends GameObject {
         this.collisionRadius = collisionRadius;
         this.duration = duration;
         this.healthDecrease = healthDecrease;
-        this.type = 'FauxPowerup';
+        this.type = 'FauxPowerUp';
     }
 
     loop(deltaTime, currentTime) {
