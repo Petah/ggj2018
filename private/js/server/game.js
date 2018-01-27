@@ -75,28 +75,21 @@ module.exports = class Game {
     }
 
     initTeams() {
-        let i = this.teamAmount;
-        while (i--) {
-            this.teams.push(new Team(this, i));
-            this.createSpawnerForTeam(i);
+        let t = this.teamAmount;
+        while (t--) {
+            const x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
+            const y = (((Math.round(t + 1) % 2) * this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
+            const spawner = new Spawner(
+                this,
+                x,
+                y,
+                0,
+                1, // Sprite
+                30,
+            );
+            this.gameObjects.push(spawner);
+            this.teams.push(new Team(this, t, spawner));
         }
-    }
-
-    createSpawnerForTeam(teamValue) {
-        let x = (((Math.round(teamValue + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
-        let y = (((Math.round(teamValue + 1) % 2) * this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
-
-        console.log("TeamValue: " + teamValue + "x: " + x, "y: " + y);
-
-        this.gameObjects.push(new Spawner(
-            this,
-            x,
-            y,
-            0,
-            1, // Sprite
-            30,
-            this.teams[teamValue],
-        ));
     }
 
     initializeMapObjects() {
