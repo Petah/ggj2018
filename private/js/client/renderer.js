@@ -56,11 +56,6 @@ const assets = {
 
     120: '/images/spawning-pool.png',
 
-    130: '/images/impassable-crystals1.png',
-    131: '/images/impassable-crystals2.png',
-    132: '/images/impassable-rocks1.png',
-    133: '/images/impassable-rocks2.png',
-
     200: '/images/satellite/collect-satellite-antenna.png',
     201: '/images/satellite/collect-satellite-dish.png',
     202: '/images/satellite/collect-satellite-frame.png',
@@ -75,10 +70,11 @@ const assets = {
 
     209: '/images/satellite/satellite-complete.png',
 
-    701: '/images/bg-tiled-green-2.png',
-    702: '/images/bg-tiled-green-3.png',
-    703: '/images/bg-tiled-green-4.png',
-    704: '/images/bg-tiled-green-5.png',
+    700: '/images/bg-tiled-stones.jpg',
+    701: '/images/bg-tiled-green-1.jpg',
+    702: '/images/bg-tiled-green-2.png',
+
+    800: '/images/white-circle.png',
 };
 
 const animations = {
@@ -207,22 +203,23 @@ class Renderer {
         this.renderer.stage.addChild(this.layers.foreground);
 
         // Init background
-        // let background1 = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage(assets[702]), 2000, 2000);
-        // background1.setTransform(0, 0);
-        // this.layers.background.addChild(background1);
+        // const texture = PIXI.Texture.fromImage(assets[702]);
+        // this.sprites.background = new PIXI.extras.TilingSprite(texture, 2000, 2000);
+        // this.sprites.background.setTransform(0, 0);
+        // this.layers.background.addChild(this.sprites.background);
 
         this.createBackground(701, 0.005);
         this.createBackground(704, -0.003);
         this.createBackground(703, 0.003);
 
         // Init effects
-        // const effects = new Effects(this.layers.background);
-        // effects.spawnRandomOrbs(1, 200, [
-        //     0x379392,
-        //     0xE8F895,
-        //     0x8BAB78,
-        //     0xFFFFFF,
-        // ]);
+        const effects = new Effects(this.renderer, this.layers.background);
+        effects.spawnRandomCircles(1, assets[800], 100, [
+            0x379392,
+            0xE8F895,
+            0x8BAB78,
+            0xFFFFFF,
+        ]);
 
 
         let container = new PIXI.ParticleContainer();
@@ -233,9 +230,6 @@ class Renderer {
             container.addChild(sprite);
         }
         this.renderer.stage.addChild(container);
-
-
-        // this.particles = new Particles(this, this.layers.foreground);
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);
@@ -292,7 +286,7 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
-        console.log('Create sprite', id, spriteAsset);
+        // console.log('Create sprite', id, spriteAsset);
         const sprite = new PIXI.extras.AnimatedSprite(this.animations[spriteAsset] || [this.textures[spriteAsset]]);
 
         sprite.anchor.set(0.5);
@@ -324,10 +318,6 @@ class Renderer {
         this.sprites[id].y = y;
 
         let currentAnimationId = this.sprites[id].animationId;
-        if (moving) {
-            this.movingSprite = id;
-        }
-
         if (moving && this.animations[spriteAsset]) {
             if (currentAnimationId === spriteAsset) {
                 return null;
