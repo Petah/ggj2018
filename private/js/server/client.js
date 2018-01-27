@@ -27,8 +27,9 @@ module.exports = class Client {
             message = JSON.parse(message);
             // logger.log('Client message', message);
             switch (message.type) {
-                case 'view': {
+                case 'reset': {
                     this.game.reset();
+                    break;
                 }
 
                 case 'view': {
