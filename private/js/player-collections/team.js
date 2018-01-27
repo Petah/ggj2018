@@ -11,6 +11,7 @@ module.exports = class Team {
     ) {
         this.game = game;
         this.id = id;
+        this.name = null;
         this.spawner = spawner;
         this.players = [];
         this.satelliteParts = 0;

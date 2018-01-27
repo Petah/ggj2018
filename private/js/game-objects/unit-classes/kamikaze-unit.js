@@ -49,7 +49,7 @@ module.exports = class KamikazeUnit extends Unit {
         if (this.shooting) {
             if (!this.speedIncreased) {
                 this.speedIncreased = true;
-                this.timeUntilExplode = 1.5;
+                this.timeUntilExplode = 3;
                 this.maxSpeed *= 2;
             }
         }
@@ -67,10 +67,15 @@ module.exports = class KamikazeUnit extends Unit {
     explode() {
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
+
+        if (i === 0) {
+            this.game.removeGameObject(this);
+        }
+
         while (i--) {
-            console.log(collisions[i]);
             if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
                 collisions[i].getHurt(this, 9000);
+                this.game.removeGameObject(this);
             }
         }
     }
