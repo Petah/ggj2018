@@ -46,7 +46,7 @@ module.exports = class Client {
                     if (message.data.switchUnit) {
                         this.game.teams[0].nextUnit(player);
                     }
-                    if (player.unit) {
+                    if (player && player.unit) {
                         player.unit.accelerate(message.data.move.x, message.data.move.y);
                         if (message.data.shoot) {
                             player.unit.attack(10, 10);
