@@ -126,7 +126,7 @@ module.exports = class Game {
                 xLocation,
                 yLocation,
                 0,
-                3,
+                100,
                 30,
                 5));
         } else if (randomPowerUp <= 0.4) {
@@ -135,7 +135,7 @@ module.exports = class Game {
                 xLocation,
                 yLocation,
                 0,
-                3,
+                101,
                 30,
                 10));
         } else if (randomPowerUp <= 0.6) {
@@ -144,7 +144,7 @@ module.exports = class Game {
                 xLocation,
                 yLocation,
                 0,
-                3,
+                102,
                 30,
                 10,
                 100));
@@ -154,7 +154,7 @@ module.exports = class Game {
                 xLocation,
                 yLocation,
                 0,
-                3,
+                104,
                 30,
                 10,
                 100));
@@ -164,7 +164,7 @@ module.exports = class Game {
                 xLocation,
                 yLocation,
                 0,
-                3,
+                104,
                 30,
                 10));
         }
