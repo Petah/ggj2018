@@ -1,6 +1,6 @@
 class Game {
     constructor() {
-        this.client = new Client();
+        this.client = new Client(this);
         this.client.connect();
 
         this.state = 'title';
@@ -28,7 +28,7 @@ class Game {
 
             if (lastSecond <= this.currentTime - 1) {
                 lastSecond = this.currentTime;
-                console.log('UPS', updates);
+                //console.log('UPS', updates);
                 updates = 0;
             }
 

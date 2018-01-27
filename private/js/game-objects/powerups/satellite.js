@@ -12,14 +12,7 @@ module.exports = class Satellite extends GameObject{
         owningTeam
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-        this.sprite = sprite;
-        this.collisionRadius = collisionRadius;
         this.owningTeam = owningTeam;
-
         this.timeToSteal = 5000;
         this.timeToHold = 30000;
         this.timeElapsed = 0;

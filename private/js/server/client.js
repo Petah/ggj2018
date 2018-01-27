@@ -79,6 +79,10 @@ module.exports = class Client {
             }
         }
 
+        let hud = {
+            part: false,
+        };
+
         const padding = 200;
         const updates = [];
         let i = this.game.gameObjects.length;
@@ -97,8 +101,13 @@ module.exports = class Client {
                     this.game.gameObjects[i].sprite,
                 ]);
             }
-        }
 
+            if (this.game.gameObjects[i].canPickUpPart) {
+                console.log('Setting part to true');
+                hud.part = true;
+            }
+        }
+        this.send('hud', hud);
         this.send('update', {
             renderer: {
                 x: this.view.x,
