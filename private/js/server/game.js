@@ -101,6 +101,11 @@ module.exports = class Game {
         let t = this.teamAmount;
         while (t--) {
             let x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.1);
+
+            if(((Math.round(t + 1) % 2) !== 0)) {
+                x = this.mapWidth * 0.9;
+            }
+
             let y = this.mapHeight * 0.5
             const spawner = new Spawner(
                 this,
