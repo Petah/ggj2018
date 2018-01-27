@@ -27,13 +27,15 @@ module.exports = class Satellite extends GameObject{
 
         let i = collisions.length;
         let noCollisions = true;
+        let unit;
 
         while (i--) {
             if (collisions[i].id !== this.id) {
                 switch (collisions[i].type) {
                     case 'CollectorUnit':
                         noCollisions = false;
-                        this.onCollisionWithUnit(collisions[i]);
+                        unit = collisions[i];
+                        this.onCollisionWithUnit(unit);
                         break;
                 }
             }

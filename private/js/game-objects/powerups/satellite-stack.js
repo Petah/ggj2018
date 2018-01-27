@@ -11,7 +11,7 @@ class SatelliteStack extends GameObject {
                 collisionRadius) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.currentSize = 0;
-        this.maxSize = 0;
+        this.maxSize = Satellite.REQUIRED_PARTS;
         this.type = 'SatellitePart';
     }
 
