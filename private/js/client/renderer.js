@@ -24,15 +24,15 @@ const assets = {
     32: '/images/kamikaze2-left.png',
     33: '/images/kamikaze2-right.png',
 
-    40: '/images/shooter-front.png',
-    41: '/images/shooter-back.png',
-    42: '/images/shooter-left.png',
-    43: '/images/shooter-right.png',
+    40: '/animations/shooter-front-walk-0.png',
+    41: '/animations/shooter-back-walk-0.png',
+    42: '/animations/shooter-side-walk-1.png',
+    43: '/animations/shooter-side-walk-left-1.png',
 
-    50: '/images/shooter2-front.png',
-    51: '/images/shooter2-back.png',
-    52: '/images/shooter2-left.png',
-    53: '/images/shooter2-right.png',
+    50: '/animations/shooter2-front-walk-0.png',
+    51: '/animations/shooter2-back-walk-0.png',
+    52: '/animations/shooter2-side-walk-1.png',
+    53: '/animations/shooter2-side-walk-left-1.png',
 
     60: '/animations/tank-front-0.png',
     61: '/animations/tank-back-0.png',
@@ -91,6 +91,7 @@ const assets = {
     704: '/images/bg-tiled-green-5.png',
 
     800: '/images/white-circle.png',
+    801: '/images/particles/circle-blur.png',
 };
 
 const animations = {
@@ -177,6 +178,102 @@ const animations = {
         '/animations/tank2-side-left-0.png',
         '/animations/tank2-side-left-1.png',
     ],
+
+    // Shooter
+    40: [
+        '/animations/shooter-front-walk-0.png',
+        '/animations/shooter-front-walk-1.png',
+        '/animations/shooter-front-walk-2.png',
+        '/animations/shooter-front-walk-3.png',
+        '/animations/shooter-front-walk-4.png',
+        '/animations/shooter-front-walk-5.png',
+        '/animations/shooter-front-walk-6.png',
+        '/animations/shooter-front-walk-7.png',
+        '/animations/shooter-front-walk-8.png',
+        '/animations/shooter-front-walk-9.png',
+    ],
+    41: [
+        '/animations/shooter-back-walk-0.png',
+        '/animations/shooter-back-walk-1.png',
+        '/animations/shooter-back-walk-2.png',
+        '/animations/shooter-back-walk-3.png',
+        '/animations/shooter-back-walk-4.png',
+        '/animations/shooter-back-walk-5.png',
+        '/animations/shooter-back-walk-6.png',
+        '/animations/shooter-back-walk-7.png',
+        '/animations/shooter-back-walk-8.png',
+        '/animations/shooter-back-walk-9.png',
+    ],
+    42: [
+        '/animations/shooter-side-walk-0.png',
+        '/animations/shooter-side-walk-1.png',
+        '/animations/shooter-side-walk-2.png',
+        '/animations/shooter-side-walk-3.png',
+        '/animations/shooter-side-walk-4.png',
+        '/animations/shooter-side-walk-5.png',
+        '/animations/shooter-side-walk-6.png',
+        '/animations/shooter-side-walk-7.png',
+        '/animations/shooter-side-walk-8.png',
+    ],
+    43: [
+        '/animations/shooter-side-walk-left-0.png',
+        '/animations/shooter-side-walk-left-1.png',
+        '/animations/shooter-side-walk-left-2.png',
+        '/animations/shooter-side-walk-left-3.png',
+        '/animations/shooter-side-walk-left-4.png',
+        '/animations/shooter-side-walk-left-5.png',
+        '/animations/shooter-side-walk-left-6.png',
+        '/animations/shooter-side-walk-left-7.png',
+        '/animations/shooter-side-walk-left-8.png',
+    ],
+
+    50: [
+        '/animations/shooter2-front-walk-0.png',
+        '/animations/shooter2-front-walk-1.png',
+        '/animations/shooter2-front-walk-2.png',
+        '/animations/shooter2-front-walk-3.png',
+        '/animations/shooter2-front-walk-4.png',
+        '/animations/shooter2-front-walk-5.png',
+        '/animations/shooter2-front-walk-6.png',
+        '/animations/shooter2-front-walk-7.png',
+        '/animations/shooter2-front-walk-8.png',
+        '/animations/shooter2-front-walk-9.png',
+    ],
+    51: [
+        '/animations/shooter2-back-walk-0.png',
+        '/animations/shooter2-back-walk-1.png',
+        '/animations/shooter2-back-walk-2.png',
+        '/animations/shooter2-back-walk-3.png',
+        '/animations/shooter2-back-walk-4.png',
+        '/animations/shooter2-back-walk-5.png',
+        '/animations/shooter2-back-walk-6.png',
+        '/animations/shooter2-back-walk-7.png',
+        '/animations/shooter2-back-walk-8.png',
+    ],
+    52: [
+        '/animations/shooter2-side-walk-0.png',
+        '/animations/shooter2-side-walk-1.png',
+        '/animations/shooter2-side-walk-2.png',
+        '/animations/shooter2-side-walk-3.png',
+        '/animations/shooter2-side-walk-4.png',
+        '/animations/shooter2-side-walk-5.png',
+        '/animations/shooter2-side-walk-6.png',
+        '/animations/shooter2-side-walk-7.png',
+        '/animations/shooter2-side-walk-8.png',
+        '/animations/shooter2-side-walk-9.png',
+    ],
+    53: [
+        '/animations/shooter2-side-walk-left-0.png',
+        '/animations/shooter2-side-walk-left-1.png',
+        '/animations/shooter2-side-walk-left-2.png',
+        '/animations/shooter2-side-walk-left-3.png',
+        '/animations/shooter2-side-walk-left-4.png',
+        '/animations/shooter2-side-walk-left-5.png',
+        '/animations/shooter2-side-walk-left-6.png',
+        '/animations/shooter2-side-walk-left-7.png',
+        '/animations/shooter2-side-walk-left-8.png',
+        '/animations/shooter2-side-walk-left-9.png',
+    ],
 };
 
 class Renderer {
@@ -228,14 +325,13 @@ class Renderer {
         this.createBackground(703, 0.003);
 
         // Init effects
-        // const effects = new Effects(this.layers.background);
+        const effects = new Effects(this.renderer, this.layers.foreground);
         // effects.spawnRandomOrbs(1, 200, [
         //     0x379392,
         //     0xE8F895,
         //     0x8BAB78,
         //     0xFFFFFF,
         // ]);
-
 
         let container = new PIXI.ParticleContainer();
 

@@ -5,12 +5,12 @@ const math = require('../../utilities/math');
 const sprites = {
     up: [41, 51],
     down: [40, 50],
-    left: [42, 52],
-    right: [43, 53],
-    upMove: [],
-    downMove: [],
-    leftMove: [],
-    rightMove: [],
+    left: [43, 53],
+    right: [42, 52],
+    upMove: [41, 51],
+    downMove: [40, 50],
+    leftMove: [43, 53],
+    rightMove: [42, 52],
 };
 
 module.exports = class MissileUnit extends Unit {
