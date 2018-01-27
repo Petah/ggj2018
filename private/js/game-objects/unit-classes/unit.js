@@ -16,6 +16,8 @@ module.exports = class Unit extends MovableGameObject {
         this.type = 'Unit';
         this.team = team;
         this.moving = false;
+        this.powerUp = null;
+        this.powerUpTime = 0;
     }
 
     attack(direction) {
@@ -31,7 +33,7 @@ module.exports = class Unit extends MovableGameObject {
         this.health -= projectile.damage;
         this.game.removeGameObject(projectile);
         console.log('unit health ' + this.type + ' ' + this.subType + ' ' + this.health + ' ' + projectile.damage);
-        if(this.health <= 0){
+        if (this.health <= 0) {
             this.game.removeGameObject(this);
         }
     }
@@ -44,20 +46,28 @@ module.exports = class Unit extends MovableGameObject {
 
     }
 
-    loop(deltaTime, currentTime){
+    loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
-        while(i--){
-            if(collisions[i].id == this.id || (collisions[i].unit && (collisions[i].unit.id == this.id))){
+        while (i--) {
+            if (collisions[i].id == this.id || (collisions[i].unit && (collisions[i].unit.id == this.id))) {
                 continue;
             }
-            if(collisions[i].type == 'projectile'){
-                console.log(collisions[i].unit + ' ' + this.id);
+            if (collisions[i].type == 'projectile') {
                 this.getHurt(collisions[i]);
             }
         }
+
+        if (this.powerUp) {
+            this.powerUpTime -= deltaTime;
+            if (this.powerUpTime <= 0) {
+                this.powerUp();
+                this.powerUp = null;
+            }
+        }
     }
+
     updateSprite(sprites) {
         if (this.direction >= 230 && this.direction <= 320) {
             this.setSprite(this.yVelocity, sprites.up, sprites.upMove);
@@ -71,7 +81,7 @@ module.exports = class Unit extends MovableGameObject {
     }
 
     setSprite(velocity, stillSprites, movingSprites) {
-        if (velocity === 0) {
+        if (Math.abs(velocity) < 100.00) {
             this.moving = false;
             this.sprite = stillSprites[this.team.id];
         } else {

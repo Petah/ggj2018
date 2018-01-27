@@ -35,8 +35,8 @@ module.exports = class KamikazeUnit extends Unit {
             team,
             teamColor,
         );
-        this.type = 'unit';
-        this.subType = 'kamikaze';
+        this.type = 'Unit';
+        this.subType = 'KamikazeUnit';
         this.health = 10;
         this.collisionRadius = 80;
     }

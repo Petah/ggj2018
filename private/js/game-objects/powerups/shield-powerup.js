@@ -1,6 +1,6 @@
-const GameObject = require('../game-object');
+const PowerUp = require('./power-up');
 
-module.exports = class ShieldPowerUp extends GameObject {
+module.exports = class ShieldPowerUp extends PowerUp {
     constructor(
         game,
         x,

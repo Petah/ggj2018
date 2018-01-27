@@ -57,15 +57,14 @@ class Client {
                         renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
                         renderer.cameraZoomAbsolute(message.data.renderer.zoom);
                     }
-
                     break;
                 }
 
                 case 'hud': {
                     this.game.gameUi.data = message.data;
-
                     break;
                 }
+
                 case 'playAudioAtPoint': {
                     if (message.data.audioClip) {
                         // @Todo
@@ -73,7 +72,6 @@ class Client {
                         console.log(`Playing audioClip: ${message.data.audioClip}`);
                         audio.play(message.data.audioClip);
                     }
-
                     break;
                 }
             }

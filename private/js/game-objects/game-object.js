@@ -7,7 +7,7 @@ module.exports = class GameObject {
         y,
         direction,
         sprite,
-        collisionRadius
+        collisionRadius = 10,
     ){
         if (!sprite) {
             throw new Error('Invalid sprite');
@@ -18,7 +18,8 @@ module.exports = class GameObject {
         this.y = y;
         this.sprite = sprite;
         this.direction = direction;
-        this.collisionRadius = 10;
+        this.collisionRadius = collisionRadius;
+        this.layer = 'foreground';
     }
 
     loop(deltaTime, currentTime) {

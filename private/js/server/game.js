@@ -8,6 +8,7 @@ const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
 const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
 const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
+const SatellitePart = require('../game-objects/powerups/satellite-part');
 const math = require('../utilities/math');
 
 module.exports = class Game {
@@ -48,8 +49,8 @@ module.exports = class Game {
 
             this.collisionCheck();
             this.loop(deltaTime, this.currentTime);
-            if(this.gameObjectsToRemove.length >0){
-                console.log(this.gameObjectsToRemove);
+            if (this.gameObjectsToRemove.length > 0) {
+                logger.log('Remove', this.gameObjectsToRemove);
                 this.gameObjects = this.gameObjects.filter(gameObject => this.gameObjectsToRemove.indexOf(gameObject.id) === -1);
                 this.gameObjectsToRemove = [];
             }
@@ -92,6 +93,7 @@ module.exports = class Game {
         this.teams = [];
 
         this.initTeams();
+        this.spawnSatelliteParts();
         // this.initializeMapObjects();
     }
 
@@ -118,74 +120,35 @@ module.exports = class Game {
         }
     }
 
-    initializeMapObjects() {
-        this.gameObjects.push(new BulletHellPowerUp(this,
-            this.mapWidth / 2,
-            this.mapHeight / 2,
-            0,
-            3,
-            30,
-            5));
-    }
 
-    spawnPowerUp() {
-        console.log('spawnPowerUp');
-        this.powerUpCooldown = 1;
-        let xLocation = Math.random() * (this.mapWidth * 0.8);
-        let yLocation = Math.random() * (this.mapHeight * 0.8);
-
-        let randomPowerUp = Math.random();
-
-        if (randomPowerUp <= 0.2) {
-            this.gameObjects.push(new BulletHellPowerUp(this,
-                xLocation,
-                yLocation,
-                0,
-                100,
-                30,
-                5));
-        } else if (randomPowerUp <= 0.4) {
-            this.gameObjects.push(new FOVPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                101,
-                30,
-                10));
-        } else if (randomPowerUp <= 0.6) {
-            this.gameObjects.push(new ShieldPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                102,
-                30,
-                10,
-                100));
-        } else if (randomPowerUp <= 0.8) {
-            this.gameObjects.push(new SpeedPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                104,
-                30,
-                10,
-                100));
-        } else {
-            this.gameObjects.push(new FauxPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                104,
-                30,
-                10));
+    spawnSatelliteParts() {
+        let i = 0;
+        while (i < 4) {
+            i++;
+            let xPos = -4800 + Math.random() * (4800 * 2);
+            let yPos = -1620 + Math.random() * (1620 * 2);
+            this.gameObjects.push(new SatellitePart(this, xPos, yPos, 0, 1, 5));
+            console.log('spawing part at: ' + xPos + ' ' + yPos);
         }
     }
 
-    removeGameObject(gameObject){
+    spawnPowerUp() {
+        this.powerUpCooldown = 20;
+        const x = Math.random() * (this.mapWidth * 0.8);
+        const y = Math.random() * (this.mapHeight * 0.8);
+
+        const types = [
+            // BulletHellPowerUp,
+            // ShieldPowerUp,
+            SpeedPowerUp,
+            // FauxPowerUp,
+        ];
+
+        const powerUp = types[Math.floor(Math.random() * types.length)];
+        this.gameObjects.push(new powerUp(this, x, y));
+    }
+
+    removeGameObject(gameObject) {
         this.gameObjectsToRemove.push(gameObject.id);
     }
 

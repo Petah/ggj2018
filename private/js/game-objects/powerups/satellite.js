@@ -12,6 +12,7 @@ Satellite = class extends GameObject{
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
         this.owningTeam = owningTeam;
+        this.winningTeam = null;
         this.timeToSteal = 5000;
         this.timeToHold = 30000;
         this.timeElapsed = 0;
@@ -59,7 +60,12 @@ Satellite = class extends GameObject{
         if (this.isHolding) {
             this.timeElapsed += deltaTime;
             if (this.timeElapsed >= this.timeToHold) {
-                this.game.win(this.owningTeam);
+                this.winningTeam = this.owningTeam;
+
+                setTimeout(() => {
+                    this.game.reset();
+                }, 5000);
+
                 this.timeElapsed = 0;
                 this.isHolding = false;
             }
