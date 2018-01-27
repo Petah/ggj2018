@@ -48,11 +48,7 @@ class SatelliteStack extends GameObject {
         this.updateSprite();
     }
 
-    updateSprite() {
-        console.log("parts antenna: " + this.parts[sprites.antenna]);
-        console.log("parts dish: " + this.parts[sprites.dish]);
-        console.log("parts fram: " + this.parts[sprites.frame]);        
-
+    updateSprite() {      
         if (this.parts[sprites.antenna] && this.parts[sprites.dish] && this.parts[sprites.frame]) {
             this.sprite = sprites.complete;
             this.isFullStack = true;
