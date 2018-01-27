@@ -8,6 +8,7 @@ const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
 const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
 const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
+const math = require('../utilities/math');
 
 module.exports = class Game {
     constructor() {
@@ -17,10 +18,11 @@ module.exports = class Game {
         this.gameObjects = [];
         this.gameObjectsToRemove = [];
 
-        this.mapWidth = 10000;
-        this.mapHeight = 10000;
+        this.mapWidth = 2000;
+        this.mapHeight = 2000;
 
         this.powerUpCooldown = 0;
+        this.collisions = {};
     }
 
     start() {
@@ -44,6 +46,7 @@ module.exports = class Game {
                 updates = 0;
             }
 
+            this.collisionCheck();
             this.loop(deltaTime, this.currentTime);
             if(this.gameObjectsToRemove.length >0){
                 console.log(this.gameObjectsToRemove);
@@ -126,7 +129,8 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
-        this.powerUpCooldown = 20;
+        console.log('spawnPowerUp');
+        this.powerUpCooldown = 1;
         let xLocation = Math.random() * (this.mapWidth * 0.8);
         let yLocation = Math.random() * (this.mapHeight * 0.8);
 
@@ -191,5 +195,28 @@ module.exports = class Game {
             x,
             y,
         });
+    }
+
+    collisionCheck() {
+        this.collisions = {};
+        let g = this.gameObjects.length;
+        while (g--) {
+            this.collisions[this.gameObjects[g].id] = this.checkCollision(this.gameObjects[g]);
+        }
+    }
+
+    checkCollision(gameObject) {
+        const result = [];
+        let i = this.gameObjects.length;
+        while (i--) {
+            if (gameObject.id === this.gameObjects[i].id) {
+                continue;
+            }
+            const distance = math.pointDistance(gameObject.x, gameObject.y, this.gameObjects[i].x, this.gameObjects[i].y);
+            if (distance < gameObject.collisionRadius + this.gameObjects[i].collisionRadius) {
+                result.push(this.gameObjects[i]);
+            }
+        }
+        return result;
     }
 }

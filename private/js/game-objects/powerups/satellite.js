@@ -1,5 +1,4 @@
 const GameObject = require('../game-object');
-const collision = require("../../utilities/collision");
 
 Satellite = class extends GameObject{
     constructor(
@@ -23,7 +22,7 @@ Satellite = class extends GameObject{
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        const collisions = this.game.collisions[this.id];
 
         let i = collisions.length;
         let noCollisions = true;

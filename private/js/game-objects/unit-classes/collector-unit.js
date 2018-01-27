@@ -1,5 +1,4 @@
 const Unit = require("./unit");
-const collision = require("../../utilities/collision");
 const SatelliteStack = require('../../game-objects/powerups/satellite-stack')
 
 const sprites = {
@@ -62,7 +61,7 @@ module.exports = class CollectorUnit extends Unit {
         this.updateSprite(sprites);
 
         this.part = null;
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        const collisions = this.game.collisions[this.id];
         let i = collisions.length;
 
         let noPartCollision = true;

@@ -1,6 +1,5 @@
 const MovableGameObject = require("../movable-game-object")
 const Team = require("../../player-collections/team");
-const collision = require("../../utilities/collision");
 
 module.exports = class Unit extends MovableGameObject {
     constructor(
@@ -40,7 +39,7 @@ module.exports = class Unit extends MovableGameObject {
 
     loop(deltaTime, currentTime){
         super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while(i--){
             if(collisions[i].id == this.id || (collisions[i].unit && (collisions[i].unit.id == this.id))){

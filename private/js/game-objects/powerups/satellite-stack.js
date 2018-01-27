@@ -1,5 +1,4 @@
 const GameObject = require('../game-object');
-const collision = require("../../utilities/collision");
 const Satellite = require('./satellite');
 
 class SatelliteStack extends GameObject {
