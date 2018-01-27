@@ -37,6 +37,7 @@ module.exports = class KamikazeUnit extends Unit {
         this.type = 'Unit';
         this.subType = 'KamikazeUnit';
         this.health = 10;
+        this.maxHealth = 10;
         this.collisionRadius = 80;
         this.timeUntilExplode = 0;
         this.speedIncreased = false;

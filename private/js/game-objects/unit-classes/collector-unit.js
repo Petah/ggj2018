@@ -36,6 +36,7 @@ module.exports = class CollectorUnit extends Unit {
             team,
         );
         this.health = 10;
+        this.maxHealth = 10;
         this.hasPart = false;
         this.part = null;
         this.canPickUpPart = false;
@@ -146,7 +147,7 @@ module.exports = class CollectorUnit extends Unit {
                         this.collectState = 'holding';
                         this.collectUnit = collision;
                     } else {
-                        console.log('can nothing');
+                        // console.log('can nothing');
                     }
                 }
             }
@@ -233,7 +234,7 @@ module.exports = class CollectorUnit extends Unit {
             }    
         }
     }
-    
+
     findTargets(){
         let targets = [];
         let i = this.game.gameObjects.length;

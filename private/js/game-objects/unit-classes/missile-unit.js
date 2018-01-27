@@ -35,6 +35,7 @@ module.exports = class MissileUnit extends Unit {
             team
         );
         this.health = 10;
+        this.maxHealth = 10;
         this.collisionRadius = 80;
         this.type = 'Unit';
         this.subType = 'MissileUnit';
@@ -47,7 +48,6 @@ module.exports = class MissileUnit extends Unit {
 
         if (this.shooting) {
             if (this.shootingCooldown <= 0) {
-                console.log('shoot');;
                 this.game.gameObjects.push(new MissileProjectile(this.game, this.x, this.y, math.lengthDirX(1000, this.direction), math.lengthDirY(1000, this.direction), this));
                 this.shootingCooldown = 0.05;
             }

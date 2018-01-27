@@ -33,6 +33,7 @@ module.exports = class TankUnit extends Unit {
             team,
         );
         this.health = 100;
+        this.maxHealth = 100;
         this.collisionRadius = 80;
         this.type = 'Unit';
         this.subType = 'TankUnit';

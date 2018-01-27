@@ -304,7 +304,6 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
-        console.log('Create sprite', id, spriteAsset);
         const sprite = new PIXI.extras.AnimatedSprite(this.animations[spriteAsset] || [this.textures[spriteAsset]]);
 
         sprite.anchor.set(0.5);
@@ -371,7 +370,6 @@ class Renderer {
                 }
             }
             if (!found) {
-                console.log('Removing sprite', id);
                 if (this.sprites[id].layer) {
                     this.layers[this.sprites[id].layer].removeChild(this.sprites[id]);
                     delete this.sprites[id];
