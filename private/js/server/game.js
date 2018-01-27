@@ -43,7 +43,7 @@ module.exports = class Game {
 
             if (lastSecond <= this.currentTime - 1) {
                 lastSecond = this.currentTime;
-                logger.log('UPS', updates);
+                // logger.log('UPS', updates);
                 updates = 0;
             }
 
@@ -122,12 +122,11 @@ module.exports = class Game {
 
 
     spawnSatelliteParts() {
-        let i = 0;
-        while (i < 3) {
+        for (let i = 0; i < 3; i++) {
             let x = Math.random() * this.mapWidth;
             let y = Math.random() * this.mapHeight;
+            console.log('-------------------', x, y, i)
             this.gameObjects.push(new SatellitePart(this, x, y, i));
-            i++;
         }
     }
 

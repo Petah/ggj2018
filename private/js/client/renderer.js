@@ -200,7 +200,7 @@ class Renderer {
         this.renderer.stage.addChild(this.layers.foreground);
 
         // Init background
-        const texture = PIXI.Texture.fromImage(assets[700]);
+        const texture = PIXI.Texture.fromImage(assets[702]);
         this.sprites.background = new PIXI.extras.TilingSprite(texture, 2000, 2000);
         this.sprites.background.setTransform(0, 0);
         this.layers.background.addChild(this.sprites.background);
