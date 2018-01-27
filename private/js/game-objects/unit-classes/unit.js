@@ -2,7 +2,6 @@ const MovableGameObject = require("../movable-game-object")
 const Team = require("../../player-collections/team");
 
 module.exports = class Unit extends MovableGameObject {
-
     constructor(
         game,
         x,

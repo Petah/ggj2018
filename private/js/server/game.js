@@ -1,18 +1,19 @@
 const logger = require('./logger')(__filename);
 const Server = require('./server');
 const MovableGameObject = require('../game-objects/movable-game-object');
-const Unit = require('../game-objects/unit-classes/unit');
+const Team = require('../player-collections/team');
 
 module.exports = class Game {
     constructor() {
         this.server = new Server(this);
+        this.teamAmount = 2;
+        this.teams = [];
+        this.gameObjects = [];
     }
 
     start() {
         logger.log('Game start');
         this.server.start();
-
-        this.gameObjects = [];
 
         let lastSecond = 0;
         const hrTimeInit = process.hrtime();
@@ -58,5 +59,15 @@ module.exports = class Game {
     reset() {
         logger.log('Game reset');
         this.gameObjects = [];
+        this.teams = [];
+
+        this.initTeams();
+    }
+
+    initTeams() {
+        let i = this.teamAmount;
+        while (i--) {
+            this.teams.push(new Team(this));
+        }
     }
 }

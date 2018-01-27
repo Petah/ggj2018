@@ -1,5 +1,4 @@
 const MovableGameObject = require("../../../movable-game-object")
-const Unit = require("../../unit");
 const collision = require("../../../../utilities/collision");
 
 module.exports = class Projectile extends MovableGameObject {
