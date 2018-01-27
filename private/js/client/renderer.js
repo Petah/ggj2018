@@ -67,6 +67,7 @@ const assets = {
     209: '/images/satellite/satellite-complete.png',
 
     700: '/images/bg-tiled-stones.jpg',
+    710: '/images/bg-tiled-green-1.jpg',
 };
 
 const animations = {
@@ -79,12 +80,12 @@ const animations = {
         '/animations/collector-back-1.png',
     ],
     9: [
-        '/animations/collector-front-walk-1.png',
-        '/animations/collector-front-walk-2.png',
+        '/animations/collector2-front-0.png',
+        '/animations/collector2-front-1.png',
     ],
     10: [
-        '/animations/collector-back-0.png',
-        '/animations/collector-back-1.png',
+        '/animations/collector2-back-1.png',
+        '/animations/collector2-back-2.png',
     ],
     7: [
         '/animations/collector-side-left-0.png',
@@ -103,20 +104,19 @@ const animations = {
         '/animations/collector-side-5.png',
     ],
     11: [
-        '/animations/collector-side-left-0.png',
-        '/animations/collector-side-left-1.png',
-        '/animations/collector-side-left-2.png',
-        '/animations/collector-side-left-3.png',
-        '/animations/collector-side-left-4.png',
-        '/animations/collector-side-left-5.png',
+        '/animations/collector2-side-left-1.png',
+        '/animations/collector2-side-left-2.png',
+        '/animations/collector2-side-left-3.png',
+        '/animations/collector2-side-left-4.png',
+        '/animations/collector2-side-left-5.png',
     ],
     12: [
-        '/animations/collector-side-0.png',
-        '/animations/collector-side-1.png',
-        '/animations/collector-side-2.png',
-        '/animations/collector-side-3.png',
-        '/animations/collector-side-4.png',
-        '/animations/collector-side-5.png',
+        '/animations/collector2-side-0.png',
+        '/animations/collector2-side-1.png',
+        '/animations/collector2-side-2.png',
+        '/animations/collector2-side-3.png',
+        '/animations/collector2-side-4.png',
+        '/animations/collector2-side-5.png',
     ],
 };
 
