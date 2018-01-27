@@ -17,6 +17,7 @@ module.exports = class Team {
         this.satelliteParts = 0;
         this.units = [];
         this.nextUnitIndex = 0;
+        this.unitsToCreate = [];
 
         this.createUnit(new CollectorUnit(this.game, spawner.x - 100, spawner.y, 0, 2, 0, 0, this));
         this.createUnit(new MissileUnit(this.game, spawner.x + 100, spawner.y, 0, 2, 0, 0, this));
@@ -26,8 +27,7 @@ module.exports = class Team {
     }
 
     createUnit(unit) {
-        this.units.push(unit);
-        this.game.gameObjects.push(unit);
+        this.unitsToCreate.push(unit);
     }
 
     addPlayer(player) {
@@ -60,6 +60,12 @@ module.exports = class Team {
         }
 
         this.ai();
+
+        while (this.unitsToCreate.length) {
+            let unit = this.unitsToCreate.pop();
+            this.units.push(unit);
+            this.game.gameObjects.push(unit);
+        }
     }
 
     ai() {

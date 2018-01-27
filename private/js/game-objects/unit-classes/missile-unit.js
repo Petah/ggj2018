@@ -63,14 +63,12 @@ module.exports = class MissileUnit extends Unit {
         if (target) {
             const direction = math.pointDirection(this.x, this.y, target.x, target.y);
             const distance = math.pointDistance(this.x, this.y, target.x, target.y);
-            if (distance < 300) {
-                if (Math.abs(direction - this.direction) < 30) {
-                    this.shooting = true;
-                } else {
-                    this.accelerate(math.lengthDirX(1000, -direction), math.lengthDirY(1000, -direction));
-                }
-            } else {
+            if (distance < 200) {
                 this.accelerate(math.lengthDirX(1000, direction), math.lengthDirY(1000, direction));
+            } else if (distance < 300 && Math.abs(direction - this.direction) < 30) {
+                this.shooting = true;
+            } else {
+                this.accelerate(math.lengthDirX(1000, -direction), math.lengthDirY(1000, -direction));
             }
         }
     }
