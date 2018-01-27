@@ -3,6 +3,7 @@ class AudioBuffer {
         this.context = context;
         this.urls = {
             'ambient-1': '/sounds/ambient-1.ogg',
+            'die-1': '/sounds/die-1.ogg',
             'pickup-1': '/sounds/pickup-1.ogg',
             'pickup-2': '/sounds/pickup-2.ogg',
             'shoot-1': '/sounds/shoot-1.ogg',
