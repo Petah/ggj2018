@@ -62,4 +62,8 @@ module.exports = class Unit extends MovableGameObject {
             this.sprite = sprites.right[this.team.id];
         }
     }
+
+    ai() {
+
+    }
 }

@@ -7,8 +7,12 @@ class GameUi {
     }
 
     render() {
-        if (this.data.part) {
+        if (this.data.canPickUp) {
             this.hud.innerHTML = `Press [A] or [Space] to pick up part`;
+        }
+
+        if (this.data.isStealing) {
+            this.hud.innerHTML= `Stealing ${this.data.stealType}!`
         }
     }
 

@@ -81,7 +81,9 @@ module.exports = class Client {
         }
 
         let hud = {
-            part: false,
+            canPickUp: false,
+            isStealing: false,
+            stealType: null
         };
 
         const padding = 200;
@@ -104,8 +106,12 @@ module.exports = class Client {
             }
 
             if (this.game.gameObjects[i].canPickUpPart) {
-                console.log('Setting part to true');
-                hud.part = true;
+                hud.canPickUp = true;
+            }
+
+            if (this.game.gameObjects[i].isStealing) {
+                hud.isStealing = true;
+                hud.stealType = this.game.gameObjects[i].type;
             }
         }
         this.send('hud', hud);

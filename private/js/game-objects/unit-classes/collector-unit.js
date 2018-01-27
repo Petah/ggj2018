@@ -1,5 +1,6 @@
 const Unit = require("./unit");
 const collision = require("../../utilities/collision");
+const SatelliteStack = require('../../game-objects/powerups/satellite-stack')
 
 const sprites = {
     up: [6, 10],
@@ -30,14 +31,25 @@ module.exports = class CollectorUnit extends Unit {
             team,
         );
         this.health = 10;
+        this.hasPart = false;
         this.canPickUpPart = false;
+        this.canAddToStack = false;
+        this.canStealFromStack = false;
+
+        this.timeToSteal = 3000;
+        this.timeElapsed = 0;
+        this.isStealing = false;
         this.type = 'CollectorUnit'
         this.collisionRadius = 55;
     }
 
     attack() {
-        if (this.canPickUpPart) {
+        if (this.canPickUpPart && !this.hasPart) {
             this.pickupPart();
+        }  else if (this.canStealFromStack && !this.hasPart) {
+            this.isStealing = true;
+        } else if (this.hasPart) {
+            this.placePart();
         }
     }
 
@@ -53,24 +65,70 @@ module.exports = class CollectorUnit extends Unit {
         const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
         let i = collisions.length;
 
-        let noSatelliteParts = true;
+        let noPartCollision = true;
+        let noStackCollision = true;
+        let stack = null;
         while (i--) {
             if (collisions[i].id !== this.id) {
                 switch(collisions[i].type) {
                     case 'SatellitePart':
                         this.canPickUpPart = true;
-                        noSatelliteParts = false;
+                        noPartCollision = false;
+                    case 'SatelliteStack':
+                        stack = collisions[i];
+                        if (collisions[i].team === this.team) {
+                            this.canAddToStack = true;
+                            noStackCollision = false;
+                        } else {
+                            this.canStealFromStack = true;
+                        }
                         break;
                 }
             }
         }
 
-        if (noSatelliteParts) {
+        if (noPartCollision) {
             this.canPickUpPart = false;
+        }
+
+        if (noStackCollision) {
+            this.canAddToStack = false;
+            this.canStealFromStack = false;
+            this.isStealing = false;
+            this.timeElapsed = 0;
+        }
+
+        if (this.isStealing) {
+            this.timeElapsed += deltaTime;
+            if (this.timeElapsed >= this.timeToSteal) {
+                this.hasPart = true;
+                if (stack !== null) {
+                    stack.removePart();
+                }
+            }
         }
     }
 
+    ai() {
+        this.accelerate(0, 1);
+    }
+
     pickupPart() {
-        this.team.hasPart = true;
+        this.hasPart = true;
+        this.canPickUpPart = false;
+    }
+
+    placePart() {
+        if (this.team.satelliteStack === null) {
+            this.team.satelliteStack = new SatelliteStack(
+                this.game,
+                this.x,
+                this.y,
+                this.direction,
+                'sprite',
+                this.collisionRadius);
+        } else if (this.canAddToStack) {
+            this.team.satelliteStack.addPart(this.team);
+        }
     }
 }

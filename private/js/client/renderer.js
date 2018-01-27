@@ -40,6 +40,16 @@ const assets = {
     70: '/images/tank2-front-0.png',
     71: '/images/tank2-back-0.png',
 
+    100: '/images/pickups/bold_silver.png',
+    101: '/images/pickups/bolt_bronze.png',
+    102: '/images/pickups/bolt_gold.png',
+    103: '/images/pickups/pill_blue.png',
+    104: '/images/pickups/pill_green.png',
+    105: '/images/pickups/pill_red.png',
+    106: '/images/pickups/pill_yellow.png',
+    107: '/images/pickups/powerupBlue_bolt.png',
+    108: '/images/pickups/powerupBlue_shield.png',
+
     700: '/images/bg-tiled-stones.jpg',
 };
 
