@@ -56,6 +56,11 @@ const assets = {
 
     120: '/images/spawning-pool.png',
 
+    130: '/images/impassable-crystals1.png',
+    131: '/images/impassable-crystals2.png',
+    132: '/images/impassable-rocks1.png',
+    133: '/images/impassable-rocks2.png',
+
     200: '/images/satellite/collect-satellite-antenna.png',
     201: '/images/satellite/collect-satellite-dish.png',
     202: '/images/satellite/collect-satellite-frame.png',
