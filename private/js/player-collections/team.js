@@ -51,5 +51,26 @@ module.exports = class Team {
         while (p--) {
             this.players[p].loop(deltaTime, currentTime);
         }
+
+        this.ai();
+
+    }
+
+    ai() {
+        let u = this.units.length;
+        while (u--) {
+            let found = false;
+            let p = this.players.length;
+            while (p--) {
+                if (this.players[p].unit.id == this.units[u].id) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                this.units[u].ai();
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-module.exports = class Satellite extends GameObject{
+Satellite = class extends GameObject{
     constructor(
         game,
         x,
@@ -18,7 +18,7 @@ module.exports = class Satellite extends GameObject{
         this.timeElapsed = 0;
         this.isHolding = true;
         this.isStealing = false;
-        this.type = 'SatelliteDish';
+        this.type = 'Satellite';
     }
 
     loop(deltaTime, currentTime) {
@@ -84,3 +84,5 @@ module.exports = class Satellite extends GameObject{
 };
 
 Satellite.REQUIRED_PARTS = 4;
+
+module.exports = Satellite;

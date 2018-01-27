@@ -108,6 +108,10 @@ module.exports = class CollectorUnit extends Unit {
         }
     }
 
+    ai() {
+        this.accelerate(0, 1);
+    }
+
     pickupPart() {
         this.hasPart = true;
         this.canPickUpPart = false;
