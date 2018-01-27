@@ -10,6 +10,7 @@ const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
 const SatellitePart = require('../game-objects/powerups/satellite-part');
 const math = require('../utilities/math');
+const Collidable = require('../game-objects/collidlable');
 
 module.exports = class Game {
     constructor() {
@@ -94,6 +95,7 @@ module.exports = class Game {
 
         this.initTeams();
         this.spawnSatelliteParts();
+        this.spawnObstacles();
         // this.initializeMapObjects();
     }
 
@@ -127,6 +129,18 @@ module.exports = class Game {
             let y = Math.random() * this.mapHeight;
             console.log('-------------------', x, y, i)
             this.gameObjects.push(new SatellitePart(this, x, y, i));
+        }
+    }
+
+    spawnObstacles(){
+        let i = 10;
+        while(i--){
+            let x = Math.random() * this.mapWidth;
+            let y = Math.random() * this.mapHeight;
+            let s = Math.floor(Math.random() * 4) + 130; // collision assets are in range 130 - 134
+            console.log('-------------------', x, y, i)
+            this.gameObjects.push(new Collidable(this, x, y, s));
+
         }
     }
 
