@@ -19,8 +19,8 @@ class Effects {
                 let x = Math.random() * 2000;
                 let y = Math.random() * 2000;
                 let radius = this.getRandomBetweenLimit(group[0], group[1]);
-    
-                this.groups[effectId].particles.beginFill(colors[Math.floor(Math.random() * colors.length)], this.getRandomBetweenLimit(0.25, 0.75));
+
+                this.groups[effectId].particles.beginFill(colors[Math.floor(Math.random() * colors.length)], this.getRandomBetweenLimit(0.1, 0.3));
                 this.groups[effectId].particles.drawCircle(x, y, radius);
                 this.groups[effectId].particles.endFill();
             }
