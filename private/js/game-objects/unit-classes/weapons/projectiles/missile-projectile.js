@@ -13,5 +13,6 @@ module.exports = class MissileProjectile extends Projectile {
         super(game, x, y, direction, 4, math.lengthDirX(speed, direction), math.lengthDirY(speed, direction));
         this.subType = 'missile';
         this.unit = unit;
+        this.damage = 2;
     }
 }

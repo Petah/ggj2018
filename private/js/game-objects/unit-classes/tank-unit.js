@@ -35,6 +35,8 @@ module.exports = class TankUnit extends Unit {
         // this.weapon = new TankWeapon(this.game, this);
         this.health = 100;
         this.collisionRadius = 80;
+        this.type = 'unit';
+        this.subType = 'tank';
     }
 
     loop(deltaTime, currentTime) {

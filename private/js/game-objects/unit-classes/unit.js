@@ -27,7 +27,12 @@ module.exports = class Unit extends MovableGameObject {
         //     this.onDie();
         // }
         console.log('Hit by ' + projectile.type + ' ' + projectile.subType);
+        this.health -= projectile.damage;
         this.game.removeGameObject(projectile);
+        console.log('unit health ' + this.type + ' ' + this.subType + ' ' + this.health + ' ' + projectile.damage);
+        if(this.health <= 0){
+            this.game.removeGameObject(this);
+        }
     }
 
     onDie() {
@@ -64,7 +69,7 @@ module.exports = class Unit extends MovableGameObject {
     }
 
     setSprite(velocity, stillSprites, movingSprites) {
-        if (velocity === 0) {
+        if (velocity < 100.00) {
             this.moving = false;
             this.sprite = stillSprites[this.team.id];
         } else {
