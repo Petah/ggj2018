@@ -3,14 +3,17 @@ const assets = {
     2: '/images/ship.png',
     3: '/images/background_nebula.jpg',
     4: '/images/projectile.png',
+
     5: '/images/collector-front-1.png',
     6: '/images/collector-back-1.png',
     7: '/images/collector-left-1.png',
     8: '/images/collector-right-1.png',
+
     9: '/images/collector-front-2.png',
     10: '/images/collector-back-2.png',
     11: '/images/collector-left-2.png',
     12: '/images/collector-right-2.png',
+
     700: '/images/bg-tiled-bacteria.jpg',
     800: '/images/bg-tiled-stones.jpg',
 };
@@ -105,6 +108,7 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
+        console.log('Create sprite', id, spriteAsset);
         const sprite = new PIXI.extras.AnimatedSprite(this.animations[spriteAsset] || [this.textures[spriteAsset]]);
 
         sprite.anchor.set(0.5);
@@ -143,15 +147,13 @@ class Renderer {
         this.sprites[id].rotation = direction * Math.PI / 180;
 
         let currentAnimationId = this.sprites[id].animationId;
-        let nextAnimationId = null;
         if (this.animations[spriteAsset]) {
-            nextAnimationId = spriteAsset;
-            if (currentAnimationId === nextAnimationId) {
+            if (currentAnimationId === spriteAsset) {
                 return null;
             }
 
             this.sprites[id].textures = this.animations[spriteAsset];
-            this.sprites[id].animationId = nextAnimationId;
+            this.sprites[id].animationId = spriteAsset;
             this.sprites[id].play();
         } else {
             this.sprites[id].textures = [this.textures[spriteAsset]];

@@ -42,6 +42,9 @@ module.exports = class Client {
 
                 case 'updateInput': {
                     const player = this.players[message.data.id];
+                    if (message.data.switchUnit) {
+                        this.game.teams[0].nextUnit(player);
+                    }
                     if (player.unit) {
                         player.unit.accelerate(message.data.move.x, message.data.move.y);
                         if (message.data.shoot) {
@@ -69,19 +72,26 @@ module.exports = class Client {
             this.view.x = averageX - this.view.width / 2;
             this.view.y = averageY - this.view.height / 2;
         }
+        for (let id in this.players) {
+            if (this.players[id].unit) {
+                this.view.x = this.players[id].unit.x - this.view.width / 2;
+                this.view.y = this.players[id].unit.y - this.view.height / 2;
+            }
+        }
 
         let hud = {
             part: false,
         };
 
+        const padding = 200;
         const updates = [];
         let i = this.game.gameObjects.length;
         while (i--) {
             if (
-                this.game.gameObjects[i].x > this.view.x &&
-                this.game.gameObjects[i].x < this.view.x + this.view.width &&
-                this.game.gameObjects[i].y > this.view.y &&
-                this.game.gameObjects[i].y < this.view.y + this.view.height
+                this.game.gameObjects[i].x > this.view.x - padding &&
+                this.game.gameObjects[i].x < this.view.x + this.view.width + (padding * 2) &&
+                this.game.gameObjects[i].y > this.view.y - padding &&
+                this.game.gameObjects[i].y < this.view.y + this.view.height + (padding * 2)
             ) {
                 updates.push([
                     this.game.gameObjects[i].id,

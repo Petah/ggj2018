@@ -37,6 +37,7 @@ class Gamepad {
                 y: verticalAxis,
             },
             shoot: this.game.gamepads[this.gamepadIndex].buttons[0].pressed,
+            switchUnit: this.game.gamepads[this.gamepadIndex].buttons[7].pressed,
         });
     }
 }

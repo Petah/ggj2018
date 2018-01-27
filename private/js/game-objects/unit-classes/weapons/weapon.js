@@ -14,6 +14,7 @@ module.exports = class Weapon {
         if (this.reloadTime < this.game.currentTime) {
             this.reloadTime = this.game.currentTime + this.fireRate;
             this.spawnProjectile(this.unit.x, this.unit.y, this.unit.direction);
+            this.game.playAudioAtPoint(this.audioClip, this.unit.x, this.unit.y);
         }
     }
 }
