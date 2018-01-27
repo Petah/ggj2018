@@ -39,10 +39,10 @@ module.exports = class Unit extends MovableGameObject {
 
     loop(deltaTime, currentTime){
         super.loop(deltaTime, currentTime);
-        let collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
         let i = collisions.length;
         while(i--){
-            if(collisions[i].id == this.id || collisions[i].team == this.team){
+            if(collisions[i].id == this.id || (collisions[i].unit && (collisions[i].unit.id == this.id))){
                 continue;
             }
             if(collisions[i].type == 'projectile'){
