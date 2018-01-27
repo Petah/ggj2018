@@ -165,6 +165,15 @@ class Renderer {
         this.sprites.background.setTransform(0, 0);
         this.layers.background.addChild(this.sprites.background);
 
+        // Init effects
+        const effects = new Effects(this.layers.background);
+        effects.spawnRandomOrbs(1, 200, [
+            [0x379392, 0.5],
+            [0xE8F895, 0.5],
+            [0x8BAB78, 0.5],
+            [0xFFFFFF, 0.5],
+        ]);
+
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);
     }
