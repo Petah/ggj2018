@@ -14,6 +14,10 @@ class GameUi {
         if (this.data.isStealing) {
             this.hud.innerHTML= `Stealing ${this.data.stealType}!`
         }
+
+        if (this.data.hasPart) {
+            this.hud.innerHTML = `Carrying part`
+        }
     }
 
     show() {

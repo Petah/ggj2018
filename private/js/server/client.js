@@ -82,6 +82,7 @@ module.exports = class Client {
 
         let hud = {
             canPickUp: false,
+            hasPart: false,
             isStealing: false,
             stealType: null
         };
@@ -114,6 +115,10 @@ module.exports = class Client {
             if (this.game.gameObjects[i].isStealing) {
                 hud.isStealing = true;
                 hud.stealType = this.game.gameObjects[i].type;
+            }
+
+            if (this.game.gameObjects[i].part !== null) {
+                hud.hasPart = true;
             }
         }
         this.send('hud', hud);
