@@ -51,7 +51,6 @@ module.exports = class Game {
             this.collisionCheck();
             this.loop(this.deltaTime, this.currentTime);
             if (this.gameObjectsToRemove.length > 0) {
-                logger.log('Remove', this.gameObjectsToRemove);
                 this.gameObjects = this.gameObjects.filter(gameObject => this.gameObjectsToRemove.indexOf(gameObject.id) === -1);
                 this.gameObjectsToRemove = [];
             }
@@ -131,14 +130,28 @@ module.exports = class Game {
     }
 
     spawnObstacles(){
+        let bail = 100;
         let i = 10;
-        while(i--){
-            let x = Math.random() * this.mapWidth;
-            let y = Math.random() * this.mapHeight;
-            let s = Math.floor(Math.random() * 4) + 130; // collision assets are in range 130 - 134
-            console.log('-------------------', x, y, i)
-            this.gameObjects.push(new Collidable(this, x, y, s));
+        top: while(i--) {
+            if (bail-- <= 0) {
+                return;
+            }
 
+            let x;
+            let y;
+            let s = Math.floor(Math.random() * 4) + 130; // collision assets are in range 130 - 134
+
+            let g = this.gameObjects.length;
+            while (g--) {
+                x = Math.random() * this.mapWidth;
+                y = Math.random() * this.mapHeight;
+                const distance = math.pointDistance(x, y, this.gameObjects[g].x, this.gameObjects[g].y);
+                if (distance < 200) {
+                    continue top;
+                }
+            }
+
+            this.gameObjects.push(new Collidable(this, x, y, s));
         }
     }
 

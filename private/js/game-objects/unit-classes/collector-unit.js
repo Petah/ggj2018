@@ -1,6 +1,7 @@
 const logger = require('../../server/logger')(__filename);
 const Unit = require("./unit");
 const SatelliteStack = require('../satellite-stack')
+const math = require('../../utilities/math');
 
 const sprites = {
     up: [6, 10],
@@ -35,6 +36,7 @@ module.exports = class CollectorUnit extends Unit {
             team,
         );
         this.health = 10;
+        this.maxHealth = 10;
         this.hasPart = false;
         this.part = null;
         this.canPickUpPart = false;
@@ -145,7 +147,7 @@ module.exports = class CollectorUnit extends Unit {
                         this.collectState = 'holding';
                         this.collectUnit = collision;
                     } else {
-                        console.log('can nothing');
+                        // console.log('can nothing');
                     }
                 }
             }
@@ -219,6 +221,35 @@ module.exports = class CollectorUnit extends Unit {
     }
 
     ai() {
-        this.accelerate(0, 1);
+        // this.accelerate(0, 1);
+        const target = this.findTargets();
+        const direction = math.pointDirection(this.x,this.y,target.x,target.y);
+        const len = math.pointDistance(this.x,this.y, target.x,target.y);
+        this.accelerate(math.lengthDirX(len,direction),math.lengthDirY(len,direction));
     }
+
+    findTargets(){
+        let targets = [];
+        let i = this.game.gameObjects.length;
+        while(i--){
+            if(this.game.gameObjects[i].type == 'SatellitePart'){
+                targets.push(this.game.gameObjects[i]);
+            }
+        }
+        if(targets.length > 0){
+            let target = targets[targets.length - 1];
+            let distance = math.pointDistance(this.x,this.y,target.x,target.y);
+            i = targets.length;
+            while(i--){
+                let potentialTarget = targets[i];
+                if(math.pointDistance(this.x,this.y,potentialTarget.x,potentialTarget.y) < distance){
+                    target = potentialTarget;
+                }
+            }
+            console.log('Aquired Target ' + target);
+            return target;
+        }
+        console.log(targets);
+    }
+
 }

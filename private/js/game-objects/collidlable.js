@@ -11,7 +11,7 @@ module.exports = class Collidable extends GameObject {
         super(game, x, y, 0, sprite);
         this.pushBackForce = 1;
         this.type = 'Collidable'
-        this.collisionRadius = 80;
+        this.collisionRadius = 20;
     }
 
     loop(deltaTime, currentTime){
@@ -19,11 +19,10 @@ module.exports = class Collidable extends GameObject {
         let i = collisions.length;
         while(i--){
             if(collisions[i].type === 'Unit'){
-                 console.log('collided with a unit');
                  const direction = math.pointDirection(this.x,this.y,collisions[i].x,collisions[i].y);
                  collisions[i].accelerate(math.lengthDirX(this.pushBackForce,direction),math.lengthDirY(this.pushBackForce,direction));
             }
         }
     }
-    
+
 }

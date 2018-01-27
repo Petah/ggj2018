@@ -75,10 +75,22 @@ const assets = {
 
     209: '/images/satellite/satellite-complete.png',
 
+    300: '/images/projectiles/tank_projectiles1.png',
+    301: '/images/projectiles/tank_projectiles2.png',
+    302: '/images/projectiles/tank_projectiles3.png',
+    303: '/images/projectiles/tank_projectiles4.png',
+
+    310: '/images/projectiles/tank2_projectiles1.png',
+    311: '/images/projectiles/tank2_projectiles2.png',
+    312: '/images/projectiles/tank2_projectiles3.png',
+    313: '/images/projectiles/tank2_projectiles4.png',
+
     701: '/images/bg-tiled-green-2.png',
     702: '/images/bg-tiled-green-3.png',
     703: '/images/bg-tiled-green-4.png',
     704: '/images/bg-tiled-green-5.png',
+
+    800: '/images/white-circle.png',
 };
 
 const animations = {
@@ -292,7 +304,6 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
-        console.log('Create sprite', id, spriteAsset);
         const sprite = new PIXI.extras.AnimatedSprite(this.animations[spriteAsset] || [this.textures[spriteAsset]]);
 
         sprite.anchor.set(0.5);
@@ -324,9 +335,6 @@ class Renderer {
         this.sprites[id].y = y;
 
         let currentAnimationId = this.sprites[id].animationId;
-        if (moving) {
-            this.movingSprite = id;
-        }
 
         if (moving && this.animations[spriteAsset]) {
             if (currentAnimationId === spriteAsset) {
@@ -362,7 +370,6 @@ class Renderer {
                 }
             }
             if (!found) {
-                console.log('Removing sprite', id);
                 if (this.sprites[id].layer) {
                     this.layers[this.sprites[id].layer].removeChild(this.sprites[id]);
                     delete this.sprites[id];

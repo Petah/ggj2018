@@ -38,7 +38,6 @@ class SatelliteStack extends GameObject {
     }
 
     removePart(sprite) {
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', sprite);
         this.parts[sprite] = false;
         console.log(this.parts[sprites.antenna] , this.parts[sprites.dish] , this.parts[sprites.frame]);
         if (!this.parts[sprites.antenna] && !this.parts[sprites.dish] && !this.parts[sprites.frame]) {
@@ -69,7 +68,6 @@ class SatelliteStack extends GameObject {
         } else if (this.parts[sprites.frame]) {
             this.sprite = sprites.framePlaced;
         }
-        console.log('#############', this.sprite);
     }
 }
 
