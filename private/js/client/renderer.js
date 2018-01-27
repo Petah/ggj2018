@@ -6,13 +6,13 @@ const assets = {
 
     5: '/animations/collector-front-walk-1.png',
     6: '/animations/collector-back-0.png',
-    7: '/animations/collector-side-left-0.png',
-    8: '/animations/collector-side-0.png',
+    7: '/animations/collector-side-left-5.png',
+    8: '/animations/collector-side-5.png',
 
     9: '/animations/collector2-front-0.png',
     10: '/animations/collector2-back-1.png',
-    11: '/animations/collector2-side-left-1.png',
-    12: '/animations/collector2-side-0.png',
+    11: '/animations/collector2-side-left-5.png',
+    12: '/animations/collector2-side-5.png',
 
     20: '/images/kamikaze-front.png',
     21: '/images/kamikaze-back.png',
@@ -71,7 +71,8 @@ const assets = {
     209: '/images/satellite/satellite-complete.png',
 
     700: '/images/bg-tiled-stones.jpg',
-    710: '/images/bg-tiled-green-1.jpg',
+    701: '/images/bg-tiled-green-1.jpg',
+    702: '/images/bg-tiled-green-2.png',
 };
 
 const animations = {
@@ -287,6 +288,13 @@ class Renderer {
         this.sprites[id].y = y;
 
         let currentAnimationId = this.sprites[id].animationId;
+        if (moving) {
+            this.movingSprite = id;
+        }
+        if (this.movingSprite === id) {
+            console.log('moving sprite', spriteAsset, moving);
+        }
+
         if (moving && this.animations[spriteAsset]) {
             if (currentAnimationId === spriteAsset) {
                 return null;
