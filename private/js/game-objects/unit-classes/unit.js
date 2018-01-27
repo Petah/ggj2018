@@ -21,10 +21,12 @@ module.exports = class Unit extends MovableGameObject {
         this.shooting = false;
         this.weapon = null;
     }
-    
+
     getHurt(object, damage) {
         this.health -= damage;
-        this.game.removeGameObject(object);
+        if (this.health > this.maxHealth) {
+            this.health = this.maxHealth;
+        }
         if (this.health <= 0) {
             this.onDie();
             this.game.removeGameObject(this);
