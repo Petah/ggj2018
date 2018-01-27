@@ -48,6 +48,7 @@ module.exports = class CollectorUnit extends Unit {
         this.collisionRadius = 40;
         this.attacking = false;
         this.collectState = null;
+        this.timeToCollect = 0.5;
     }
 
     attack() {
@@ -121,6 +122,7 @@ module.exports = class CollectorUnit extends Unit {
         if (this.shooting) {
             switch (this.collectState) {
                 case 'collecting': {
+                    console.log('collecting', this.collectTime);
                     this.accelerate(0, 0);
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
@@ -132,12 +134,31 @@ module.exports = class CollectorUnit extends Unit {
                     break;
                 }
                 case 'stealing': {
-                    break;
-                }
-                case 'placing': {
+                    console.log('stealing', this.collectTime);
                     this.accelerate(0, 0);
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
+                        if (this.collectUnit.parts[SatelliteStack.sprites.antenna]) {
+                            this.collectUnit.removePart(SatelliteStack.sprites.antenna);
+                            this.hasPart = SatelliteStack.sprites.antenna;
+                        } else if (this.collectUnit.parts[SatelliteStack.sprites.dish]) {
+                            this.collectUnit.removePart(SatelliteStack.sprites.dish);
+                            this.hasPart = SatelliteStack.sprites.dish;
+                        } else if (this.collectUnit.parts[SatelliteStack.sprites.frame]) {
+                            this.collectUnit.removePart(SatelliteStack.sprites.frame);
+                            this.hasPart = SatelliteStack.sprites.frame;
+                        }
+                        this.collectState = null;
+                        this.collectUnit = null;
+                    }
+                    break;
+                }
+                case 'placing': {
+                    console.log('placing', this.collectTime, this.collectUnit);
+                    this.accelerate(0, 0);
+                    this.collectTime -= deltaTime;
+                    if (this.collectTime <= 0) {
+                        console.log('place', this.collectUnit);
                         if (this.collectUnit === true) {
                             const stack = new SatelliteStack(
                                 this.game,
@@ -147,6 +168,8 @@ module.exports = class CollectorUnit extends Unit {
                             );
                             stack.addPart(this.hasPart);
                             this.game.gameObjects.push(stack);
+                        } else {
+                            this.collectUnit.addPart(this.hasPart);
                         }
 
                         this.hasPart = false;
@@ -158,28 +181,27 @@ module.exports = class CollectorUnit extends Unit {
                 default: {
                     let collision;
                     if (collision = this.canCollect()) {
+                        console.log('can collect');
                         this.collectState = 'collecting';
-                        this.collectTime = 1.5;
+                        this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
                     } else if (collision = this.canSteal()) {
+                        console.log('can steal');
                         this.collectState = 'stealing';
-                        this.collectTime = 1.5;
+                        this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
                     } else if (collision = this.canPlace()) {
+                        console.log('can place', collision);
                         this.collectState = 'placing';
-                        this.collectTime = 1.5;
+                        this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
+                    } else {
+                        console.log('can nothing');
                     }
                 }
             }
-
-            // if (this.canPickUpPart && !this.hasPart) {
-            //     this.pickupPart();
-            // }  else if (this.canStealFromStack && !this.hasPart) {
-            //     this.isStealing = true;
-            // } else if (this.hasPart) {
-            //     this.placePart();
-            // }
+        } else {
+            this.collectState = null;
         }
     }
 
@@ -206,7 +228,7 @@ module.exports = class CollectorUnit extends Unit {
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while (i--) {
-            if (collisions[i].type == 'SatelliteStack' && collisions[i].team.id !== this.team.id) {
+            if (collisions[i].type == 'SatelliteStack') {
                 return collisions[i];
             }
         }
@@ -215,6 +237,14 @@ module.exports = class CollectorUnit extends Unit {
 
     canPlace() {
         if (this.hasPart) {
+            const collisions = this.game.collisions[this.id];
+            let i = collisions.length;
+            while (i--) {
+                if (collisions[i].type == 'SatelliteStack' && collisions[i].team.id === this.team.id) {
+                    console.log('asdsadasdsadas', collisions[i]);
+                    return collisions[i];
+                }
+            }
             return true;
         }
         return false;
@@ -243,7 +273,7 @@ module.exports = class CollectorUnit extends Unit {
     //         );
     //         this.game.gameObjects.push(this.team.satelliteStack);
     //     } else if (this.canAddToStack) {
-    //         this.team.satelliteStack.addPart(this.team);
+    //         this.team.satelliteStack.sprites.addPart(this.team);
     //     }
     // }
 }

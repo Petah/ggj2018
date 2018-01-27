@@ -17,7 +17,8 @@ const sprites = {
     complete: 209,
 };
 
-module.exports = class SatelliteStack extends GameObject {
+
+class SatelliteStack extends GameObject {
     constructor(
         game,
         x,
@@ -35,7 +36,33 @@ module.exports = class SatelliteStack extends GameObject {
 
     addPart(sprite) {
         this.parts[sprite] = true;
+        this.updateSprite();
 
+        // if (this.currentSize++ === this.maxSize) {
+        //     this.game.gameObjects.push(new Satellite(this.game,
+        //         this.x,
+        //         this.y,
+        //         this.direction,
+        //         'satellite-sprite-path',
+        //         this.collisionRadius,
+        //         team));
+        // } else {
+        //     this.sprite++;
+        // }
+    }
+
+    removePart(sprite) {
+        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', sprite);
+        this.parts[sprite] = false;
+        console.log(this.parts[sprites.antenna] , this.parts[sprites.dish] , this.parts[sprites.frame]);
+        if (!this.parts[sprites.antenna] && !this.parts[sprites.dish] && !this.parts[sprites.frame]) {
+            this.game.removeGameObject(this);
+            return;
+        }
+        this.updateSprite();
+    }
+
+    updateSprite() {
         if (this.parts[sprites.antenna] && this.parts[sprites.dish] && this.parts[sprites.frame]) {
             this.sprite = sprites.complete;
         } else if (this.parts[sprites.antenna] && this.parts[sprites.dish]) {
@@ -52,21 +79,9 @@ module.exports = class SatelliteStack extends GameObject {
             this.sprite = sprites.framePlaced;
         }
         console.log('#############', this.sprite);
-
-        // if (this.currentSize++ === this.maxSize) {
-        //     this.game.gameObjects.push(new Satellite(this.game,
-        //         this.x,
-        //         this.y,
-        //         this.direction,
-        //         'satellite-sprite-path',
-        //         this.collisionRadius,
-        //         team));
-        // } else {
-        //     this.sprite++;
-        // }
-    }
-
-    removePart() {
-        this.currentSize--;
     }
 }
+
+SatelliteStack.sprites = sprites;
+
+module.exports = SatelliteStack;
