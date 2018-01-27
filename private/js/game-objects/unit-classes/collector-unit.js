@@ -32,6 +32,7 @@ module.exports = class CollectorUnit extends Unit {
         this.health = 10;
         this.canPickUpPart = false;
         this.type = 'CollectorUnit'
+        this.collisionRadius = 55;
     }
 
     attack() {

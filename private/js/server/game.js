@@ -18,6 +18,7 @@ module.exports = class Game {
 
         this.mapWidth = 10000;
         this.mapHeight = 10000;
+        this.gameObjectsToRemove = [];
     }
 
     start() {
@@ -42,7 +43,13 @@ module.exports = class Game {
             }
 
             this.loop(deltaTime, this.currentTime);
+            if(this.gameObjectsToRemove.length >0){
+                console.log(this.gameObjectsToRemove);
+                this.gameObjects = this.gameObjects.filter(gameObject => this.gameObjectsToRemove.indexOf(gameObject.id) === -1);
+                this.gameObjectsToRemove = [];
+            }
             this.id = setImmediate(gameLoop);
+
         };
         this.id = setImmediate(gameLoop);
     }
@@ -69,7 +76,7 @@ module.exports = class Game {
         this.server.loop(deltaTime, currentTime);
 
         if(Math.round(currentTime) % 20 === 0) {
-            this.spawnPowerUp();
+            // this.spawnPowerUp();
         }
     }
 
@@ -168,6 +175,10 @@ module.exports = class Game {
                 30,
                 10));
         }
+    }
+
+    removeGameObject(gameObject){
+        this.gameObjectsToRemove.push(gameObject.id);
     }
 
     playAudioAtPoint(audioClip, x, y) {

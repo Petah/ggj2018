@@ -27,6 +27,7 @@ module.exports = class Unit extends MovableGameObject {
         //     this.onDie();
         // }
         console.log('Hit by ' + projectile.type + ' ' + projectile.subType);
+        this.game.removeGameObject(projectile);
     }
 
     onDie() {
