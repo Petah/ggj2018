@@ -15,6 +15,21 @@ const assets = {
     800: '/images/bg-tiled-stones.jpg',
 };
 
+const animations = {
+    5: [
+        '/animations/collector-front-0.png',
+        '/animations/collector-front-1.png',
+        '/animations/collector-front-2.png',
+        '/animations/collector-front-3.png',
+        '/animations/collector-front-4.png',
+        '/animations/collector-front-5.png',
+        '/animations/collector-front-6.png',
+        '/animations/collector-front-7.png',
+        '/animations/collector-front-8.png',
+        '/animations/collector-front-9.png',
+    ]
+};
+
 class Renderer {
     constructor(width = null, height = null, options = {}) {
         this.sprites = {};
@@ -26,6 +41,16 @@ class Renderer {
         this.textures = {};
         for (let key in assets) {
             this.textures[key] = PIXI.Texture.fromImage(assets[key]);
+        }
+
+        this.animations = {};
+        for (let key in animations) {
+            animations[key].map((frame) => {
+                if (!this.animations[key]) {
+                    this.animations[key] = [];
+                }
+                this.animations[key].push(PIXI.Texture.fromImage(frame));
+            });
         }
     }
 
@@ -80,12 +105,18 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
-        console.log('Create sprite', id, spriteAsset);
+        const sprite = new PIXI.extras.AnimatedSprite(this.animations[spriteAsset] || [this.textures[spriteAsset]]);
 
-        const sprite = new PIXI.Sprite(this.textures[spriteAsset]);
         sprite.anchor.set(0.5);
+        sprite.animationId = null;
+        sprite.animationSpeed = 0.25;
         sprite.x = x;
         sprite.y = y;
+
+        if (this.animations[spriteAsset]) {
+            sprite.animationId = spriteAsset;
+            sprite.play();
+        }
 
         switch (layer) {
             case 'background': {
@@ -110,7 +141,22 @@ class Renderer {
         this.sprites[id].x = x;
         this.sprites[id].y = y;
         this.sprites[id].rotation = direction * Math.PI / 180;
-        this.sprites[id].texture = this.textures[spriteAsset];
+
+        let currentAnimationId = this.sprites[id].animationId;
+        let nextAnimationId = null;
+        if (this.animations[spriteAsset]) {
+            nextAnimationId = spriteAsset;
+            if (currentAnimationId === nextAnimationId) {
+                return null;
+            }
+
+            this.sprites[id].textures = this.animations[spriteAsset];
+            this.sprites[id].animationId = nextAnimationId;
+            this.sprites[id].play();
+        } else {
+            this.sprites[id].textures = [this.textures[spriteAsset]];
+            this.sprites[id].animationId = null;
+        }
     }
 
     cullSprites(gameObjects) {
