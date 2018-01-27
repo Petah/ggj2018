@@ -1,27 +1,19 @@
 const logger = require('./logger')(__filename);
 const Server = require('./server');
 const MovableGameObject = require('../game-objects/movable-game-object');
-const Unit = require('../game-objects/unit-classes/unit');
-const BulletHellPowerUp = require('../game-objects/powerups/bullet-hell-powerup');
-const FOVPowerUp = require('../game-objects/powerups//fov-powerup');
-const FauxPowerUp = require('../game-objects/powerups/faux-powerup');
-const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
-const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
+const Team = require('../player-collections/team');
 
 module.exports = class Game {
     constructor() {
         this.server = new Server(this);
-        this.mapWidth  = 1920 * 5;
-        this.mapHeight = 1080 * 3;
+        this.teamAmount = 2;
+        this.teams = [];
+        this.gameObjects = [];
     }
 
     start() {
         logger.log('Game start');
         this.server.start();
-
-        this.gameObjects = [];
-
-        this.initializeMapObjects();
 
         let lastSecond = 0;
         const hrTimeInit = process.hrtime();
@@ -62,12 +54,24 @@ module.exports = class Game {
             this.gameObjects[i].loop(deltaTime, currentTime);
         }
         this.server.loop(deltaTime, currentTime);
-
-        if(Math.round(currentTime) % 30 == 0) {
-            this.spawnPowerUp();
-        }
     }
 
+    reset() {
+        logger.log('Game reset');
+        this.gameObjects = [];
+        this.teams = [];
+
+        this.initTeams();
+        this.initializeMapObjects();
+    }
+
+    initTeams() {
+        let i = this.teamAmount;
+        while (i--) {
+            this.teams.push(new Team(this));
+        }
+    }
+    
     initializeMapObjects() {
         this.gameObjects.push(new BulletHellPowerUp(this,
             this.mapWidth/2,
@@ -131,10 +135,5 @@ module.exports = class Game {
                 30,
                 10));
         }
-    }
-
-    reset() {
-        logger.log('Game reset');
-        this.gameObjects = [];
     }
 }

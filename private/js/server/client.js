@@ -1,9 +1,6 @@
 const logger = require('./logger')(__filename);
 const WebSocket = require('ws');
 const MovableGameObject = require('../game-objects/movable-game-object');
-const Unit = require('../game-objects/unit-classes/unit');
-const KamikazeUnit = require('../game-objects/unit-classes/kamikaze-unit');
-const MissileUnit = require('../game-objects/unit-classes/missile-unit');
 const Player = require('../player-collections/player');
 
 module.exports = class Client {
@@ -45,17 +42,20 @@ module.exports = class Client {
 
                 case 'updateInput': {
                     const player = this.players[message.data.id];
-                    player.units[0].accelerate(message.data.move.x, message.data.move.y);
-                    if (message.data.shoot) {
-                        player.units[0].attack(10, 10);
+                    if (player.unit) {
+                        player.unit.accelerate(message.data.move.x, message.data.move.y);
+                        if (message.data.shoot) {
+                            player.unit.attack(10, 10);
+                        }
                     }
                     break;
                 }
 
                 case 'createPlayer': {
                     logger.log('Create player', message.data);
-                    const player = new Player(this.game)
+                    const player = new Player(this.game, message.data.id)
                     this.players[message.data.id] = player;
+                    this.game.teams[0].addPlayer(player);
                     break;
                 }
             }
@@ -63,8 +63,12 @@ module.exports = class Client {
     }
 
     loop(deltaTime, currentTime) {
-        this.view.x = this.game.gameObjects[0] ? this.game.gameObjects[0].x - this.view.width / 2 : 0;
-        this.view.y = this.game.gameObjects[0] ? this.game.gameObjects[0].y - this.view.height / 2 : 0;
+        if (this.game.gameObjects.length) {
+            const averageX = this.game.gameObjects.reduce((p, c) => c.x + p, 0) / this.game.gameObjects.length;
+            const averageY = this.game.gameObjects.reduce((p, c) => c.y + p, 0) / this.game.gameObjects.length;
+            this.view.x = averageX - this.view.width / 2;
+            this.view.y = averageY - this.view.height / 2;
+        }
 
         const updates = [];
         let i = this.game.gameObjects.length;
@@ -84,6 +88,7 @@ module.exports = class Client {
                 ]);
             }
         }
+
         this.send('update', {
             renderer: {
                 x: this.view.x,
