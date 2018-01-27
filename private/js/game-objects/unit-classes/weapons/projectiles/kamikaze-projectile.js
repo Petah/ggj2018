@@ -9,5 +9,6 @@ module.exports = class KamikazeProjectile extends Projectile {
         sprite,
     ) {
         super(game, x, y, direction, sprite);
+        this.subType = 'kamikaze';
     }
 }

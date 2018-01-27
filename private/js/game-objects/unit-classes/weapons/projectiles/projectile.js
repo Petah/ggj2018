@@ -20,6 +20,7 @@ module.exports = class Projectile extends MovableGameObject {
         this.range = range;
         this.areaOfEffect = areaOfEffect;
         this.travelledDistance = 0;
+        this.type = 'projectile';
     }
 
     move(deltaTime) {

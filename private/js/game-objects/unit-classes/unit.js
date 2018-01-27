@@ -1,5 +1,6 @@
 const MovableGameObject = require("../movable-game-object")
 const Team = require("../../player-collections/team");
+const collision = require("../../utilities/collision");
 
 module.exports = class Unit extends MovableGameObject {
     constructor(
@@ -21,10 +22,11 @@ module.exports = class Unit extends MovableGameObject {
     }
 
     getHurt(projectile) {
-        this.health -= projectile.damage;
-        if (this.health < 1) {
-            this.onDie();
-        }
+        // this.health -= projectile.damage;
+        // if (this.health < 1) {
+        //     this.onDie();
+        // }
+        console.log('Hit by ' + projectile.type + ' ' + projectile.subType);
     }
 
     onDie() {
@@ -33,5 +35,19 @@ module.exports = class Unit extends MovableGameObject {
 
     showDeathAnimation() {
 
+    }
+
+    loop(deltaTime, currentTime){
+        super.loop(deltaTime, currentTime);
+        let collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
+        let i = collisions.length;
+        while(i--){
+            if(collisions[i].id == this.id || collisions[i].team == this.team){
+                continue;
+            }
+            if(collisions[i].type == 'projectile'){
+                this.getHurt(collisions[i]);
+            }
+        }
     }
 }
