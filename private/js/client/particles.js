@@ -58,11 +58,8 @@ class Particles {
         // Calculate the current time
         var elapsed = Date.now();
 
-        console.log('updatewwwwwwwwwwwwwww');
         // Update function every frame
         var update = function(){
-            console.log('update');
-
             // Update the next frame
             requestAnimationFrame(update);
 

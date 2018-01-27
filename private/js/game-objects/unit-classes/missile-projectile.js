@@ -1,5 +1,12 @@
 const MovableGameObject = require("../movable-game-object")
 
+const sprites = [
+    [300, 310],
+    [301, 311],
+    [302, 312],
+    [303, 313],
+];
+
 module.exports = class MissileProjectile extends MovableGameObject {
     constructor(game,
                 x,
@@ -7,7 +14,7 @@ module.exports = class MissileProjectile extends MovableGameObject {
                 xVelocity,
                 yVelocity,
                 unit) {
-        super(game, x, y, 0, 4);
+        super(game, x, y, 0, sprites[Math.floor(Math.random() * 4)][unit.team.id]);
         this.type = 'MissileProjectile';
         this.unit = unit;
         this.damage = 2;
@@ -19,12 +26,9 @@ module.exports = class MissileProjectile extends MovableGameObject {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
-        console.log(this.xVelocity, this.yVelocity);
 
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
-
-        console.log(collisions);
 
         while (i--) {
             if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.unit.team.id) {

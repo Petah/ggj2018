@@ -136,9 +136,7 @@ module.exports = class Game {
             let x = Math.random() * this.mapWidth;
             let y = Math.random() * this.mapHeight;
             let s = Math.floor(Math.random() * 4) + 130; // collision assets are in range 130 - 134
-            console.log('-------------------', x, y, i)
             this.gameObjects.push(new Collidable(this, x, y, s));
-
         }
     }
 
