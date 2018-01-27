@@ -8,7 +8,7 @@ const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
 const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
 const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
-const SatellitePart = require('../game-objects/powerups/satellite-part');
+const SatellitePart = require('../game-objects/satellite-part');
 const math = require('../utilities/math');
 const Collidable = require('../game-objects/collidlable');
 

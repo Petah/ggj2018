@@ -10,8 +10,9 @@ gulp.task('watch', ['default'], () => {
 
 gulp.task('default', () => {
     gulp.src([
-            './node_modules/pixi.js/dist/pixi.min.js',
-        ])
+        './node_modules/pixi.js/dist/pixi.min.js',
+        './node_modules/pixi-particles/dist/pixi-particles.min.js',
+    ])
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('public'))
 

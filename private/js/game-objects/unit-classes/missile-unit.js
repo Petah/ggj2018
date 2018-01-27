@@ -1,5 +1,6 @@
 const Unit = require("./unit");
-const MissileWeapon = require("./weapons/missile-weapon");
+const MissileProjectile = require('./missile-projectile');
+const math = require('../../utilities/math');
 
 const sprites = {
     up: [41, 51],
@@ -33,17 +34,23 @@ module.exports = class MissileUnit extends Unit {
             yVelocity,
             team
         );
-        this.weapon = new MissileWeapon(this.game, this);
         this.health = 10;
         this.collisionRadius = 80;
         this.type = 'Unit';
         this.subType = 'MissileUnit';
+        this.shootingCooldown = 0;
     }
-
-
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
+
+        if (this.shooting) {
+            if (this.shootingCooldown <= 0) {
+                this.game.gameObjects.push(new MissileProjectile(this.game, this.x, this.y, math.lengthDirX(1000, this.direction), math.lengthDirY(1000, this.direction), this));
+                this.shootingCooldown = 0.5;
+            }
+        }
+        this.shootingCooldown -= deltaTime;
     }
 }
