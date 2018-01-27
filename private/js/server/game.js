@@ -114,7 +114,8 @@ module.exports = class Game {
                 0,
                 3,
                 30,
-                10));
+                10,
+                100));
         } else if (randomPowerUp <= 0.8) {
             this.gameObjects.push(new SpeedPowerUp(
                 this,
@@ -123,7 +124,8 @@ module.exports = class Game {
                 0,
                 3,
                 30,
-                10));
+                10,
+                100));
         } else {
             this.gameObjects.push(new FauxPowerUp(
                 this,
