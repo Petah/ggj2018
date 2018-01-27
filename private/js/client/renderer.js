@@ -89,6 +89,8 @@ const assets = {
     702: '/images/bg-tiled-green-3.png',
     703: '/images/bg-tiled-green-4.png',
     704: '/images/bg-tiled-green-5.png',
+
+    800: '/images/white-circle.png',
 };
 
 const animations = {
@@ -334,9 +336,6 @@ class Renderer {
         this.sprites[id].y = y;
 
         let currentAnimationId = this.sprites[id].animationId;
-        if (moving) {
-            this.movingSprite = id;
-        }
 
         if (moving && this.animations[spriteAsset]) {
             if (currentAnimationId === spriteAsset) {
