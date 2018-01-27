@@ -143,15 +143,13 @@ class Renderer {
         this.sprites[id].rotation = direction * Math.PI / 180;
 
         let currentAnimationId = this.sprites[id].animationId;
-        let nextAnimationId = null;
         if (this.animations[spriteAsset]) {
-            nextAnimationId = spriteAsset;
-            if (currentAnimationId === nextAnimationId) {
+            if (currentAnimationId === spriteAsset) {
                 return null;
             }
 
             this.sprites[id].textures = this.animations[spriteAsset];
-            this.sprites[id].animationId = nextAnimationId;
+            this.sprites[id].animationId = spriteAsset;
             this.sprites[id].play();
         } else {
             this.sprites[id].textures = [this.textures[spriteAsset]];
