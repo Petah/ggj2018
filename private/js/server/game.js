@@ -77,9 +77,9 @@ module.exports = class Game {
     initTeams() {
         let t = this.teamAmount;
         while (t--) {
-	        let x = (((Math.round(teamValue + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
+	        let x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
 	        let y;
-	        if(teamValue <= 2) {
+	        if (t <= 2) {
 	            y =  (this.mapHeight * 0.05);
 	        } else {
 	            y = ((this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
