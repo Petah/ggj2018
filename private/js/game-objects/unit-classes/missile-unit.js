@@ -3,6 +3,13 @@ const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
 const collision = require("../../utilities/collision");
 const MissileWeapon = require("./weapons/missile-weapon");
 
+const sprites = {
+    up: [6, 10],
+    down: [5, 9],
+    left: [7, 11],
+    right: [8, 12],
+}
+
 module.exports = class MissileUnit extends Unit {
     constructor(
         game,
@@ -19,7 +26,7 @@ module.exports = class MissileUnit extends Unit {
             x,
             y,
             direction,
-            5,
+            sprites.up[team.id],
             xVelocity,
             yVelocity,
             team,
@@ -34,17 +41,13 @@ module.exports = class MissileUnit extends Unit {
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         if (this.direction >= 230 && this.direction <= 320) {
-            // Up
-            this.sprite = 6;
+            this.sprite = sprites.up[this.team.id];
         } else if (this.direction >= 140 && this.direction <= 230) {
-            // Left
-            this.sprite = 7;
+            this.sprite = sprites.left[this.team.id];
         } else if (this.direction >= 50 && this.direction <= 140) {
-            // Down
-            this.sprite = 5;
+            this.sprite = sprites.down[this.team.id];
         } else {
-            // Right
-            this.sprite = 8;
+            this.sprite = sprites.right[this.team.id];
         }
 
         // const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);

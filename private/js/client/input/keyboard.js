@@ -18,6 +18,13 @@ class Keyboard {
         } else if (Keyboard.buttons[39]) { // Right
             horizontalAxis = 1;
         }
+
+        // Tab
+        let switchUnit = false;
+        if (Keyboard.buttons[9]) {
+            switchUnit = true;
+        }
+
         this.game.client.send('updateInput', {
             id: this.player.id,
             move: {
@@ -25,6 +32,7 @@ class Keyboard {
                 y: verticalAxis,
             },
             shoot: Keyboard.buttons[32],
+            switchUnit: switchUnit,
         });
     }
 }
@@ -34,6 +42,7 @@ Keyboard.buttons = {};
 document.addEventListener('keydown', (event) => {
     // event.ctrlKey
     Keyboard.buttons[event.which] = true;
+    event.preventDefault();
     // switch (event.which) {
     //     case 38: { // Up
     //         this.upDown = true;
@@ -63,6 +72,7 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
     // event.ctrlKey
     Keyboard.buttons[event.which] = false;
+    event.preventDefault();
     // switch (event.which) {
     //     case 38: { // Up
     //         this.upDown = false;

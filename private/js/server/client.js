@@ -42,6 +42,9 @@ module.exports = class Client {
 
                 case 'updateInput': {
                     const player = this.players[message.data.id];
+                    if (message.data.switchUnit) {
+                        this.game.teams[0].nextUnit(player);
+                    }
                     if (player.unit) {
                         player.unit.accelerate(message.data.move.x, message.data.move.y);
                         if (message.data.shoot) {
