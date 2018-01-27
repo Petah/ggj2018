@@ -75,9 +75,7 @@ const assets = {
 
     209: '/images/satellite/satellite-complete.png',
 
-    700: '/images/bg-tiled-stones.jpg',
-    701: '/images/bg-tiled-green-1.jpg',
-    702: '/images/bg-tiled-green-2.png',
+    702: '/images/bg-tiled-green-3.png',
 };
 
 const animations = {
@@ -212,13 +210,13 @@ class Renderer {
         this.layers.background.addChild(this.sprites.background);
 
         // Init effects
-        const effects = new Effects(this.layers.background);
-        effects.spawnRandomOrbs(1, 200, [
-            0x379392,
-            0xE8F895,
-            0x8BAB78,
-            0xFFFFFF,
-        ]);
+        // const effects = new Effects(this.layers.background);
+        // effects.spawnRandomOrbs(1, 200, [
+        //     0x379392,
+        //     0xE8F895,
+        //     0x8BAB78,
+        //     0xFFFFFF,
+        // ]);
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);

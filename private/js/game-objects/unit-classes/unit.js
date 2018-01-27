@@ -19,17 +19,12 @@ module.exports = class Unit extends MovableGameObject {
         this.powerUp = null;
         this.powerUpTime = 0;
         this.shooting = false;
+        this.weapon = null;
     }
     
-    getHurt(projectile) {
-        // this.health -= projectile.damage;
-        // if (this.health < 1) {
-        //     this.onDie();
-        // }
-        console.log('Hit by ' + projectile.type + ' ' + projectile.subType);
-        this.health -= projectile.damage;
-        this.game.removeGameObject(projectile);
-        console.log('unit health ' + this.type + ' ' + this.subType + ' ' + this.health + ' ' + projectile.damage);
+    getHurt(object, damage) {
+        this.health -= damage;
+        this.game.removeGameObject(object);
         if (this.health <= 0) {
             this.game.removeGameObject(this);
         }
