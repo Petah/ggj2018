@@ -130,59 +130,20 @@ module.exports = class Game {
 
     spawnPowerUp() {
         console.log('spawnPowerUp');
+
         this.powerUpCooldown = 1;
-        let xLocation = Math.random() * (this.mapWidth * 0.8);
-        let yLocation = Math.random() * (this.mapHeight * 0.8);
+        const x = Math.random() * (this.mapWidth * 0.8);
+        const y = Math.random() * (this.mapHeight * 0.8);
 
-        let randomPowerUp = Math.random();
+        const types = [
+            // BulletHellPowerUp,
+            // ShieldPowerUp,
+            SpeedPowerUp,
+            // FauxPowerUp,
+        ];
 
-        if (randomPowerUp <= 0.2) {
-            this.gameObjects.push(new BulletHellPowerUp(this,
-                xLocation,
-                yLocation,
-                0,
-                100,
-                30,
-                5));
-        } else if (randomPowerUp <= 0.4) {
-            this.gameObjects.push(new FOVPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                101,
-                30,
-                10));
-        } else if (randomPowerUp <= 0.6) {
-            this.gameObjects.push(new ShieldPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                102,
-                30,
-                10,
-                100));
-        } else if (randomPowerUp <= 0.8) {
-            this.gameObjects.push(new SpeedPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                104,
-                30,
-                10,
-                100));
-        } else {
-            this.gameObjects.push(new FauxPowerUp(
-                this,
-                xLocation,
-                yLocation,
-                0,
-                104,
-                30,
-                10));
-        }
+        const powerUp = types[Math.floor(Math.random() * types.length)];
+        this.gameObjects.push(new powerUp(this, x, y));
     }
 
     removeGameObject(gameObject){

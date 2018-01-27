@@ -40,15 +40,17 @@ const assets = {
     70: '/images/tank2-front-0.png',
     71: '/images/tank2-back-0.png',
 
-    100: '/images/pickups/bold_silver.png',
-    101: '/images/pickups/bolt_bronze.png',
-    102: '/images/pickups/bolt_gold.png',
-    103: '/images/pickups/pill_blue.png',
-    104: '/images/pickups/pill_green.png',
-    105: '/images/pickups/pill_red.png',
-    106: '/images/pickups/pill_yellow.png',
-    107: '/images/pickups/powerupBlue_bolt.png',
-    108: '/images/pickups/powerupBlue_shield.png',
+    100: '/images/power-up-blue.png',
+    101: '/images/power-up-yellow.png',
+    102: '/images/power-up-blue.png',
+    103: '/images/power-up-blue.png',
+    104: '/images/power-up-blue.png',
+    105: '/images/power-up-yellow.png',
+    106: '/images/power-up-yellow.png',
+    107: '/images/power-up-yellow.png',
+    108: '/images/power-up-yellow.png',
+
+    120: '/images/spawning-pool.png',
 
     700: '/images/bg-tiled-stones.jpg',
 };
@@ -110,16 +112,19 @@ class Renderer {
         });
 
         // Init layers
-        this.layers.background = new    PIXI.Container();
+        this.layers.background = new PIXI.Container();
         this.renderer.stage.addChild(this.layers.background);
+
+        this.layers.map = new PIXI.Container();
+        this.renderer.stage.addChild(this.layers.map);
 
         this.layers.foreground = new PIXI.Container();
         this.renderer.stage.addChild(this.layers.foreground);
 
         // Init background
-        let texture = PIXI.Texture.fromImage(assets[700]);
-        this.sprites.background = new PIXI.extras.TilingSprite(texture, 9600, 3240);
-        this.sprites.background.setTransform(-4800, -1620);
+        const texture = PIXI.Texture.fromImage(assets[700]);
+        this.sprites.background = new PIXI.extras.TilingSprite(texture, 2000, 2000);
+        this.sprites.background.setTransform(0, 0);
         this.layers.background.addChild(this.sprites.background);
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
@@ -147,6 +152,7 @@ class Renderer {
     cameraPanAbsolute(x, y) {
         this.layers.foreground.setTransform(-x, -y);
         this.layers.background.setTransform(-x, -y);
+        this.layers.map.setTransform(-x, -y);
     }
 
     // cameraPanRelative(x, y) {
@@ -179,24 +185,14 @@ class Renderer {
         } else {
             sprite.stillId = spriteAsset;
         }
-
-        switch (layer) {
-            case 'background': {
-                this.layers.background.addChild(sprite);
-                break;
-            }
-            case 'foreground': {
-                this.layers.foreground.addChild(sprite);
-                break;
-            }
-        }
+        this.layers[layer].addChild(sprite);
 
         return sprite;
     }
 
-    moveSprite(id, x, y, direction, spriteAsset, moving) {
+    moveSprite(id, x, y, layer, spriteAsset, moving) {
         if (!this.sprites[id]) {
-            this.sprites[id] = this.createSprite(id, spriteAsset, x, y);
+            this.sprites[id] = this.createSprite(id, spriteAsset, x, y, 0.5, layer);
             return;
         }
 

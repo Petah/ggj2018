@@ -42,8 +42,8 @@ module.exports = class CollectorUnit extends Unit {
         this.timeToSteal = 3000;
         this.timeElapsed = 0;
         this.isStealing = false;
-        this.type = 'unit';
-        this.subType = 'collector';
+        this.type = 'Unit';
+        this.subType = 'CollectorUnit';
         this.collisionRadius = 55;
     }
 

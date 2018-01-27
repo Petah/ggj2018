@@ -8,14 +8,17 @@ module.exports = class Spawner extends GameObject {
         sprite,
         collisionRadius,
         team
-        ) {
-            super(game,
+    ) {
+        super(
+            game,
             x,
             y,
             direction,
-            sprite,
-            collisionRadius);
+            120,
+            collisionRadius,
+        );
 
         this.team = team;
+        this.layer = 'map';
     }
 }

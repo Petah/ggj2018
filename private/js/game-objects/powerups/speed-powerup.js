@@ -1,28 +1,29 @@
-const GameObject = require('../game-object');
+const PowerUp = require('./power-up');
 
-module.exports = class SpeedPowerUp extends GameObject {
+module.exports = class SpeedPowerUp extends PowerUp {
     constructor(
         game,
         x,
         y,
-        direction,
-        sprite,
-        collisionRadius,
-        duration,
-        speedIncrease
     ) {
-        super(game, x, y, direction, sprite, collisionRadius);
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-        this.sprite = sprite;
-        this.collisionRadius = collisionRadius;
-        this.duration = duration;
-        this.speedIncrease = speedIncrease;
+        super(game, x, y, 0, 100, 20);
+        this.duration = 5;
+        this.speedIncrease = 5;
         this.timeElapsed = 0;
         this.isActive = false;
         this.type = 'SpeedPowerUp';
+    }
+
+    loop(deltaTime, currentTime) {
+        super.loop(deltaTime, currentTime);
+
+        const collisions = this.game.collisions[this.id];
+        let c = collisions.length;
+        while (c--) {
+            if (collisions[c].type === 'Unit') {
+                this.game.removeGameObject(this);
+            }
+        }
     }
 
     onCollisionWithUnit(unit) {

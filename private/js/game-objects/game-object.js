@@ -19,6 +19,7 @@ module.exports = class GameObject {
         this.sprite = sprite;
         this.direction = direction;
         this.collisionRadius = 10;
+        this.layer = 'foreground';
     }
 
     loop(deltaTime, currentTime) {

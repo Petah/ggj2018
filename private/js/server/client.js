@@ -100,7 +100,7 @@ module.exports = class Client {
                     this.game.gameObjects[i].id,
                     this.game.gameObjects[i].x,
                     this.game.gameObjects[i].y,
-                    0,
+                    this.game.gameObjects[i].layer,
                     this.game.gameObjects[i].sprite,
                     this.game.gameObjects[i].moving
                 ]);
