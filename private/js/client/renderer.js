@@ -60,9 +60,33 @@ const animations = {
         '/animations/collector-front-walk-1.png',
         '/animations/collector-front-walk-2.png',
     ],
+    6: [
+        '/animations/collector-back-0.png',
+        '/animations/collector-back-1.png',
+    ],
     9: [
         '/animations/collector-front-walk-1.png',
         '/animations/collector-front-walk-2.png',
+    ],
+    10: [
+        '/animations/collector-back-0.png',
+        '/animations/collector-back-1.png',
+    ],
+    7: [
+        '/animations/collector-side-left-0.png',
+        '/animations/collector-side-left-1.png',
+        '/animations/collector-side-left-2.png',
+        '/animations/collector-side-left-3.png',
+        '/animations/collector-side-left-4.png',
+        '/animations/collector-side-left-5.png',
+    ],
+    8: [
+        '/animations/collector-side-0.png',
+        '/animations/collector-side-1.png',
+        '/animations/collector-side-2.png',
+        '/animations/collector-side-3.png',
+        '/animations/collector-side-4.png',
+        '/animations/collector-side-5.png',
     ],
     11: [
         '/animations/collector-side-left-0.png',
