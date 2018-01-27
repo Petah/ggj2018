@@ -8,6 +8,7 @@ module.exports = class MissileLauncher extends Weapon {
     }
 
     spawnProjectile(x, y, direction) {
-        this.game.gameObjects.push(new MissileProjectile(this.game, x, y, this.unit.direction));
+        console.log('missile weapon class ' + this.unit.id);
+        this.game.gameObjects.push(new MissileProjectile(this.game, x, y, this.unit.direction,this.unit));
     }
 }

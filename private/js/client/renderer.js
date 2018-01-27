@@ -59,12 +59,11 @@ const animations = {
 };
 
 class Renderer {
-    constructor(width = null, height = null, options = {}) {
+    constructor(gameContainer) {
         this.sprites = {};
         this.layers = {};
-        this.width = width || document.body.clientWidth;
-        this.height = height || document.body.clientHeight;
-        this.options = options;
+        this.width = document.body.clientWidth;
+        this.height = document.body.clientHeight;
 
         this.textures = {};
         for (let key in assets) {
@@ -80,6 +79,29 @@ class Renderer {
                 this.animations[key].push(PIXI.Texture.fromImage(frame));
             });
         }
+
+        this.renderer = new PIXI.Application({
+            width: this.width,
+            height: this.height,
+            // antialias: false,
+            // forceFXAA: false,
+        });
+
+        // Init layers
+        this.layers.background = new    PIXI.Container();
+        this.renderer.stage.addChild(this.layers.background);
+
+        this.layers.foreground = new PIXI.Container();
+        this.renderer.stage.addChild(this.layers.foreground);
+
+        // Init background
+        let texture = PIXI.Texture.fromImage(assets[700]);
+        this.sprites.background = new PIXI.extras.TilingSprite(texture, 9600, 3240);
+        this.sprites.background.setTransform(-4800, -1620);
+        this.layers.background.addChild(this.sprites.background);
+
+        window.addEventListener('resize', this.resizeViewport.bind(this));
+        gameContainer.appendChild(this.renderer.view);
     }
 
     cameraZoomAbsolute(zoom) {
@@ -116,20 +138,6 @@ class Renderer {
 
     resizeViewport() {
         this.renderer.renderer.resize(document.body.clientWidth, document.body.clientHeight);
-    }
-
-    getSprites() {
-        return this.sprites;
-    }
-
-    setSprites(sprites = {}) {
-        this.sprites = sprites;
-
-        return this;
-    }
-
-    getSprite(id) {
-        return this.sprites[id];
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
@@ -169,7 +177,8 @@ class Renderer {
 
         this.sprites[id].x = x;
         this.sprites[id].y = y;
-        this.sprites[id].rotation = direction * Math.PI / 180;
+        this.sprites[id].scale.x = 0.2;
+        this.sprites[id].scale.y = 0.2;
 
         let currentAnimationId = this.sprites[id].animationId;
         if (this.animations[spriteAsset]) {
@@ -202,70 +211,5 @@ class Renderer {
                 delete this.sprites[id];
             }
         }
-    }
-
-    getWidth() {
-        return this.width;
-    }
-
-    setWidth(width) {
-        this.width = width;
-
-        return this;
-    }
-
-    getHeight() {
-        return this.height;
-    }
-
-    setHeight(height) {
-        this.height = height;
-
-        return this;
-    }
-
-    getOptions() {
-        return this.options;
-    }
-
-    setOptions(options) {
-        this.options = options;
-
-        return this;
-    }
-
-    getRenderer() {
-        if (!this.renderer) {
-            this.renderer = new PIXI.Application(this.getWidth(), this.getHeight(), this.getOptions());
-
-            // Init layers
-            this.layers.background = new PIXI.Container();
-            this.renderer.stage.addChild(this.layers.background);
-
-            this.layers.foreground = new PIXI.Container();
-            this.renderer.stage.addChild(this.layers.foreground);
-
-            // Init background
-            let texture = PIXI.Texture.fromImage(assets[700]);
-            this.sprites.background = new PIXI.extras.TilingSprite(texture, 9600, 3240);
-            this.sprites.background.setTransform(-4800, -1620);
-            this.layers.background.addChild(this.sprites.background);
-
-            window.addEventListener('resize', this.resizeViewport.bind(this));
-        }
-
-        return this.renderer;
-    }
-
-    getView() {
-        return this.getRenderer().view;
-    }
-
-    getBackground() {
-        return this.layers.background;
-    }
-
-    getForeground() {
-        return this.layers.foreground;
     }
 }

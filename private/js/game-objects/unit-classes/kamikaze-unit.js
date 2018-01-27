@@ -19,6 +19,7 @@ module.exports = class KamikazeUnit extends Unit {
         xVelocity,
         yVelocity,
         team,
+        teamColor
     ) {
         super(
             game,
@@ -29,8 +30,10 @@ module.exports = class KamikazeUnit extends Unit {
             xVelocity,
             yVelocity,
             team,
+            teamColor,
         );
         this.type = 'KamikazeUnit';
+        this.health = 10;
     }
 
     attack() {

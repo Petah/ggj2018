@@ -19,7 +19,7 @@ module.exports = class MissileUnit extends Unit {
         sprite,
         xVelocity,
         yVelocity,
-        team,
+        team
     ) {
         super(
             game,
@@ -29,9 +29,10 @@ module.exports = class MissileUnit extends Unit {
             sprites.up[team.id],
             xVelocity,
             yVelocity,
-            team,
+            team
         );
         this.weapon = new MissileWeapon(this.game, this);
+        this.health = 10;
     }
 
     attack(direction) {

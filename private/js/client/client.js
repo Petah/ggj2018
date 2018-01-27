@@ -15,8 +15,7 @@ class Client {
 
         // Init renderer
         const gameContainer = document.getElementById('game');
-        const renderer = new Renderer();
-        gameContainer.appendChild(renderer.getView());
+        const renderer = new Renderer(gameContainer);
 
         // Init audio
         var audio = new Audio();

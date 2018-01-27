@@ -7,8 +7,11 @@ module.exports = class MissileProjectile extends Projectile {
         x,
         y,
         direction,
+        unit
     ) {
         const speed = 500;
         super(game, x, y, direction, 4, math.lengthDirX(speed, direction), math.lengthDirY(speed, direction));
+        this.subType = 'missile';
+        this.unit = unit;
     }
 }
