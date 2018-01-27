@@ -23,12 +23,16 @@ module.exports = class Projectile extends MovableGameObject {
     }
 
     move(deltaTime) {
-        deltaX = (xVelocity * deltaTime);
-        deltaY = (yVelocity * deltaTime);
+        let deltaX = (this.xVelocity * deltaTime);
+        let deltaY = (this.yVelocity * deltaTime);
         this.travelledDistance += Math.hypot(this.x, (this.x + deltaX), this.y, ((this.y + deltaY)));
 
-        if (travelledDistance > range) {
-            onCollisionWithNonDamageableGameObject(null);
+        console.log('deltax: ' + deltaX + ' deltay: ' + deltaY);
+        console.log('x: ' + this.x + ' y: ' + this.y);
+        console.log('distance travelled: ' + this.travelledDistance);
+
+        if (this.travelledDistance > this.range) {
+            this.onCollisionWithNonDamageableGameObject(null);
         } else {
             this.x += (this.xVelocity * deltaTime);
             this.y += (this.yVelocity * deltaTime);

@@ -1,5 +1,4 @@
 const Unit = require("./unit");
-const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
 
 const sprites = {
     up: [21, 31],
@@ -39,18 +38,40 @@ module.exports = class KamikazeUnit extends Unit {
         this.subType = 'KamikazeUnit';
         this.health = 10;
         this.collisionRadius = 80;
-    }
-
-    attack() {
-        this.game.gameObjects.push(new KamikazeProjectile(this.game, this.x, this.y, 0, 1));
-    }
-
-    onDie() {
-        this.attack();
+        this.timeUntilExplode = 0;
+        this.speedIncreased = false;
     }
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
+
+        if (this.shooting) {
+            if (!this.speedIncreased) {
+                this.speedIncreased = true;
+                this.timeUntilExplode = 1.5;
+                this.maxSpeed *= 2;
+            }
+        }
+
+        if (this.speedIncreased) {
+            this.timeUntilExplode -= deltaTime;
+            if (this.timeUntilExplode <= 0) {
+                console.log('called explode');
+                this.collisionRadius = 150;
+                this.explode();
+            }
+        }
+    }
+
+    explode() {
+        const collisions = this.game.collisions[this.id];
+        let i = collisions.length;
+        while (i--) {
+            console.log(collisions[i]);
+            if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
+                collisions[i].getHurt(this, 9000);
+            }
+        }
     }
 }

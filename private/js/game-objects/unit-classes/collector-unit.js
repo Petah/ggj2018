@@ -51,7 +51,7 @@ module.exports = class CollectorUnit extends Unit {
     }
 
     attack() {
-        this.attacking = true;
+        this.shooting = true;
         // if (this.canPickUpPart && !this.hasPart) {
         //     this.pickupPart();
         // }  else if (this.canStealFromStack && !this.hasPart) {

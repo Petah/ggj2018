@@ -33,6 +33,6 @@ module.exports = class Player {
         }
         
         let direction = Math.pointDirection(x, y, objectX, objectY);
-        console.log("Direction of closest Satellite parts: " + direction);
+        //console.log("Direction of closest Satellite parts: " + direction);
     }
 }
