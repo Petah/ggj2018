@@ -1,10 +1,13 @@
 class AudioBuffer {
     constructor(context) {
         this.context = context;
-        this.urls = [
-            '/sounds/shoot.wav',
-            '/sounds/button.wav',
-        ];
+        this.urls = {
+            'pickup-1': '/sounds/pickup-1.ogg',
+            'pickup-2': '/sounds/pickup-2.ogg',
+            'shoot-1': '/sounds/shoot-1.ogg',
+            'shoot-1': '/sounds/shoot-2.ogg',
+            'button': '/sounds/button.ogg',
+        };
         this.buffer = [];
     }
 
@@ -23,9 +26,9 @@ class AudioBuffer {
     }
 
     loadAll() {
-        this.urls.forEach((url, index) => {
-            this.loadSound(url, index);
-        });
+        for (let key in this.urls) {
+            this.loadSound(this.urls[key], key);
+        }
     }
 
     getSoundByIndex(index) {
