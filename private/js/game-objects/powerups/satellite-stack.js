@@ -16,13 +16,13 @@ class SatelliteStack extends GameObject {
 
     addPart(team) {
         if (this.currentSize++ === this.maxSize) {
-            new Satellite(this.game,
+            this.game.gameObjects.push(new Satellite(this.game,
                 this.x,
                 this.y,
                 this.direction,
                 'satellite-sprite-path',
                 this.collisionRadius,
-                team);
+                team));
         } else {
             this.sprite++;
         }

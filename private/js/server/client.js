@@ -84,7 +84,9 @@ module.exports = class Client {
             canPickUp: false,
             hasPart: false,
             isStealing: false,
-            stealType: null
+            stealType: null,
+            gameOver: false,
+            winningTeam: null
         };
 
         const padding = 200;
@@ -119,6 +121,11 @@ module.exports = class Client {
 
             if (this.game.gameObjects[i].part !== null) {
                 hud.hasPart = true;
+            }
+
+            if (this.game.gameObjects[i].winningTeam !== null) {
+                hud.gameOver = true;
+                hud.winningTeam = this.game.gameObjects[i].winningTeam;
             }
         }
         this.send('hud', hud);
