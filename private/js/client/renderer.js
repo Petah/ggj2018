@@ -4,13 +4,13 @@ const assets = {
     3: '/images/placeholder3.jpg',
     4: '/images/placeholder4.png',
 
-    5: '/animations/collector-front-walk-1.png',
+    5: '/animations/collector-front-0.png',
     6: '/animations/collector-back-0.png',
     7: '/animations/collector-side-left-5.png',
     8: '/animations/collector-side-5.png',
 
     9: '/animations/collector2-front-0.png',
-    10: '/animations/collector2-back-1.png',
+    10: '/animations/collector2-back-0.png',
     11: '/animations/collector2-side-left-5.png',
     12: '/animations/collector2-side-5.png',
 
@@ -36,13 +36,13 @@ const assets = {
 
     60: '/animations/tank-front-0.png',
     61: '/animations/tank-back-0.png',
-    62: '/animations/tank-left-1.png',
-    63: '/animations/tank-right-1.png',
+    62: '/animations/tank-side-0.png',
+    63: '/animations/tank-side-left-0.png',
 
     70: '/animations/tank2-front-0.png',
     71: '/animations/tank2-back-0.png',
-    72: '/animations/tank2-left-1.png',
-    73: '/animations/tank2-right-1.png',
+    72: '/animations/tank2-side-0.png',
+    73: '/animations/tank2-side-left-0.png',
 
     100: '/images/power-up-blue.png',
     101: '/images/power-up-yellow.png',
@@ -83,8 +83,8 @@ const assets = {
 const animations = {
     // Collector
     5: [
-        '/animations/collector-front-walk-1.png',
-        '/animations/collector-front-walk-2.png',
+        '/animations/collector-front-0.png',
+        '/animations/collector-front-1.png',
     ],
     6: [
         '/animations/collector-back-0.png',
@@ -95,8 +95,8 @@ const animations = {
         '/animations/collector2-front-1.png',
     ],
     10: [
+        '/animations/collector2-back-0.png',
         '/animations/collector2-back-1.png',
-        '/animations/collector2-back-2.png',
     ],
     7: [
         '/animations/collector-side-left-0.png',
@@ -115,6 +115,7 @@ const animations = {
         '/animations/collector-side-5.png',
     ],
     11: [
+        '/animations/collector2-side-left-0.png',
         '/animations/collector2-side-left-1.png',
         '/animations/collector2-side-left-2.png',
         '/animations/collector2-side-left-3.png',
@@ -140,12 +141,12 @@ const animations = {
         '/animations/tank-back-2.png',
     ],
     62: [
-        '/animations/tank-left-1.png',
-        '/animations/tank-left-2.png',
+        '/animations/tank-side-0.png',
+        '/animations/tank-side-1.png',
     ],
     63: [
-        '/animations/tank-right-1.png',
-        '/animations/tank-right-2.png',
+        '/animations/tank-side-left-0.png',
+        '/animations/tank-side-left-1.png',
     ],
     70: [
         '/animations/tank2-front-1.png',
@@ -156,12 +157,12 @@ const animations = {
         '/animations/tank2-back-2.png',
     ],
     72: [
-        '/animations/tank2-left-1.png',
-        '/animations/tank2-left-2.png',
+        '/animations/tank2-side-0.png',
+        '/animations/tank2-side-1.png',
     ],
     73: [
-        '/animations/tank2-right-1.png',
-        '/animations/tank2-right-2.png',
+        '/animations/tank2-side-left-0.png',
+        '/animations/tank2-side-left-1.png',
     ],
 };
 
@@ -205,7 +206,7 @@ class Renderer {
         this.renderer.stage.addChild(this.layers.foreground);
 
         // Init background
-        const texture = PIXI.Texture.fromImage(assets[700]);
+        const texture = PIXI.Texture.fromImage(assets[702]);
         this.sprites.background = new PIXI.extras.TilingSprite(texture, 2000, 2000);
         this.sprites.background.setTransform(0, 0);
         this.layers.background.addChild(this.sprites.background);

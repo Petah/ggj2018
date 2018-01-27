@@ -4,12 +4,12 @@ const TankWeapon = require('./weapons/tank-weapon');
 const sprites = {
     up: [61, 71],
     down: [60, 70],
-    left: [62, 72],
-    right: [63, 73],
+    left: [63, 73],
+    right: [62, 72],
     upMove: [61, 71],
     downMove: [60, 70],
-    leftMove: [62, 72],
-    rightMove: [63, 73],
+    leftMove: [63, 73],
+    rightMove: [62, 72],
 };
 
 module.exports = class TankUnit extends Unit {
