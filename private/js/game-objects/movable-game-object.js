@@ -33,7 +33,13 @@ module.exports = class extends GameObject {
         if (this.xVelocity > this.maxSpeed) {
             this.xVelocity = this.maxSpeed;
         }
+        if (this.xVelocity < -this.maxSpeed) {
+            this.xVelocity = -this.maxSpeed;
+        }
         if (this.yVelocity > this.maxSpeed) {
+            this.yVelocity = this.maxSpeed;
+        }
+        if (this.yVelocity < -this.maxSpeed) {
             this.yVelocity = this.maxSpeed;
         }
 
