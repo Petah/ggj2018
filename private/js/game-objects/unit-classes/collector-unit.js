@@ -7,6 +7,10 @@ const sprites = {
     down: [5, 9],
     left: [7, 11],
     right: [8, 12],
+    upMove: [],
+    downMove: [9, 9],
+    leftMove: [],
+    rightMove: [],
 };
 
 module.exports = class CollectorUnit extends Unit {

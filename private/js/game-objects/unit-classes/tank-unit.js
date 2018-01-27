@@ -5,6 +5,10 @@ const sprites = {
     down: [60, 70],
     left: [62, 72],
     right: [63, 73],
+    upMove: [],
+    downMove: [],
+    leftMove: [],
+    rightMove: [],
 };
 
 module.exports = class TankUnit extends Unit {

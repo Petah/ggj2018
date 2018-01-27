@@ -8,6 +8,10 @@ const sprites = {
     down: [40, 50],
     left: [42, 52],
     right: [43, 53],
+    upMove: [],
+    downMove: [],
+    leftMove: [],
+    rightMove: [],
 };
 
 module.exports = class MissileUnit extends Unit {
