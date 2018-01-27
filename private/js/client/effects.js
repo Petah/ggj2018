@@ -18,8 +18,8 @@ class Effects {
 
         let circles = [];
         let radiusGroups = [
-            [0.5, 1.5, 50],
-            [0.25, 0.5, 250],
+            [0.5, 1, 80],
+            [0.25, 0.5, 320],
         ];
 
         radiusGroups.map((group) => {
@@ -27,18 +27,19 @@ class Effects {
                 let circle = PIXI.Sprite.fromImage(assetId);
                 
                 circle.scaleMin = group[0];
-                circle.scaleMax = group[0];
+                circle.scaleMax = group[1];
 
                 circle.x = Math.random() * 2000;
                 circle.y = Math.random() * 2000;
                 circle.anchor.set(0.5);
                 circle.scale.set(this.getRandomBetweenLimit(circle.scaleMin, circle.scaleMax));
+                circle.alpha = this.getRandomBetweenLimit(0.25, 0.75);
 
                 circle.tint = colors[Math.floor(Math.random() * colors.length)];
 
                 circle.direction = Math.random() * Math.PI * 2;
                 circle.turningSpeed = Math.random() - 0.8;
-                circle.speed = (2 + Math.random() * 2) * 0.2;
+                circle.speed = (2 + Math.random() * 2) * 0.05;
                 circle.offset = Math.random() * 500;
 
                 circles.push(circle);
