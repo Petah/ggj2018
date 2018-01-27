@@ -18,6 +18,8 @@ module.exports = class Game {
 
         this.mapWidth = 10000;
         this.mapHeight = 10000;
+
+        this.powerUpCooldown = 0;
     }
 
     start() {
@@ -68,7 +70,8 @@ module.exports = class Game {
         }
         this.server.loop(deltaTime, currentTime);
 
-        if(Math.round(currentTime) % 20 === 0) {
+        this.powerUpCooldown -= deltaTime;
+        if (this.powerUpCooldown <= 0) {
             this.spawnPowerUp();
         }
     }
@@ -85,13 +88,13 @@ module.exports = class Game {
     initTeams() {
         let t = this.teamAmount;
         while (t--) {
-	        let x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
-	        let y;
-	        if (t <= 2) {
-	            y =  (this.mapHeight * 0.05);
-	        } else {
-	            y = ((this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
-	        }
+            let x = (((Math.round(t + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
+            let y;
+            if (t <= 2) {
+                y = (this.mapHeight * 0.05);
+            } else {
+                y = ((this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
+            }
             const spawner = new Spawner(
                 this,
                 x,
@@ -116,6 +119,8 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
+        console.log('spawnPowerUp');
+        this.powerUpCooldown = 20;
         let xLocation = Math.random() * (this.mapWidth * 0.8);
         let yLocation = Math.random() * (this.mapHeight * 0.8);
 

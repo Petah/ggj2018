@@ -24,26 +24,6 @@ module.exports = class BulletHellPowerUp extends GameObject {
         this.startTime = -1;
     }
 
-    loop(deltaTime, currentTime) {
-        super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
-        let i = collisions.length;
-        while (i--) {
-            if (collisions[i].id !== this.id) {
-                switch(collisions[i].type) {
-                    case 'Unit':
-                        this.onCollisionWithUnit(collisions[i]);
-                        this.startTime = currentTime;
-                        break;
-                }
-            }
-        }
-
-        if(this.startTime + this.duration >= currentTime) {
-
-        }
-    }
-
     onCollisionWithUnit(unit) {
         let currentFireRate = unit.weapon.fireRate;
         unit.weapon.fireRate = 1;

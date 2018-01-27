@@ -26,32 +26,6 @@ module.exports = class SpeedPowerUp extends GameObject {
         this.type = 'SpeedPowerUp';
     }
 
-    loop(deltaTime, currentTime) {
-        super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
-        let i = collisions.length;
-        while (i--) {
-            if (collisions[i].id !== this.id) {
-                switch(collisions[i].type) {
-                    case 'Unit':
-                        this.unit = collisions[i];
-                        this.onCollisionWithUnit(this.unit);
-                        break;
-                }
-            }
-        }
-
-        if (this.isActive) {
-            this.timeElapsed+=deltaTime;
-            if (this.timeElapsed >= this.duration) {
-                this.unit.xVelocity -= this.speedIncrease;
-                this.unit.yVelocity -= this.speedIncrease;
-                this.isActive = false;
-            }
-        }
-
-    }
-
     onCollisionWithUnit(unit) {
         if (!this.isActive) {
             this.isActive = true;

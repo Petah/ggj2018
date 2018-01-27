@@ -24,21 +24,6 @@ module.exports = class ShieldPowerUp extends GameObject {
         this.type = 'ShieldPowerUp';
     }
 
-    loop(deltaTime, currentTime) {
-        super.loop(deltaTime, currentTime);
-        const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
-        let i = collisions.length;
-        while (i--) {
-            if (collisions[i].id !== this.id) {
-                switch(collisions[i].type) {
-                    case 'Unit':
-                        this.onCollisionWithUnit(collisions[i]);
-                        break;
-                }
-            }
-        }
-    }
-
     onCollisionWithUnit(unit) {
         unit.health += this.healthIncrease;
     }
