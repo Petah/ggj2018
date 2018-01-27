@@ -202,6 +202,7 @@ class Renderer {
         sprite.animationSpeed = 0.25;
         sprite.x = x;
         sprite.y = y;
+        sprite.layer = layer;
 
         if (this.animations[spriteAsset]) {
             sprite.animationId = spriteAsset;
@@ -259,8 +260,10 @@ class Renderer {
             }
             if (!found) {
                 console.log('Removing sprite', id);
-                this.layers.foreground.removeChild(this.sprites[id]);
-                delete this.sprites[id];
+                if (this.sprites[id].layer) {
+                    this.layers[this.sprites[id].layer].removeChild(this.sprites[id]);
+                    delete this.sprites[id];
+                }
             }
         }
     }

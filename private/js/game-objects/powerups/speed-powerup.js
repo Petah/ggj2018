@@ -6,11 +6,9 @@ module.exports = class SpeedPowerUp extends PowerUp {
         x,
         y,
     ) {
-        super(game, x, y, 0, 100, 20);
+        super(game, x, y, 0, 100, 10);
         this.duration = 5;
-        this.speedIncrease = 5;
-        this.timeElapsed = 0;
-        this.isActive = false;
+        this.speedMultiplier = 2;
         this.type = 'SpeedPowerUp';
     }
 
@@ -21,7 +19,16 @@ module.exports = class SpeedPowerUp extends PowerUp {
         let c = collisions.length;
         while (c--) {
             if (collisions[c].type === 'Unit') {
-                this.game.removeGameObject(this);
+                if (!collisions[c].powerUp) {
+                    const oldMaxSpeed = collisions[c].maxSpeed;
+                    collisions[c].maxSpeed = collisions[c].maxSpeed * this.speedMultiplier;
+                    collisions[c].powerUpTime = this.duration;
+                    collisions[c].powerUp = () => {
+                        collisions[c].maxSpeed = oldMaxSpeed;
+                    };
+                    this.game.removeGameObject(this);
+                    return;
+                }
             }
         }
     }
