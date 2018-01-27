@@ -1,6 +1,7 @@
 const logger = require('./logger')(__filename);
 const Server = require('./server');
 const MovableGameObject = require('../game-objects/movable-game-object');
+const BulletHellPowerUp = require('../game-objects/powerups/bullet-hell-powerup');
 const Team = require('../player-collections/team');
 
 module.exports = class Game {
@@ -62,7 +63,7 @@ module.exports = class Game {
         this.teams = [];
 
         this.initTeams();
-        this.initializeMapObjects();
+        // this.initializeMapObjects();
     }
 
     initTeams() {
@@ -71,7 +72,7 @@ module.exports = class Game {
             this.teams.push(new Team(this));
         }
     }
-    
+
     initializeMapObjects() {
         this.gameObjects.push(new BulletHellPowerUp(this,
             this.mapWidth/2,
