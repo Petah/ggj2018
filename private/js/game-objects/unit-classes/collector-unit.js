@@ -125,7 +125,7 @@ module.exports = class CollectorUnit extends Unit {
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
                         this.game.removeGameObject(this.collectUnit);
-                        this.hasPart = true;
+                        this.hasPart = this.collectUnit.sprite;
                         this.collectState = null;
                         this.collectUnit = null;
                     }
@@ -145,6 +145,7 @@ module.exports = class CollectorUnit extends Unit {
                                 this.y,
                                 this.team,
                             );
+                            stack.addPart(this.hasPart);
                             this.game.gameObjects.push(stack);
                         }
 
@@ -223,26 +224,26 @@ module.exports = class CollectorUnit extends Unit {
         this.accelerate(0, 1);
     }
 
-    pickupPart() {
-        if (!this.pickingUp) {
+    // pickupPart() {
+    //     if (!this.pickingUp) {
 
-        }
-        this.hasPart = true;
-        this.canPickUpPart = false;
-        this.game.removeGameObject(this.part);
-        this.part = null;
-    }
+    //     }
+    //     this.hasPart = true;
+    //     this.canPickUpPart = false;
+    //     this.game.removeGameObject(this.part);
+    //     this.part = null;
+    // }
 
-    placePart() {
-        if (this.team.satelliteStack === null) {
-            this.team.satelliteStack = new SatelliteStack(
-                this.game,
-                this.x,
-                this.y,
-            );
-            this.game.gameObjects.push(this.team.satelliteStack);
-        } else if (this.canAddToStack) {
-            this.team.satelliteStack.addPart(this.team);
-        }
-    }
+    // placePart() {
+    //     if (this.team.satelliteStack === null) {
+    //         this.team.satelliteStack = new SatelliteStack(
+    //             this.game,
+    //             this.x,
+    //             this.y,
+    //         );
+    //         this.game.gameObjects.push(this.team.satelliteStack);
+    //     } else if (this.canAddToStack) {
+    //         this.team.satelliteStack.addPart(this.team);
+    //     }
+    // }
 }

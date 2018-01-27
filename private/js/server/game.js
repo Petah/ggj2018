@@ -123,12 +123,11 @@ module.exports = class Game {
 
     spawnSatelliteParts() {
         let i = 0;
-        while (i < 4) {
-            i++;
+        while (i < 3) {
             let x = Math.random() * this.mapWidth;
             let y = Math.random() * this.mapHeight;
-            this.gameObjects.push(new SatellitePart(this, x, y));
-            console.log('spawing part at: ' + x + ' ' + y);
+            this.gameObjects.push(new SatellitePart(this, x, y, i));
+            i++;
         }
     }
 

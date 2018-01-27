@@ -5,8 +5,10 @@ module.exports = class SatellitePart extends GameObject {
         game,
         x,
         y,
+        number,
     ) {
-        super(game, x, y, 0, 1, 5);
+        console.log('---------',200 + number);
+        super(game, x, y, 0, 200 + number, 5);
         this.type = 'SatellitePart';
         this.layer = 'map';
     }

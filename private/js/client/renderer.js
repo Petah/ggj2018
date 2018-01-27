@@ -52,6 +52,20 @@ const assets = {
 
     120: '/images/spawning-pool.png',
 
+    200: '/images/satellite/collect-satellite-antenna.png',
+    201: '/images/satellite/collect-satellite-dish.png',
+    202: '/images/satellite/collect-satellite-frame.png',
+
+    203: '/images/satellite/satellite-antenna-placed.png',
+    204: '/images/satellite/satellite-dish-placed.png',
+    205: '/images/satellite/satellite-frame-placed.png',
+
+    206: '/images/satellite/satellite-antenna-frame.png',
+    207: '/images/satellite/satellite-dish-frame.png',
+    208: '/images/satellite/satellite-dish-antenna.png',
+
+    209: '/images/satellite/satellite-complete.png',
+
     700: '/images/bg-tiled-stones.jpg',
 };
 
