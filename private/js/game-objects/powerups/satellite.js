@@ -31,8 +31,8 @@ Satellite = class extends GameObject{
 
         while (i--) {
             if (collisions[i].id !== this.id) {
-                switch (collisions[i].type) {
-                    case 'CollectorUnit':
+                switch (collisions[i].subType) {
+                    case 'collector':
                         noCollisions = false;
                         unit = collisions[i];
                         this.onCollisionWithUnit(unit);

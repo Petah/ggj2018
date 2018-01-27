@@ -5,6 +5,7 @@ module.exports = class MissileLauncher extends Weapon {
     constructor(game, unit) {
         super(game, unit)
         this.audioClip = 'shoot-1';
+        this.damage = 5;
     }
 
     spawnProjectile(x, y, direction) {
