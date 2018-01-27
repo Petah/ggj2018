@@ -10,6 +10,7 @@ const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
 const SatellitePart = require('../game-objects/powerups/satellite-part');
 const math = require('../utilities/math');
+const Collidable = require('../game-objects/collidlable');
 
 module.exports = class Game {
     constructor() {
@@ -94,6 +95,7 @@ module.exports = class Game {
 
         this.initTeams();
         this.spawnSatelliteParts();
+        this.spawnObstacles();
         // this.initializeMapObjects();
     }
 
@@ -120,17 +122,29 @@ module.exports = class Game {
         }
     }
 
-
     spawnSatelliteParts() {
         for (let i = 0; i < 3; i++) {
             let x = Math.random() * this.mapWidth;
             let y = Math.random() * this.mapHeight;
-            console.log('-------------------', x, y, i)
             this.gameObjects.push(new SatellitePart(this, x, y, i));
         }
     }
 
+    spawnObstacles(){
+        let i = 10;
+        while(i--){
+            let x = Math.random() * this.mapWidth;
+            let y = Math.random() * this.mapHeight;
+            let s = Math.floor(Math.random() * 4) + 130; // collision assets are in range 130 - 134
+            console.log('-------------------', x, y, i)
+            this.gameObjects.push(new Collidable(this, x, y, s));
+
+        }
+    }
+
     spawnPowerUp() {
+        console.log('spawnPowerUp');
+
         this.powerUpCooldown = 20;
         const x = Math.random() * (this.mapWidth * 0.8);
         const y = Math.random() * (this.mapHeight * 0.8);
@@ -143,6 +157,17 @@ module.exports = class Game {
         ];
 
         const powerUp = types[Math.floor(Math.random() * types.length)];
+        const type = new powerUp().type;
+
+        let g = this.gameObjects.length;
+        while (g--) {
+            if (this.gameObjects[g].type === type) {
+                console.log('power up already exists');
+                return;
+            }
+        }
+
+        console.log('power up create');
         this.gameObjects.push(new powerUp(this, x, y));
     }
 

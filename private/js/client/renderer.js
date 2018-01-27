@@ -75,9 +75,10 @@ const assets = {
 
     209: '/images/satellite/satellite-complete.png',
 
-    700: '/images/bg-tiled-stones.jpg',
-    701: '/images/bg-tiled-green-1.jpg',
-    702: '/images/bg-tiled-green-2.png',
+    701: '/images/bg-tiled-green-2.png',
+    702: '/images/bg-tiled-green-3.png',
+    703: '/images/bg-tiled-green-4.png',
+    704: '/images/bg-tiled-green-5.png',
 };
 
 const animations = {
@@ -206,22 +207,38 @@ class Renderer {
         this.renderer.stage.addChild(this.layers.foreground);
 
         // Init background
-        const texture = PIXI.Texture.fromImage(assets[702]);
-        this.sprites.background = new PIXI.extras.TilingSprite(texture, 2000, 2000);
-        this.sprites.background.setTransform(0, 0);
-        this.layers.background.addChild(this.sprites.background);
+        // let background1 = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage(assets[702]), 2000, 2000);
+        // background1.setTransform(0, 0);
+        // this.layers.background.addChild(background1);
+
+        this.createBackground(701, 0.005);
+        this.createBackground(704, -0.003);
+        this.createBackground(703, 0.003);
 
         // Init effects
-        const effects = new Effects(this.layers.background);
-        effects.spawnRandomOrbs(1, 200, [
-            0x379392,
-            0xE8F895,
-            0x8BAB78,
-            0xFFFFFF,
-        ]);
+        // const effects = new Effects(this.layers.background);
+        // effects.spawnRandomOrbs(1, 200, [
+        //     0x379392,
+        //     0xE8F895,
+        //     0x8BAB78,
+        //     0xFFFFFF,
+        // ]);
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);
+    }
+
+    createBackground(asset, step) {
+        let background2 = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage(assets[asset]), 4000, 4000);
+        let x = -1000;
+        let y = -1000;
+        let i = 0;
+        background2.setTransform(x + Math.sin(i) * 200, y + Math.cos(i) * 200);
+        window.setInterval(() => {
+            i += step * Math.random();
+            background2.setTransform(x + Math.sin(i) * 200, y + Math.cos(i) * 200);
+        }, 1000 / 60);
+        this.layers.background.addChild(background2);
     }
 
     cameraZoomAbsolute(zoom) {
