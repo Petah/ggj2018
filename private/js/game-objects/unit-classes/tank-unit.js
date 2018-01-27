@@ -1,5 +1,12 @@
 const Unit = require("./unit");
 
+const sprites = {
+    up: [61, 71],
+    down: [60, 70],
+    left: [62, 72],
+    right: [63, 73],
+};
+
 module.exports = class TankUnit extends Unit {
     constructor(
         game,
@@ -23,5 +30,18 @@ module.exports = class TankUnit extends Unit {
         );
         // this.weapon = new TankWeapon(this.game, this);
         this.health = 100;
+    }
+
+    loop(deltaTime, currentTime) {
+        super.loop(deltaTime, currentTime);
+        this.updateSprite(sprites);
+    }
+
+    updateSprite(sprites) {
+        if (this.direction >= 181) {
+            this.sprite = sprites.up[this.team.id];
+        } else {
+            this.sprite = sprites.down[this.team.id];
+        }
     }
 }

@@ -1,6 +1,13 @@
 const Unit = require("./unit");
 const collision = require("../../utilities/collision");
 
+const sprites = {
+    up: [6, 10],
+    down: [5, 9],
+    left: [7, 11],
+    right: [8, 12],
+};
+
 module.exports = class CollectorUnit extends Unit {
     constructor(
         game,
@@ -39,6 +46,7 @@ module.exports = class CollectorUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
+        this.updateSprite(sprites);
 
         this.part = null;
         const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);

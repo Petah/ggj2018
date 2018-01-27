@@ -4,11 +4,11 @@ const collision = require("../../utilities/collision");
 const MissileWeapon = require("./weapons/missile-weapon");
 
 const sprites = {
-    up: [6, 10],
-    down: [5, 9],
-    left: [7, 11],
-    right: [8, 12],
-}
+    up: [41, 51],
+    down: [40, 50],
+    left: [42, 52],
+    right: [43, 53],
+};
 
 module.exports = class MissileUnit extends Unit {
     constructor(
@@ -40,15 +40,7 @@ module.exports = class MissileUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
-        if (this.direction >= 230 && this.direction <= 320) {
-            this.sprite = sprites.up[this.team.id];
-        } else if (this.direction >= 140 && this.direction <= 230) {
-            this.sprite = sprites.left[this.team.id];
-        } else if (this.direction >= 50 && this.direction <= 140) {
-            this.sprite = sprites.down[this.team.id];
-        } else {
-            this.sprite = sprites.right[this.team.id];
-        }
+        this.updateSprite(sprites);
 
         // const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
         // let i = collisions.length;

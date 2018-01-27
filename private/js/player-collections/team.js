@@ -7,19 +7,21 @@ module.exports = class Team {
     constructor(
         game,
         id,
+        spawner,
     ) {
         this.game = game;
         this.id = id;
+        this.spawner = spawner;
         this.players = [];
         this.satelliteParts = 0;
         this.units = [];
         this.nextUnitIndex = 0;
 
-        this.createUnit(new CollectorUnit(this.game, 500 + id * 100, 500, 0, 2, 0, 0, this));
-        this.createUnit(new MissileUnit(this.game, 500 + id * 100, 600, 0, 2, 0, 0, this));
-        this.createUnit(new KamikazeUnit(this.game, 500 + id * 100, 700, 0, 2, 0, 0, this));
-        this.createUnit(new TankUnit(this.game, 500 + id * 100, 800, 0, 2, 0, 0, this));
-            this.hasPart = false;
+        this.createUnit(new CollectorUnit(this.game, spawner.x - 100, spawner.y, 0, 2, 0, 0, this));
+        this.createUnit(new MissileUnit(this.game, spawner.x + 100, spawner.y, 0, 2, 0, 0, this));
+        this.createUnit(new KamikazeUnit(this.game, spawner.x, spawner.y - 100, 0, 2, 0, 0, this));
+        this.createUnit(new TankUnit(this.game, spawner.x, spawner.y + 100, 0, 2, 0, 0, this));
+        this.hasPart = false;
     }
 
     createUnit(unit) {
