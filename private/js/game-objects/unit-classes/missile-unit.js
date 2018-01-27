@@ -33,6 +33,7 @@ module.exports = class MissileUnit extends Unit {
         );
         this.weapon = new MissileWeapon(this.game, this);
         this.health = 10;
+        this.collisionRadius = 80;
     }
 
     attack(direction) {

@@ -34,6 +34,7 @@ module.exports = class KamikazeUnit extends Unit {
         );
         this.type = 'KamikazeUnit';
         this.health = 10;
+        this.collisionRadius = 80;
     }
 
     attack() {

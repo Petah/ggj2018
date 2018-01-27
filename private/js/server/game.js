@@ -15,6 +15,7 @@ module.exports = class Game {
         this.teamAmount = 2;
         this.teams = [];
         this.gameObjects = [];
+        this.gameObjectsToRemove = [];
 
         this.mapWidth = 10000;
         this.mapHeight = 10000;
@@ -44,7 +45,13 @@ module.exports = class Game {
             }
 
             this.loop(deltaTime, this.currentTime);
+            if(this.gameObjectsToRemove.length >0){
+                console.log(this.gameObjectsToRemove);
+                this.gameObjects = this.gameObjects.filter(gameObject => this.gameObjectsToRemove.indexOf(gameObject.id) === -1);
+                this.gameObjectsToRemove = [];
+            }
             this.id = setImmediate(gameLoop);
+
         };
         this.id = setImmediate(gameLoop);
     }
@@ -119,7 +126,6 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
-        console.log('spawnPowerUp');
         this.powerUpCooldown = 20;
         let xLocation = Math.random() * (this.mapWidth * 0.8);
         let yLocation = Math.random() * (this.mapHeight * 0.8);
@@ -173,6 +179,10 @@ module.exports = class Game {
                 30,
                 10));
         }
+    }
+
+    removeGameObject(gameObject){
+        this.gameObjectsToRemove.push(gameObject.id);
     }
 
     playAudioAtPoint(audioClip, x, y) {
