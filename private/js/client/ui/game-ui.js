@@ -12,11 +12,15 @@ class GameUi {
         }
 
         if (this.data.isStealing) {
-            this.hud.innerHTML= `Stealing ${this.data.stealType}!`
+            this.hud.innerHTML= `Stealing ${this.data.stealType}!`;
         }
 
         if (this.data.hasPart) {
-            this.hud.innerHTML = `Carrying part`
+            this.hud.innerHTML = `Carrying part`;
+        }
+
+        if (this.data.gameOver) {
+            this.hud.innerHTML = `Game over: ${this.hud.winningTeam} wins!`;
         }
     }
 
