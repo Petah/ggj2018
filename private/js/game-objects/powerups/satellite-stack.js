@@ -1,23 +1,19 @@
 const GameObject = require('../game-object');
+const SatelliteDish = require('private/js/game-objects/powerups/satellite');
 const collision = require("../../utilities/collision");
+const Satellite = require('satellite');
 
-module.exports = class FOVPowerUp extends GameObject {
+class SatellitePart extends GameObject {
     constructor(
         game,
         x,
         y,
         direction,
         sprite,
-        collisionRadius,
-        duration,
-        increase
+        collisionRadius
     ) {
         super(game, x, y, direction, sprite, collisionRadius);
-        this.duration = duration;
-        this.increase = increase;
-        this.timeElapsed = 0;
-        this.isActive = false;
-        this.type = 'FOVPowerUp';
+        this.type = 'SatellitePart';
     }
 
     loop(deltaTime, currentTime) {
@@ -28,23 +24,24 @@ module.exports = class FOVPowerUp extends GameObject {
             if (collisions[i].id !== this.id) {
                 switch(collisions[i].type) {
                     case 'Unit':
-                        var unit = collisions[i];
                         this.onCollisionWithUnit(collisions[i]);
                         break;
                 }
             }
         }
-
-        if (this.isActive) {
-            this.timeElapsed += deltaTime;
-            if (this.timeElapsed >= this.duration) {
-                //zoom camera back in
-                this.isActive = false;
-            }
-        }
     }
 
     onCollisionWithUnit(unit) {
-        // zoom camera out
+        // if (unit.team.satelliteParts++ === Satellite.REQUIRED_PARTS) {
+        //     new SatelliteDish(this.game,
+        //         this.x,
+        //         this.y,
+        //         this.direction,
+        //         'satellite-sprite-path',
+        //         this.collisionRadius,
+        //         unit.team);
+        // } else {
+        //     console.log('Collected another part');
+        // }
+        //destroy()?? dont wanna render anymore
     }
-}

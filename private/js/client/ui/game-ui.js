@@ -3,21 +3,20 @@ class GameUi {
         this.game = game;
         this.element = document.getElementById('game');
         this.hud = document.getElementById('hud');
+        this.data = {};
     }
 
     render() {
-        this.hud.innerHTML = `
-            Test
-        `;
+        if (this.data.part) {
+            this.hud.innerHTML = `Press [A] or [Space] to pick up part`;
+        }
     }
 
     show() {
         this.element.style.display = 'block';
-        this.hud.style.display = 'block';
     }
 
     hide() {
         this.element.style.display = 'none';
-        this.hud.style.display = 'none';
     }
 }

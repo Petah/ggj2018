@@ -70,6 +70,10 @@ module.exports = class Client {
             this.view.y = averageY - this.view.height / 2;
         }
 
+        let hud = {
+            part: false,
+        };
+
         const updates = [];
         let i = this.game.gameObjects.length;
         while (i--) {
@@ -87,8 +91,13 @@ module.exports = class Client {
                     this.game.gameObjects[i].sprite,
                 ]);
             }
-        }
 
+            if (this.game.gameObjects[i].canPickUpPart) {
+                console.log('Setting part to true');
+                hud.part = true;
+            }
+        }
+        this.send('hud', hud);
         this.send('update', {
             renderer: {
                 x: this.view.x,
