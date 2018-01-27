@@ -87,6 +87,19 @@ module.exports = class Client {
             winningTeam: null
         };
 
+        if (this.view.x < 0) {
+            this.view.x = 0;
+        }
+        if (this.view.y < 0) {
+            this.view.y = 0;
+        }
+        if (this.view.x + this.view.width > this.game.mapWidth) {
+            this.view.x = this.game.mapWidth - this.view.width;
+        }
+        if (this.view.y + this.view.height > this.game.mapHeight) {
+            this.view.y = this.game.mapHeight - this.view.height;
+        }
+
         const padding = 200;
         const updates = [];
         let i = this.game.gameObjects.length;

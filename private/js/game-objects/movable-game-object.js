@@ -55,6 +55,18 @@ module.exports = class extends GameObject {
         this.oldY = this.y;
         this.x += this.xVelocity * deltaTime;
         this.y += this.yVelocity * deltaTime;
+        if (this.x < 0) {
+            this.x = 0;
+        }
+        if (this.y < 0) {
+            this.y = 0;
+        }
+        if (this.x > this.game.mapWidth) {
+            this.x = this.game.mapWidth;
+        }
+        if (this.y > this.game.mapHeight) {
+            this.y = this.game.mapHeight;
+        }
         if (this.oldX != this.x || this.oldY != this.y) {
             this.direction = math.pointDirection(this.oldX, this.oldY, this.x, this.y);
             while (this.direction < 0) {
