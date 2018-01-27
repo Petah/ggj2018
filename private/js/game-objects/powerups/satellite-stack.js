@@ -23,6 +23,8 @@ class SatelliteStack extends GameObject {
                 'satellite-sprite-path',
                 this.collisionRadius,
                 team);
+        } else {
+            this.sprite++;
         }
     }
 

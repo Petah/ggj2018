@@ -128,7 +128,7 @@ module.exports = class CollectorUnit extends Unit {
                 this.x,
                 this.y,
                 this.direction,
-                'sprite',
+                'satellite-part-spritesprite',
                 this.collisionRadius);
         } else if (this.canAddToStack) {
             this.team.satelliteStack.addPart(this.team);

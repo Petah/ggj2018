@@ -8,6 +8,7 @@ const SpeedPowerUp = require('../game-objects/powerups/speed-powerup');
 const ShieldPowerUp = require('../game-objects/powerups/shield-powerup');
 const Team = require('../player-collections/team');
 const Spawner = require('../game-objects/spawner');
+const SatellitePart = require('../game-objects/powerups/satellite-part');
 const math = require('../utilities/math');
 
 module.exports = class Game {
@@ -92,6 +93,7 @@ module.exports = class Game {
         this.teams = [];
 
         this.initTeams();
+        this.spawnSatelliteParts();
         // this.initializeMapObjects();
     }
 
@@ -118,14 +120,16 @@ module.exports = class Game {
         }
     }
 
-    initializeMapObjects() {
-        this.gameObjects.push(new BulletHellPowerUp(this,
-            this.mapWidth / 2,
-            this.mapHeight / 2,
-            0,
-            3,
-            30,
-            5));
+
+    spawnSatelliteParts() {
+        let i = 0;
+        while (i < 4) {
+            i++;
+            let xPos = -4800 + Math.random() * (4800*2);
+            let yPos = -1620 + Math.random() * (1620*2);
+            this.gameObjects.push(new SatellitePart(this, xPos, yPos, 0, 1, 5));
+            console.log('spawing part at: ' + xPos + ' ' + yPos);
+        }
     }
 
     spawnPowerUp() {

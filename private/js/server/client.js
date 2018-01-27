@@ -103,6 +103,7 @@ module.exports = class Client {
                     0,
                     this.game.gameObjects[i].sprite,
                     this.game.gameObjects[i].moving,
+                    this.game.gameObjects[i].type,
                 ]);
             }
 
