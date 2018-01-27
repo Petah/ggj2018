@@ -1,4 +1,5 @@
 const Unit = require("./unit");
+const math = require('../../utilities/math');
 
 const sprites = {
     up: [21, 31],
@@ -36,6 +37,7 @@ module.exports = class KamikazeUnit extends Unit {
         );
         this.type = 'Unit';
         this.subType = 'KamikazeUnit';
+        this.maxSpeed = 300;
         this.health = 10;
         this.maxHealth = 10;
         this.collisionRadius = 80;
@@ -56,6 +58,17 @@ module.exports = class KamikazeUnit extends Unit {
         }
 
         if (this.speedIncreased) {
+            const collisions = this.game.collisions[this.id];
+            let i = collisions.length;
+            while (i--) {
+                if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
+                    collisions[i].getHurt(this, 9000);
+                    this.game.removeGameObject(this);
+                    return;
+                }
+            }
+
+
             this.timeUntilExplode -= deltaTime;
             if (this.timeUntilExplode <= 0) {
                 console.log('called explode');
@@ -79,5 +92,39 @@ module.exports = class KamikazeUnit extends Unit {
                 this.game.removeGameObject(this);
             }
         }
+    }
+
+    ai() {
+        const target = this.findTarget();
+        if (target) {
+            const direction = math.pointDirection(this.x, this.y, target.x, target.y);
+            const distance = math.pointDistance(this.x, this.y, target.x, target.y);
+            if (distance < 80) {
+                this.shooting = true;
+            } else {
+                this.accelerate(math.lengthDirX(1000, direction), math.lengthDirY(1000, direction));
+            }
+        }
+    }
+
+    findTarget() {
+        let targets = [];
+        let g = this.game.gameObjects.length;
+        while (g--) {
+            if (this.game.gameObjects[g].type == 'Unit' && this.game.gameObjects[g].team.id != this.team.id) {
+                targets.push(this.game.gameObjects[g]);
+            }
+        }
+        let closestDistance = null;
+        let closest = null;
+        let c = targets.length;
+        while (c--) {
+            const distance = math.pointDistance(this.x, this.y, targets[c].x, targets[c].y);
+            if (!closest || distance < closestDistance) {
+                closest = targets[c];
+                closestDistance = distance;
+            }
+        }
+        return closest;
     }
 }

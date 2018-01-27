@@ -37,6 +37,7 @@ module.exports = class CollectorUnit extends Unit {
         );
         this.health = 10;
         this.maxHealth = 10;
+        this.maxSpeed = 280;
         this.hasPart = false;
         this.part = null;
         this.canPickUpPart = false;
@@ -222,10 +223,10 @@ module.exports = class CollectorUnit extends Unit {
 
     ai() {
         // this.accelerate(0, 1);
-        const target = this.findTargets();
-        const direction = math.pointDirection(this.x,this.y,target.x,target.y);
-        const len = math.pointDistance(this.x,this.y, target.x,target.y);
-        this.accelerate(math.lengthDirX(len,direction),math.lengthDirY(len,direction));
+        // const target = this.findTargets();
+        // const direction = math.pointDirection(this.x,this.y,target.x,target.y);
+        // const len = math.pointDistance(this.x,this.y, target.x,target.y);
+        // this.accelerate(math.lengthDirX(len,direction),math.lengthDirY(len,direction));
     }
 
     findTargets(){

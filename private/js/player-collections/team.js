@@ -31,6 +31,7 @@ module.exports = class Team {
     }
 
     addPlayer(player) {
+        console.log('addPlayer');
         this.players.push(player);
         this.nextUnit(player, true);
     }
@@ -38,6 +39,11 @@ module.exports = class Team {
     nextUnit(player, force) {
         if (force || player.nextUnitCooldown <= 0) {
             player.nextUnitCooldown = 1;
+            console.log('nextUnit');
+            if (!this.units.length) {
+                console.log('no units');
+                return;
+            }
             player.unit = this.units[this.nextUnitIndex];
             player.unitIndex = this.nextUnitIndex;
             this.nextUnitIndex++;
@@ -54,7 +60,6 @@ module.exports = class Team {
         }
 
         this.ai();
-
     }
 
     ai() {
@@ -63,7 +68,7 @@ module.exports = class Team {
             let found = false;
             let p = this.players.length;
             while (p--) {
-                if (this.players[p].unit.id == this.units[u].id) {
+                if (this.players[p].unit && this.players[p].unit.id == this.units[u].id) {
                     found = true;
                     break;
                 }
@@ -71,6 +76,18 @@ module.exports = class Team {
 
             if (!found) {
                 this.units[u].ai();
+            }
+        }
+    }
+
+    removeUnits(gameObjectsToRemove) {
+        this.units = this.units.filter(gameObject => gameObjectsToRemove.indexOf(gameObject.id) === -1);
+        let p = this.players.length;
+        while (p--) {
+            if (this.players[p].unit && gameObjectsToRemove.indexOf(this.players[p].unit.id) !== -1) {
+                console.log('killing player');
+                this.players[p].unit = null;
+                this.nextUnit(true);
             }
         }
     }

@@ -10,6 +10,11 @@ module.exports = class Player {
     loop(deltaTime, currentTime) {
         this.nextUnitCooldown -= deltaTime;
 
+        if (!this.unit) {
+            // console.log('player', null);
+            return;
+        }
+        // console.log('player', this.unit.subType);
         let x = this.unit.x;
         let y = this.unit.y;
 

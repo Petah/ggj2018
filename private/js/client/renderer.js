@@ -1,7 +1,7 @@
 const assets = {
     1: '/images/placeholder.png',
     2: '/images/placeholder2.png',
-    3: '/images/placeholder3.jpg',
+    3: '/images/placeholder3.png',
     4: '/images/placeholder4.png',
 
     5: '/animations/collector-front-0.png',
@@ -75,15 +75,15 @@ const assets = {
 
     209: '/images/satellite/satellite-complete.png',
 
-    300: '/images/projectiles/tank_projectiles1.png',
-    301: '/images/projectiles/tank_projectiles2.png',
-    302: '/images/projectiles/tank_projectiles3.png',
-    303: '/images/projectiles/tank_projectiles4.png',
+    300: '/images/projectiles/tank-projectiles1.png',
+    301: '/images/projectiles/tank-projectiles2.png',
+    302: '/images/projectiles/tank-projectiles3.png',
+    303: '/images/projectiles/tank-projectiles4.png',
 
-    310: '/images/projectiles/tank2_projectiles1.png',
-    311: '/images/projectiles/tank2_projectiles2.png',
-    312: '/images/projectiles/tank2_projectiles3.png',
-    313: '/images/projectiles/tank2_projectiles4.png',
+    310: '/images/projectiles/tank2-projectiles1.png',
+    311: '/images/projectiles/tank2-projectiles2.png',
+    312: '/images/projectiles/tank2-projectiles3.png',
+    313: '/images/projectiles/tank2-projectiles4.png',
 
     701: '/images/bg-tiled-green-2.png',
     702: '/images/bg-tiled-green-3.png',
@@ -304,6 +304,9 @@ class Renderer {
     }
 
     createSprite(id, spriteAsset, x = 0, y = 0, anchor = 0.5, layer = 'foreground') {
+        if (!spriteAsset) {
+            throw new Error('Missing sprite');
+        }
         const sprite = new PIXI.extras.AnimatedSprite(this.animations[spriteAsset] || [this.textures[spriteAsset]]);
 
         sprite.anchor.set(0.5);
