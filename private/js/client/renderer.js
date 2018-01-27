@@ -4,15 +4,15 @@ const assets = {
     3: '/images/placeholder3.jpg',
     4: '/images/placeholder4.png',
 
-    5: '/images/collector-front-1.png',
-    6: '/images/collector-back-1.png',
-    7: '/images/collector-left-1.png',
-    8: '/images/collector-right-1.png',
+    5: '/animations/collector-front-walk-1.png',
+    6: '/animations/collector-back-0.png',
+    7: '/animations/collector-side-left-0.png',
+    8: '/animations/collector-side-0.png',
 
-    9: '/images/collector-front-2.png',
-    10: '/images/collector-back-2.png',
-    11: '/images/collector-left-2.png',
-    12: '/images/collector-right-2.png',
+    9: '/animations/collector2-front-0.png',
+    10: '/animations/collector2-back-1.png',
+    11: '/animations/collector2-side-left-1.png',
+    12: '/animations/collector2-side-0.png',
 
     20: '/images/kamikaze-front.png',
     21: '/images/kamikaze-back.png',
@@ -34,11 +34,15 @@ const assets = {
     52: '/images/shooter2-left.png',
     53: '/images/shooter2-right.png',
 
-    60: '/images/tank-front-0.png',
-    61: '/images/tank-back-0.png',
+    60: '/animations/tank-front-0.png',
+    61: '/animations/tank-back-0.png',
+    62: '/animations/tank-left-1.png',
+    63: '/animations/tank-right-1.png',
 
-    70: '/images/tank2-front-0.png',
-    71: '/images/tank2-back-0.png',
+    70: '/animations/tank2-front-0.png',
+    71: '/animations/tank2-back-0.png',
+    72: '/animations/tank2-left-1.png',
+    73: '/animations/tank2-right-1.png',
 
     100: '/images/power-up-blue.png',
     101: '/images/power-up-yellow.png',
@@ -71,6 +75,7 @@ const assets = {
 };
 
 const animations = {
+    // Collector
     5: [
         '/animations/collector-front-walk-1.png',
         '/animations/collector-front-walk-2.png',
@@ -117,6 +122,40 @@ const animations = {
         '/animations/collector2-side-3.png',
         '/animations/collector2-side-4.png',
         '/animations/collector2-side-5.png',
+    ],
+
+    // Tank
+    60: [
+        '/animations/tank-front-0.png',
+        '/animations/tank-front-1.png',
+    ],
+    61: [
+        '/animations/tank-back-0.png',
+        '/animations/tank-back-1.png',
+    ],
+    62: [
+        '/animations/tank-left-1.png',
+        '/animations/tank-left-2.png',
+    ],
+    63: [
+        '/animations/tank-right-1.png',
+        '/animations/tank-right-2.png',
+    ],
+    70: [
+        '/animations/tank2-front-0.png',
+        '/animations/tank2-front-1.png',
+    ],
+    71: [
+        '/animations/tank2-back-0.png',
+        '/animations/tank2-back-1.png',
+    ],
+    72: [
+        '/animations/tank2-left-1.png',
+        '/animations/tank2-left-2.png',
+    ],
+    73: [
+        '/animations/tank2-right-1.png',
+        '/animations/tank2-right-2.png',
     ],
 };
 
@@ -168,10 +207,10 @@ class Renderer {
         // Init effects
         const effects = new Effects(this.layers.background);
         effects.spawnRandomOrbs(1, 200, [
-            [0x379392, 0.5],
-            [0xE8F895, 0.5],
-            [0x8BAB78, 0.5],
-            [0xFFFFFF, 0.5],
+            0x379392,
+            0xE8F895,
+            0x8BAB78,
+            0xFFFFFF,
         ]);
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
