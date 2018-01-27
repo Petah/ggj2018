@@ -1,8 +1,8 @@
 const assets = {
-    1: '/images/bunny.png',
-    2: '/images/ship.png',
-    3: '/images/background_nebula.jpg',
-    4: '/images/projectile.png',
+    1: '/images/placeholder.png',
+    2: '/images/placeholder.png',
+    3: '/images/placeholder.jpg',
+    4: '/images/placeholder.png',
 
     5: '/images/collector-front-1.png',
     6: '/images/collector-back-1.png',
@@ -187,8 +187,6 @@ class Renderer {
 
         this.sprites[id].x = x;
         this.sprites[id].y = y;
-        this.sprites[id].scale.x = 0.2;
-        this.sprites[id].scale.y = 0.2;
 
         let currentAnimationId = this.sprites[id].animationId;
         if (this.animations[spriteAsset]) {
@@ -203,6 +201,12 @@ class Renderer {
             this.sprites[id].textures = [this.textures[spriteAsset]];
             this.sprites[id].animationId = null;
         }
+    }
+
+    sortSprites() {
+        this.layers.foreground.children.sort((a, b) => {
+            return a.y - b.y;
+        })
     }
 
     cullSprites(gameObjects) {
