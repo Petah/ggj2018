@@ -57,4 +57,11 @@ module.exports = class Server {
     removeClient(id) {
         this.clients = this.clients.filter(client => client.id != id);
     }
+
+    send(type, data) {
+        let i = this.clients.length;
+        while (i--) {
+            this.clients[i].send(type, data);
+        }
+    }
 }
