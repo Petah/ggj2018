@@ -3,6 +3,7 @@ const Server = require('./server');
 const MovableGameObject = require('../game-objects/movable-game-object');
 const BulletHellPowerUp = require('../game-objects/powerups/bullet-hell-powerup');
 const Team = require('../player-collections/team');
+const Spawner = require('../game-objects/spawner');
 
 module.exports = class Game {
     constructor() {
@@ -70,7 +71,23 @@ module.exports = class Game {
         let i = this.teamAmount;
         while (i--) {
             this.teams.push(new Team(this));
+            this.createSpawnerForTeam(i);
         }
+    }
+
+    createSpawnerForTeam(teamValue) {
+        let x = (((Math.round(teamValue + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
+        let y = (((Math.round(teamValue + 1) % 2) * this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
+
+        console.log("TeamValue: " + teamValue + "x: " + x, "y: " + y);
+
+        this.gameObjects.push(new Spawner(this),
+            x,
+            y,
+            0,
+            1, // Sprite
+            30,
+            this.teams[teamValue]);
     }
 
     initializeMapObjects() {

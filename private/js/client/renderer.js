@@ -12,6 +12,7 @@ const assets = {
     11: '/images/collector-left-2.png',
     12: '/images/collector-right-2.png',
     700: '/images/bg-tiled-bacteria.jpg',
+    700: '/images/sand.png',
     800: '/images/bg-tiled-stones.jpg',
 };
 
@@ -217,9 +218,9 @@ class Renderer {
             this.renderer.stage.addChild(this.layers.foreground);
 
             // Init background
-            let texture = PIXI.Texture.fromImage(assets[800]);
-            this.sprites.background = new PIXI.extras.TilingSprite(texture, 15360, 9792);
-            this.sprites.background.setTransform(-7680, -4896);
+            let texture = PIXI.Texture.fromImage(assets[700]);
+            this.sprites.background = new PIXI.extras.TilingSprite(texture, 9600, 3240);
+            this.sprites.background.setTransform(-4800, -1620);
             this.layers.background.addChild(this.sprites.background);
 
             window.addEventListener('resize', this.resizeViewport.bind(this));
