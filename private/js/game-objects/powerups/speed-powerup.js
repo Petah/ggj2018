@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-class SpeedPowerUp extends GameObject {
+module.exports = class SpeedPowerUp extends GameObject {
     constructor(
         game,
         x,
@@ -41,7 +41,7 @@ class SpeedPowerUp extends GameObject {
             }
         }
 
-        if (isActive) {
+        if (this.isActive) {
             this.timeElapsed+=deltaTime;
             if (this.timeElapsed >= this.duration) {
                 unit.xVelocity -= this.speedIncrease;
