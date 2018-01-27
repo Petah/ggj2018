@@ -69,7 +69,7 @@ module.exports = class Game {
     }
 
     initializeMapObjects() {
-        this.gameObjects.push(new BulletHell(this,
+        this.gameObjects.push(new BulletHellPowerUp(this,
             this.mapWidth/2,
             this.mapHeight/2,
             0,
@@ -109,7 +109,8 @@ module.exports = class Game {
                 0,
                 3,
                 30,
-                10));
+                10,
+                100));
         } else if (randomPowerUp <= 0.8) {
             this.gameObjects.push(new SpeedPowerUp(
                 this,
@@ -118,7 +119,8 @@ module.exports = class Game {
                 0,
                 3,
                 30,
-                10));
+                10,
+                100));
         } else {
             this.gameObjects.push(new FauxPowerUp(
                 this,
