@@ -88,6 +88,6 @@ Satellite = class extends GameObject{
     }
 };
 
-Satellite.REQUIRED_PARTS = 4;
+Satellite.REQUIRED_PARTS = 3;
 
 module.exports = Satellite;

@@ -40,84 +40,20 @@ module.exports = class CollectorUnit extends Unit {
         this.canPickUpPart = false;
         this.canAddToStack = false;
         this.canStealFromStack = false;
-        this.timeToSteal = 3000;
+        this.timeToSteal = 3;
+        this.timeToHold = 20;
         this.timeElapsed = 0;
         this.isStealing = false;
         this.type = 'Unit';
         this.subType = 'CollectorUnit';
         this.collisionRadius = 40;
-        this.attacking = false;
         this.collectState = null;
-        this.timeToCollect = 0.5;
-    }
-
-    attack() {
-        this.shooting = true;
-        // if (this.canPickUpPart && !this.hasPart) {
-        //     this.pickupPart();
-        // }  else if (this.canStealFromStack && !this.hasPart) {
-        //     this.isStealing = true;
-        // } else if (this.hasPart) {
-        //     this.placePart();
-        // }
-    }
-
-    onDie() {
-        //
+        this.timeToCollect = 1;
     }
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
         this.updateSprite(sprites);
-
-
-        // let noPartCollision = true;
-        // let noStackCollision = true;
-        // let stack = null;
-
-        // const collisions = this.game.collisions[this.id];
-        // let i = collisions.length;
-        // while (i--) {
-        //     switch(collisions[i].type) {
-        //         case 'SatellitePart':
-        //             this.canPickUpPart = true;
-        //             this.part = collisions[i];
-        //             noPartCollision = false;
-        //             break;
-
-        //         case 'SatelliteStack':
-        //             stack = collisions[i];
-        //             if (collisions[i].team === this.team) {
-        //                 this.canAddToStack = true;
-        //                 noStackCollision = false;
-        //             } else {
-        //                 this.canStealFromStack = true;
-        //             }
-        //             break;
-        //     }
-        // }
-
-        // if (noPartCollision) {
-        //     this.canPickUpPart = false;
-        //     this.part = null;
-        // }
-
-        // if (noStackCollision) {
-        //     this.canAddToStack = false;
-        //     this.canStealFromStack = false;
-        //     this.isStealing = false;
-        //     this.timeElapsed = 0;
-        // }
-
-        // if (this.isStealing) {
-        //     this.timeElapsed += deltaTime;
-        //     if (this.timeElapsed >= this.timeToSteal) {
-        //         this.hasPart = true;
-        //         if (stack !== null) {
-        //             stack.removePart();
-        //         }
-        //     }
-        // }
 
         if (this.shooting) {
             switch (this.collectState) {
@@ -167,6 +103,7 @@ module.exports = class CollectorUnit extends Unit {
                                 this.team,
                             );
                             stack.addPart(this.hasPart);
+                            this.team.satelliteStack = stack;
                             this.game.gameObjects.push(stack);
                         } else {
                             this.collectUnit.addPart(this.hasPart);
@@ -175,6 +112,16 @@ module.exports = class CollectorUnit extends Unit {
                         this.hasPart = false;
                         this.collectState = null;
                         this.collectUnit = null;
+                    }
+                    break;
+                }
+                case 'holding': {
+                    console.log('holding... ' + this.timeToHold);
+                    this.accelerate(0, 0);
+                    this.timeToHold -= deltaTime;
+                    if (this.timeToHold <= 0) {
+                        console.log('held!!! ' + this.team + ' wins!');
+                        this.game.reset();
                     }
                     break;
                 }
@@ -195,6 +142,10 @@ module.exports = class CollectorUnit extends Unit {
                         this.collectState = 'placing';
                         this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
+                    } else if (collision = this.canHold()) {
+                        console.log('can hold', collision);
+                        this.collectState = 'holding';
+                        this.collectUnit = collision;
                     } else {
                         console.log('can nothing');
                     }
@@ -213,7 +164,7 @@ module.exports = class CollectorUnit extends Unit {
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while (i--) {
-            if (collisions[i].type == 'SatellitePart') {
+            if (collisions[i].type === 'SatellitePart') {
                 return collisions[i];
             }
         }
@@ -228,7 +179,7 @@ module.exports = class CollectorUnit extends Unit {
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while (i--) {
-            if (collisions[i].type == 'SatelliteStack') {
+            if (collisions[i].type === 'SatelliteStack' && collisions[i].team.id !== this.team.id) {
                 return collisions[i];
             }
         }
@@ -240,40 +191,36 @@ module.exports = class CollectorUnit extends Unit {
             const collisions = this.game.collisions[this.id];
             let i = collisions.length;
             while (i--) {
-                if (collisions[i].type == 'SatelliteStack' && collisions[i].team.id === this.team.id) {
+                if (collisions[i].type === 'SatelliteStack' && collisions[i].team.id === this.team.id) {
                     console.log('asdsadasdsadas', collisions[i]);
                     return collisions[i];
                 }
             }
-            return true;
+            return this.team.satelliteStack === null;
         }
         return false;
+    }
+
+    canHold() {
+        const collisions = this.game.collisions[this.id];
+        let i = collisions.length;
+        while (i--) {
+            if (collisions[i].type === 'SatelliteStack' &&
+                collisions[i].team.id === this.team.id &&
+                collisions[i].isFullStack) {
+                return collisions[i];
+            }
+        }
+        return null;
+    }
+
+    onDie() {
+        super.onDie();
+        //TODO: Game over coz yo collecti boi ded
+
     }
 
     ai() {
         this.accelerate(0, 1);
     }
-
-    // pickupPart() {
-    //     if (!this.pickingUp) {
-
-    //     }
-    //     this.hasPart = true;
-    //     this.canPickUpPart = false;
-    //     this.game.removeGameObject(this.part);
-    //     this.part = null;
-    // }
-
-    // placePart() {
-    //     if (this.team.satelliteStack === null) {
-    //         this.team.satelliteStack = new SatelliteStack(
-    //             this.game,
-    //             this.x,
-    //             this.y,
-    //         );
-    //         this.game.gameObjects.push(this.team.satelliteStack);
-    //     } else if (this.canAddToStack) {
-    //         this.team.satelliteStack.sprites.addPart(this.team);
-    //     }
-    // }
 }

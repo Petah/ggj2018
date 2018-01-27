@@ -32,23 +32,12 @@ class SatelliteStack extends GameObject {
         this.type = 'SatelliteStack';
         this.layer = 'map';
         this.parts = {};
+        this.isFullStack = false;
     }
 
     addPart(sprite) {
         this.parts[sprite] = true;
         this.updateSprite();
-
-        // if (this.currentSize++ === this.maxSize) {
-        //     this.game.gameObjects.push(new Satellite(this.game,
-        //         this.x,
-        //         this.y,
-        //         this.direction,
-        //         'satellite-sprite-path',
-        //         this.collisionRadius,
-        //         team));
-        // } else {
-        //     this.sprite++;
-        // }
     }
 
     removePart(sprite) {
@@ -65,6 +54,7 @@ class SatelliteStack extends GameObject {
     updateSprite() {
         if (this.parts[sprites.antenna] && this.parts[sprites.dish] && this.parts[sprites.frame]) {
             this.sprite = sprites.complete;
+            this.isFullStack = true;
         } else if (this.parts[sprites.antenna] && this.parts[sprites.dish]) {
             this.sprite = sprites.antennaDishPlaced;
         } else if (this.parts[sprites.antenna] && this.parts[sprites.frame]) {
