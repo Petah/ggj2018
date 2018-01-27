@@ -133,9 +133,7 @@ module.exports = class Game {
     }
 
     spawnPowerUp() {
-        console.log('spawnPowerUp');
-
-        this.powerUpCooldown = 1;
+        this.powerUpCooldown = 20;
         const x = Math.random() * (this.mapWidth * 0.8);
         const y = Math.random() * (this.mapHeight * 0.8);
 
