@@ -9,9 +9,9 @@ const sprites = {
     dishPlaced: 204,
     framePlaced: 205,
 
-    antennaDishPlaced: 206,
-    antennaFramePlaced: 207,
-    dishFramePlaced: 208,
+    antennaDishPlaced: 208,
+    antennaFramePlaced: 206,
+    dishFramePlaced: 207,
 
     complete: 209,
 };
@@ -49,6 +49,10 @@ class SatelliteStack extends GameObject {
     }
 
     updateSprite() {
+        console.log("parts antenna: " + this.parts[sprites.antenna]);
+        console.log("parts dish: " + this.parts[sprites.dish]);
+        console.log("parts fram: " + this.parts[sprites.frame]);        
+
         if (this.parts[sprites.antenna] && this.parts[sprites.dish] && this.parts[sprites.frame]) {
             this.sprite = sprites.complete;
             this.isFullStack = true;
