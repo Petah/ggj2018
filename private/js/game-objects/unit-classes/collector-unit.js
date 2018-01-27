@@ -1,6 +1,7 @@
 const logger = require('../../server/logger')(__filename);
 const Unit = require("./unit");
 const SatelliteStack = require('../../game-objects/powerups/satellite-stack')
+const math = require('../../utilities/math');
 
 const sprites = {
     up: [6, 10],
@@ -252,6 +253,31 @@ module.exports = class CollectorUnit extends Unit {
 
     ai() {
         this.accelerate(0, 1);
+        this.findTargets();
+    }
+
+    findTargets(){
+        let targets = [];
+        let i = this.game.gameObjects.length;
+        while(i--){
+            if(this.game.gameObjects[i].type == 'SatellitePart'){
+                targets.push(this.game.gameObjects[i]);
+            }
+        }
+        if(targets.length > 0){
+            let target = targets[targets.length - 1];
+            let distance = math.pointDistance(this.x,this.y,target.x,target.y);
+            i = targets.length;
+            while(i--){
+                let potentialTarget = targets[i];
+                if(math.pointDistance(this.x,this.y,potentialTarget.x,potentialTarget.y) < distance){
+                    target = potentialTarget;
+                }
+            }
+            console.log('Aquired Target ' + target);
+            return target;
+        }
+        console.log(targets);
     }
 
     // pickupPart() {
