@@ -69,7 +69,7 @@ module.exports = class Game {
     }
 
     initializeMapObjects() {
-        this.gameObjects.push(new BulletHell(this,
+        this.gameObjects.push(new BulletHellPowerUp(this,
             this.mapWidth/2,
             this.mapHeight/2,
             0,

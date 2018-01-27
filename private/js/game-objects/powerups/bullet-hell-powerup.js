@@ -1,7 +1,7 @@
 const GameObject = require('../game-object');
 const collision = require("../../utilities/collision");
 
-class BulletHellPowerUp extends GameObject {
+module.exports = class BulletHellPowerUp extends GameObject {
     constructor(
         game,
         x,
