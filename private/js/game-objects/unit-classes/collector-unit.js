@@ -1,6 +1,7 @@
 const logger = require('../../server/logger')(__filename);
 const Unit = require("./unit");
 const SatelliteStack = require('../satellite-stack')
+const math = require('../../utilities/math');
 
 const sprites = {
     up: [6, 10],
@@ -219,7 +220,11 @@ module.exports = class CollectorUnit extends Unit {
     }
 
     ai() {
-        this.accelerate(0, 1);
+        // this.accelerate(0, 1);
+        const target = this.findTargets();
+        const direction = math.pointDirection(this.x,this.y,target.x,target.y);
+        const len = math.pointDistance(this.x,this.y, target.x,target.y);
+        this.accelerate(math.lengthDirX(len,direction),math.lengthDirY(len,direction));
     }
     
     findTargets(){
