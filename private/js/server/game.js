@@ -81,7 +81,12 @@ module.exports = class Game {
 
     createSpawnerForTeam(teamValue) {
         let x = (((Math.round(teamValue + 1) % 2) * this.mapWidth) * 0.9) + (this.mapWidth * 0.05);
-        let y = (((Math.round(teamValue + 1) % 2) * this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
+        let y;
+        if(teamValue <= 2) {
+            y =  (this.mapHeight * 0.05);
+        } else {
+            y = ((this.mapHeight) * 0.9) + (this.mapHeight * 0.05);
+        }
 
         console.log("TeamValue: " + teamValue + "x: " + x, "y: " + y);
 
