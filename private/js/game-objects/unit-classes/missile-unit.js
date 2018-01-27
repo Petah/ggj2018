@@ -47,8 +47,9 @@ module.exports = class MissileUnit extends Unit {
 
         if (this.shooting) {
             if (this.shootingCooldown <= 0) {
+                console.log('shoot');;
                 this.game.gameObjects.push(new MissileProjectile(this.game, this.x, this.y, math.lengthDirX(1000, this.direction), math.lengthDirY(1000, this.direction), this));
-                this.shootingCooldown = 0.5;
+                this.shootingCooldown = 0.05;
             }
         }
         this.shootingCooldown -= deltaTime;
