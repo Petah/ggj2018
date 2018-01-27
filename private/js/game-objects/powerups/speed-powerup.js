@@ -34,8 +34,8 @@ module.exports = class SpeedPowerUp extends GameObject {
             if (collisions[i].id !== this.id) {
                 switch(collisions[i].type) {
                     case 'Unit':
-                        var unit = collisions[i];
-                        this.onCollisionWithUnit(unit);
+                        this.unit = collisions[i];
+                        this.onCollisionWithUnit(this.unit);
                         break;
                 }
             }
@@ -44,8 +44,8 @@ module.exports = class SpeedPowerUp extends GameObject {
         if (this.isActive) {
             this.timeElapsed+=deltaTime;
             if (this.timeElapsed >= this.duration) {
-                unit.xVelocity -= this.speedIncrease;
-                unit.yVelocity -= this.speedIncrease;
+                this.unit.xVelocity -= this.speedIncrease;
+                this.unit.yVelocity -= this.speedIncrease;
                 this.isActive = false;
             }
         }
@@ -55,8 +55,9 @@ module.exports = class SpeedPowerUp extends GameObject {
     onCollisionWithUnit(unit) {
         if (!this.isActive) {
             this.isActive = true;
-            unit.xVelocity += this.speedIncrease;
-            unit.yVelocity += this.speedIncrease;
+            this.unit = unit;
+            this.unit.xVelocity += this.speedIncrease;
+            this.unit.yVelocity += this.speedIncrease;
         }
         //destroy()?? dont wanna render anymore
     }

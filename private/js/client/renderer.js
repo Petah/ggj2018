@@ -14,9 +14,33 @@ const assets = {
     11: '/images/collector-left-2.png',
     12: '/images/collector-right-2.png',
 
-    700: '/images/bg-tiled-bacteria.jpg',
-    700: '/images/sand.png',
-    800: '/images/bg-tiled-stones.jpg',
+    20: '/images/kamikaze-front.png',
+    21: '/images/kamikaze-back.png',
+    22: '/images/kamikaze-left.png',
+    23: '/images/kamikaze-right.png',
+
+    30: '/images/kamikaze2-front.png',
+    31: '/images/kamikaze2-back.png',
+    32: '/images/kamikaze2-left.png',
+    33: '/images/kamikaze2-right.png',
+
+    40: '/images/shooter-front.png',
+    41: '/images/shooter-back.png',
+    42: '/images/shooter-left.png',
+    43: '/images/shooter-right.png',
+
+    50: '/images/shooter2-front.png',
+    51: '/images/shooter2-back.png',
+    52: '/images/shooter2-left.png',
+    53: '/images/shooter2-right.png',
+
+    60: '/images/tank-front-0.png',
+    61: '/images/tank-back-0.png',
+
+    70: '/images/tank2-front-0.png',
+    71: '/images/tank2-back-0.png',
+
+    700: '/images/bg-tiled-stones.jpg',
 };
 
 const animations = {

@@ -2,6 +2,13 @@ const Unit = require("./unit");
 const KamikazeProjectile = require("./weapons/projectiles/kamikaze-projectile");
 const collision = require("../../utilities/collision");
 
+const sprites = {
+    up: [21, 31],
+    down: [20, 30],
+    left: [22, 32],
+    right: [23, 33],
+};
+
 module.exports = class KamikazeUnit extends Unit {
     constructor(
         game,
@@ -18,7 +25,7 @@ module.exports = class KamikazeUnit extends Unit {
             x,
             y,
             direction,
-            sprite,
+            sprites.up[team.id],
             xVelocity,
             yVelocity,
             team,
@@ -36,6 +43,8 @@ module.exports = class KamikazeUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
+        this.updateSprite(sprites);
+
         const collisions = collision.getCollisions(this.game, this.x, this.y, this.collisionRadius);
         let i = collisions.length;
         while (i--) {

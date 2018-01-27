@@ -13,9 +13,15 @@ class Client {
         // Create WebSocket connection.
         this.socket = new WebSocket('ws://' + location.hostname + ':8081');
 
+        // Init renderer
         const gameContainer = document.getElementById('game');
         const renderer = new Renderer();
         gameContainer.appendChild(renderer.getView());
+
+        // Init audio
+        var audio = new Audio();
+        audio.init();
+        audio.play('ambient-1', 'background');
 
         // Connection opened
         this.socket.addEventListener('open', (event) => {
@@ -51,13 +57,25 @@ class Client {
                         renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
                         renderer.cameraZoomAbsolute(message.data.renderer.zoom);
                     }
-                    break;
-                }
-                case 'hud': {
-                    this.game.gameUi.data = message.data;
+
                     break;
                 }
 
+                case 'hud': {
+                    this.game.gameUi.data = message.data;
+
+                    break;
+                }
+                case 'playAudioAtPoint': {
+                    if (message.data.audioClip) {
+                        // @Todo
+                        // Check if object inside viewport
+                        console.log(`Playing audioClip: ${message.data.audioClip}`);
+                        audio.play(message.data.audioClip);
+                    }
+
+                    break;
+                }
             }
         });
     }

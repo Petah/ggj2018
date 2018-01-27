@@ -34,4 +34,16 @@ module.exports = class Unit extends MovableGameObject {
     showDeathAnimation() {
 
     }
+
+    updateSprite(sprites) {
+        if (this.direction >= 230 && this.direction <= 320) {
+            this.sprite = sprites.up[this.team.id];
+        } else if (this.direction >= 140 && this.direction <= 230) {
+            this.sprite = sprites.left[this.team.id];
+        } else if (this.direction >= 50 && this.direction <= 140) {
+            this.sprite = sprites.down[this.team.id];
+        } else {
+            this.sprite = sprites.right[this.team.id];
+        }
+    }
 }
