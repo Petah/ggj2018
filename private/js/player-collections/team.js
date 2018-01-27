@@ -32,7 +32,6 @@ module.exports = class Team {
     }
 
     nextUnit(player, force) {
-        console.log(player.nextUnitCooldown);
         if (force || player.nextUnitCooldown <= 0) {
             player.nextUnitCooldown = 1;
             player.unit = this.units[this.nextUnitIndex];
