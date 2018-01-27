@@ -37,7 +37,7 @@ module.exports = class CollectorUnit extends Unit {
         );
         this.health = 10;
         this.maxHealth = 10;
-        this.maxSpeed = 280;
+        this.maxSpeed = 260;
         this.hasPart = false;
         this.part = null;
         this.canPickUpPart = false;
@@ -161,7 +161,7 @@ module.exports = class CollectorUnit extends Unit {
         if (this.hasPart) {
             return null;
         }
-console.log(this.id);
+
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while (i--) {
