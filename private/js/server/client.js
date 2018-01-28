@@ -92,12 +92,7 @@ module.exports = class Client {
         }
 
         let hud = {
-            canPickUp: false,
-            hasPart: false,
-            isStealing: false,
-            stealType: null,
-            gameOver: false,
-            winningTeam: null
+            collectState: {},
         };
 
         if (this.view.x < 0) {
@@ -134,22 +129,8 @@ module.exports = class Client {
                 ]);
             }
 
-            if (this.game.gameObjects[i].canPickUpPart) {
-                hud.canPickUp = true;
-            }
-
-            if (this.game.gameObjects[i].isStealing) {
-                hud.isStealing = true;
-                hud.stealType = this.game.gameObjects[i].type;
-            }
-
-            if (this.game.gameObjects[i].part !== null) {
-                hud.hasPart = true;
-            }
-
-            if (this.game.gameObjects[i].winningTeam !== null) {
-                hud.gameOver = true;
-                hud.winningTeam = this.game.gameObjects[i].winningTeam;
+            if (this.game.gameObjects[i].subType === 'CollectorUnit') {
+                hud.collectState[this.game.gameObjects[i].team.id] = this.game.gameObjects[i].collectState;
             }
         }
         this.send('hud', hud);

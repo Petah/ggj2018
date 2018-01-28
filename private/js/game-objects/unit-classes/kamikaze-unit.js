@@ -38,8 +38,6 @@ module.exports = class KamikazeUnit extends Unit {
         this.type = 'Unit';
         this.subType = 'KamikazeUnit';
         this.maxSpeed = 240;
-        this.health = 10;
-        this.maxHealth = 10;
         this.collisionRadius = 80;
         this.timeUntilExplode = 0;
         this.speedIncreased = false;
@@ -71,7 +69,7 @@ module.exports = class KamikazeUnit extends Unit {
 
             this.timeUntilExplode -= deltaTime;
             if (this.timeUntilExplode <= 0) {
-                console.log('called explode');
+                //console.log('called explode');
                 this.collisionRadius = 150;
                 this.explode();
             }

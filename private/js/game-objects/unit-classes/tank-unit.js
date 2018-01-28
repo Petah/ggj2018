@@ -33,8 +33,8 @@ module.exports = class TankUnit extends Unit {
             yVelocity,
             team,
         );
-        this.health = 100;
-        this.maxHealth = 100;
+        this.health = 300;
+        this.maxHealth = 300;
         this.maxSpeed = 150;
         this.collisionRadius = 80;
         this.type = 'Unit';

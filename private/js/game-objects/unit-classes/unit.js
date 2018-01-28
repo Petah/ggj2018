@@ -19,7 +19,8 @@ module.exports = class Unit extends MovableGameObject {
         this.powerUp = null;
         this.powerUpTime = 0;
         this.shooting = false;
-        this.weapon = null;
+        this.health = 100;
+        this.maxHealth = 100;
     }
 
     getHurt(object, damage) {
