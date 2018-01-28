@@ -52,6 +52,12 @@ module.exports = class Game {
             this.loop(this.deltaTime, this.currentTime);
             if (this.gameObjectsToRemove.length > 0) {
                 this.gameObjects = this.gameObjects.filter(gameObject => this.gameObjectsToRemove.indexOf(gameObject.id) === -1);
+
+                let t = this.teams.length;
+                while (t--) {
+                    this.teams[t].removeUnits(this.gameObjectsToRemove);
+                }
+
                 this.gameObjectsToRemove = [];
             }
             this.id = setImmediate(gameLoop);
@@ -70,16 +76,16 @@ module.exports = class Game {
     }
 
     loop(deltaTime, currentTime) {
-        let t = this.teams.length;
-        while (t--) {
-            this.teams[t].loop(deltaTime, currentTime);
-        }
-
         let g = this.gameObjects.length;
         while (g--) {
             this.gameObjects[g].loop(deltaTime, currentTime);
         }
         this.server.loop(deltaTime, currentTime);
+
+        let t = this.teams.length;
+        while (t--) {
+            this.teams[t].loop(deltaTime, currentTime);
+        }
 
         this.powerUpCooldown -= deltaTime;
         if (this.powerUpCooldown <= 0) {
@@ -117,7 +123,9 @@ module.exports = class Game {
                 30,
             );
             this.gameObjects.push(spawner);
-            this.teams.push(new Team(this, t, spawner));
+            const team = new Team(this, t, spawner);
+            this.teams.push(team);
+            spawner.team = team;
         }
     }
 

@@ -58,6 +58,7 @@ module.exports = class Client {
                     const player = new Player(this.game, message.data.id)
                     this.players[message.data.id] = player;
                     this.game.teams[0].addPlayer(player);
+                    player.team = this.game.teams[0];
                     break;
                 }
             }
@@ -71,10 +72,22 @@ module.exports = class Client {
             this.view.x = averageX - this.view.width / 2;
             this.view.y = averageY - this.view.height / 2;
         }
+        let found = false;
         for (let id in this.players) {
             if (this.players[id].unit) {
                 this.view.x = this.players[id].unit.x - this.view.width / 2;
                 this.view.y = this.players[id].unit.y - this.view.height / 2;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            for (let id in this.players) {
+                if (this.players[id].team.spawner) {
+                    this.view.x = this.players[id].team.spawner.x - this.view.width / 2;
+                    this.view.y = this.players[id].team.spawner.y - this.view.height / 2;
+                    break;
+                }
             }
         }
 

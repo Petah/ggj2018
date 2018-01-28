@@ -37,6 +37,7 @@ module.exports = class CollectorUnit extends Unit {
         );
         this.health = 10;
         this.maxHealth = 10;
+        this.maxSpeed = 280;
         this.hasPart = false;
         this.part = null;
         this.canPickUpPart = false;
@@ -160,7 +161,7 @@ module.exports = class CollectorUnit extends Unit {
         if (this.hasPart) {
             return null;
         }
-
+console.log(this.id);
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
         while (i--) {
@@ -228,9 +229,9 @@ module.exports = class CollectorUnit extends Unit {
             this.shooting = false;
             const target = this.findTargets();
             if(target){
-                const direction = math.pointDirection(this.x,this.y,target.x,target.y);            
-                this.accelerate(math.lengthDirX(1000,direction),math.lengthDirY(1000,direction));            
-            }    
+                const direction = math.pointDirection(this.x,this.y,target.x,target.y);
+                this.accelerate(math.lengthDirX(1000,direction),math.lengthDirY(1000,direction));
+            }
         }
     }
 

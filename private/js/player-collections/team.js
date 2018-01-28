@@ -17,6 +17,7 @@ module.exports = class Team {
         this.satelliteParts = 0;
         this.units = [];
         this.nextUnitIndex = 0;
+        this.unitsToCreate = [];
 
         this.createUnit(new CollectorUnit(this.game, spawner.x - 100, spawner.y, 0, 2, 0, 0, this));
         this.createUnit(new MissileUnit(this.game, spawner.x + 100, spawner.y, 0, 2, 0, 0, this));
@@ -26,11 +27,11 @@ module.exports = class Team {
     }
 
     createUnit(unit) {
-        this.units.push(unit);
-        this.game.gameObjects.push(unit);
+        this.unitsToCreate.push(unit);
     }
 
     addPlayer(player) {
+        console.log('addPlayer');
         this.players.push(player);
         this.nextUnit(player, true);
     }
@@ -38,6 +39,11 @@ module.exports = class Team {
     nextUnit(player, force) {
         if (force || player.nextUnitCooldown <= 0) {
             player.nextUnitCooldown = 1;
+            console.log('nextUnit');
+            if (!this.units.length) {
+                console.log('no units');
+                return;
+            }
             player.unit = this.units[this.nextUnitIndex];
             player.unitIndex = this.nextUnitIndex;
             this.nextUnitIndex++;
@@ -55,6 +61,11 @@ module.exports = class Team {
 
         this.ai();
 
+        while (this.unitsToCreate.length) {
+            let unit = this.unitsToCreate.pop();
+            this.units.push(unit);
+            this.game.gameObjects.push(unit);
+        }
     }
 
     ai() {
@@ -63,7 +74,7 @@ module.exports = class Team {
             let found = false;
             let p = this.players.length;
             while (p--) {
-                if (this.players[p].unit.id == this.units[u].id) {
+                if (this.players[p].unit && this.players[p].unit.id == this.units[u].id) {
                     found = true;
                     break;
                 }
@@ -71,6 +82,18 @@ module.exports = class Team {
 
             if (!found) {
                 this.units[u].ai();
+            }
+        }
+    }
+
+    removeUnits(gameObjectsToRemove) {
+        this.units = this.units.filter(gameObject => gameObjectsToRemove.indexOf(gameObject.id) === -1);
+        let p = this.players.length;
+        while (p--) {
+            if (this.players[p].unit && gameObjectsToRemove.indexOf(this.players[p].unit.id) !== -1) {
+                console.log('killing player');
+                this.players[p].unit = null;
+                this.nextUnit(true);
             }
         }
     }
