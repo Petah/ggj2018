@@ -101,8 +101,7 @@ class Game {
                         // Start
                         if (this.players.length > 0 && this.gamepads[i].buttons[9] && this.gamepads[i].buttons[9].pressed) {
                             this.titleUi.hide();
-                            this.winUi.show();
-                            // this.gameUi.show();
+                            this.gameUi.show();
                             this.state = 'game';
                         }
                     }
@@ -114,8 +113,7 @@ class Game {
 
                 if (this.players.length > 0 && Keyboard.buttons[13]) {
                     this.titleUi.hide();
-                    this.winUi.show();
-                    // this.gameUi.show();
+                    this.gameUi.show();
                     this.state = 'game';
                 }
 
