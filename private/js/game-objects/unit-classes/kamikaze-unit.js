@@ -53,7 +53,7 @@ module.exports = class KamikazeUnit extends Unit {
         if (this.shooting) {
             if (!this.speedIncreased) {
                 this.speedIncreased = true;
-                this.timeUntilExplode = 3;
+                this.timeUntilExplode = 0.5;
                 this.maxSpeed *= 2;
             }
         }
@@ -111,7 +111,9 @@ module.exports = class KamikazeUnit extends Unit {
             if (distance < 80) {
                 this.shooting = true;
             } else {
-                this.accelerate(math.lengthDirX(1000, direction), math.lengthDirY(1000, direction));
+                if (this.shooting || Math.random() < 0.5) {
+                    this.accelerate(math.lengthDirX(1000, direction), math.lengthDirY(1000, direction));
+                }
             }
         }
     }

@@ -89,6 +89,15 @@ class Client {
                     }
                     break;
                 }
+
+                case 'blood': {
+                    if (this.renderer.blood) {
+                        this.renderer.blood.forEach((e) => {
+                            e.emit(message.data.x, message.data.y);
+                        })
+                    }
+                    break;
+                }
             }
         });
     }
