@@ -82,6 +82,9 @@ module.exports = class KamikazeUnit extends Unit {
         const collisions = this.game.collisions[this.id];
         let i = collisions.length;
 
+        console.log("playing explode sound");
+        this.game.playAudioAtPoint('explode', this.x, this.y);
+
         if (i === 0) {
             this.game.removeGameObject(this);
         }

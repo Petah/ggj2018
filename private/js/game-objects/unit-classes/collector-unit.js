@@ -91,7 +91,6 @@ module.exports = class CollectorUnit extends Unit {
                     break;
                 }
                 case 'placing': {
-                    console.log('placing', this.collectTime, this.collectUnit);
                     this.accelerate(0, 0);
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
