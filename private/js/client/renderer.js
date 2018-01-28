@@ -392,14 +392,14 @@ class Renderer {
         this.layers.background = new PIXI.Container();
         this.renderer.stage.addChild(this.layers.background);
 
+        this.layers.particles = new PIXI.Container();
+        this.renderer.stage.addChild(this.layers.particles);
+
         this.layers.map = new PIXI.Container();
         this.renderer.stage.addChild(this.layers.map);
 
         this.layers.foreground = new PIXI.Container();
         this.renderer.stage.addChild(this.layers.foreground);
-
-        this.layers.particles = new PIXI.Container();
-        this.renderer.stage.addChild(this.layers.particles);
 
         // Init background
         // let background1 = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage(assets[702]), 2000, 2000);
@@ -418,18 +418,16 @@ class Renderer {
         //     0x8BAB78,
         //     0xFFFFFF,
         // ]);
-
-        let container = new PIXI.ParticleContainer();
-
-        for (let i = 0; i < 100; ++i)
-        {
-            let sprite = new PIXI.Sprite(this.textures[101]);
-            container.addChild(sprite);
-        }
-        this.renderer.stage.addChild(container);
-
-
-        // this.particles = new Particles(this, this.layers.foreground);
+        this.explode = [
+            effects.starburst(1, [assets[300]]),
+            effects.starburst(1, [assets[301]]),
+            effects.starburst(1, [assets[302]]),
+            effects.starburst(1, [assets[303]]),
+            effects.starburst(2, [assets[310]]),
+            effects.starburst(2, [assets[311]]),
+            effects.starburst(2, [assets[312]]),
+            effects.starburst(2, [assets[313]]),
+        ];
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);
@@ -470,6 +468,7 @@ class Renderer {
         this.layers.foreground.setTransform(-x, -y);
         this.layers.background.setTransform(-x, -y);
         this.layers.map.setTransform(-x, -y);
+        this.layers.particles.setTransform(-x, -y);
     }
 
     // cameraPanRelative(x, y) {

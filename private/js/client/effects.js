@@ -5,6 +5,95 @@ class Effects {
         this.groups = {};
     }
 
+    getParticleConfig(config) {
+        return Object.assign({
+            alpha: {
+                start: 1,
+                end: 1,
+            },
+            scale: {
+                start: 2,
+                end: 1,
+            },
+            color: {
+                start: "ffffff",
+                end: "ffffff",
+            },
+            speed: {
+                start: 200,
+                end: 0,
+            },
+            startRotation: {
+                min: 0,
+                max: 360,
+            },
+            rotationSpeed: {
+                min: 0,
+                max: 0,
+            },
+            lifetime: {
+                min: 0.1,
+                max: 1,
+            },
+            frequency: 0.008,
+            emitterLifetime: 0.31,
+            maxParticles: 30,
+            pos: {
+                x: 0,
+                y: 0,
+            },
+            addAtBack: false,
+            spawnType: "circle",
+            spawnCircle: {
+                x: 0,
+                y: 0,
+                r: 10,
+            }
+        }, config);
+    }
+
+    starburst(effectId = null, assets, config = {}) {
+        effectId = effectId || this.getRandomId();
+        this.groups[effectId] = {};
+
+        this.groups[effectId].textures = assets.map((assetId) => PIXI.Texture.fromImage(assetId));
+        this.groups[effectId].container = new PIXI.particles.ParticleContainer(1000, {
+            scale: true,
+            position: true,
+            rotation: true,
+            uvs: true,
+            alpha: true
+        });
+        this.container.addChild(this.groups[effectId].container);
+
+        let elapsed = Date.now();
+        this.groups[effectId].update = () => {
+            let updateId = requestAnimationFrame(this.groups[effectId].update);
+            let now = Date.now();
+            this.groups[effectId].emitter.update((now - elapsed) * 0.001);
+            elapsed = now;
+        };
+
+        this.groups[effectId].emit = (xPos, yPos) => {
+            this.groups[effectId].emitter.emit = true;
+            this.groups[effectId].emitter.resetPositionTracking();
+            this.groups[effectId].emitter.updateOwnerPos(xPos, yPos);
+        };
+
+        this.groups[effectId].emitter = new PIXI.particles.Emitter(
+            this.groups[effectId].container,
+            this.groups[effectId].textures,
+            this.getParticleConfig(config)
+        );
+
+        this.groups[effectId].emitter.particleConstructor = PIXI.particles.PathParticle;
+        this.groups[effectId].emitter.updateOwnerPos(this.container.width / 2, this.container.height / 2);
+
+        this.groups[effectId].update();
+
+        return this.groups[effectId];
+    }
+
     spawnRandomCircles(effectId, assetId, maxCount, colors = []) {
         this.groups[effectId] = {};
         this.groups[effectId].particles = new PIXI.particles.ParticleContainer(maxCount, {
@@ -25,7 +114,7 @@ class Effects {
         radiusGroups.map((group) => {
             for (let i = 0; i < group[2]; i++) {
                 let circle = PIXI.Sprite.fromImage(assetId);
-                
+
                 circle.scaleMin = group[0];
                 circle.scaleMax = group[1];
 

@@ -38,8 +38,6 @@ module.exports = class KamikazeUnit extends Unit {
         this.type = 'Unit';
         this.subType = 'KamikazeUnit';
         this.maxSpeed = 240;
-        this.health = 10;
-        this.maxHealth = 10;
         this.collisionRadius = 80;
         this.timeUntilExplode = 0;
         this.speedIncreased = false;
@@ -47,6 +45,7 @@ module.exports = class KamikazeUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
+
         this.updateSprite(sprites);
 
         if (this.shooting) {
@@ -63,7 +62,7 @@ module.exports = class KamikazeUnit extends Unit {
             while (i--) {
                 if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
                     collisions[i].getHurt(this, 9000);
-                    this.game.removeGameObject(this);
+                    this.die(collisions[i]);
                     return;
                 }
             }
@@ -71,7 +70,7 @@ module.exports = class KamikazeUnit extends Unit {
 
             this.timeUntilExplode -= deltaTime;
             if (this.timeUntilExplode <= 0) {
-                console.log('called explode');
+                //console.log('called explode');
                 this.collisionRadius = 150;
                 this.explode();
             }
@@ -86,15 +85,23 @@ module.exports = class KamikazeUnit extends Unit {
         this.game.playAudioAtPoint('explode', this.x, this.y);
 
         if (i === 0) {
-            this.game.removeGameObject(this);
+            this.die();
         }
 
         while (i--) {
             if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
                 collisions[i].getHurt(this, 9000);
-                this.game.removeGameObject(this);
+                this.die(collisions[i]);
             }
         }
+    }
+
+    die(target) {
+        this.game.server.send('explode', {
+            x: this.x,
+            y: this.y,
+        });
+        this.game.removeGameObject(this);
     }
 
     ai() {

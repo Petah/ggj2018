@@ -66,12 +66,12 @@ module.exports = class Client {
     }
 
     loop(deltaTime, currentTime) {
-        if (this.game.gameObjects.length) {
-            const averageX = this.game.gameObjects.reduce((p, c) => c.x + p, 0) / this.game.gameObjects.length;
-            const averageY = this.game.gameObjects.reduce((p, c) => c.y + p, 0) / this.game.gameObjects.length;
-            this.view.x = averageX - this.view.width / 2;
-            this.view.y = averageY - this.view.height / 2;
-        }
+        // if (this.game.gameObjects.length) {
+        //     const averageX = this.game.gameObjects.reduce((p, c) => c.x + p, 0) / this.game.gameObjects.length;
+        //     const averageY = this.game.gameObjects.reduce((p, c) => c.y + p, 0) / this.game.gameObjects.length;
+        //     this.view.x = averageX - this.view.width / 2;
+        //     this.view.y = averageY - this.view.height / 2;
+        // }
         let found = false;
         for (let id in this.players) {
             if (this.players[id].unit) {
@@ -81,23 +81,18 @@ module.exports = class Client {
                 break;
             }
         }
-        if (!found) {
-            for (let id in this.players) {
-                if (this.players[id].team.spawner) {
-                    this.view.x = this.players[id].team.spawner.x - this.view.width / 2;
-                    this.view.y = this.players[id].team.spawner.y - this.view.height / 2;
-                    break;
-                }
-            }
-        }
+        // if (!found) {
+        //     for (let id in this.players) {
+        //         if (this.players[id].team.spawner) {
+        //             this.view.x = this.players[id].team.spawner.x - this.view.width / 2;
+        //             this.view.y = this.players[id].team.spawner.y - this.view.height / 2;
+        //             break;
+        //         }
+        //     }
+        // }
 
         let hud = {
-            canPickUp: false,
-            hasPart: false,
-            isStealing: false,
-            stealType: null,
-            gameOver: false,
-            winningTeam: null
+            collectState: {},
         };
 
         if (this.view.x < 0) {
@@ -134,22 +129,8 @@ module.exports = class Client {
                 ]);
             }
 
-            if (this.game.gameObjects[i].canPickUpPart) {
-                hud.canPickUp = true;
-            }
-
-            if (this.game.gameObjects[i].isStealing) {
-                hud.isStealing = true;
-                hud.stealType = this.game.gameObjects[i].type;
-            }
-
-            if (this.game.gameObjects[i].part !== null) {
-                hud.hasPart = true;
-            }
-
-            if (this.game.gameObjects[i].winningTeam !== null) {
-                hud.gameOver = true;
-                hud.winningTeam = this.game.gameObjects[i].winningTeam;
+            if (this.game.gameObjects[i].subType === 'CollectorUnit') {
+                hud.collectState[this.game.gameObjects[i].team.id] = this.game.gameObjects[i].collectState;
             }
         }
         this.send('hud', hud);

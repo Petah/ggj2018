@@ -40,6 +40,7 @@ class SatelliteStack extends GameObject {
     removePart(sprite) {
         this.parts[sprite] = false;
         this.isComplete = false;
+        //console.log(this.parts[sprites.antenna] , this.parts[sprites.dish] , this.parts[sprites.frame]);
         if (!this.parts[sprites.antenna] && !this.parts[sprites.dish] && !this.parts[sprites.frame]) {
             this.game.removeGameObject(this);
             return;

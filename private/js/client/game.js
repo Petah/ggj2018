@@ -10,6 +10,7 @@ class Game {
 
         this.titleUi = new TitleUi(this);
         this.gameUi = new GameUi(this);
+        this.winUi = new WinUi(this);
     }
 
     start() {
@@ -125,6 +126,7 @@ class Game {
                 while (p--) {
                     this.players[p].loop(deltaTime, currentTime);
                 }
+                console.log('render called');
                 this.gameUi.render();
                 break;
             }
