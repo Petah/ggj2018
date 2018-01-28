@@ -193,7 +193,6 @@ module.exports = class CollectorUnit extends Unit {
             let i = collisions.length;
             while (i--) {
                 if (collisions[i].type === 'SatelliteStack' && collisions[i].team.id === this.team.id) {
-                    console.log('asdsadasdsadas', collisions[i]);
                     return collisions[i];
                 }
             }
@@ -223,7 +222,7 @@ module.exports = class CollectorUnit extends Unit {
     ai() {
         // this.accelerate(0, 1);
         if(this.canCollect() || this.canPlace() || this.canSteal() || this.canHold()){
-            console.log('collecti boi doin da shootz');
+            // console.log('collecti boi doin da shootz');
             this.shooting = true;
             this.accelerate(0,0);
         }else {

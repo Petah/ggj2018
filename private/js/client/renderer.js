@@ -420,16 +420,12 @@ class Renderer {
         // ]);
 
         let container = new PIXI.ParticleContainer();
-
         for (let i = 0; i < 100; ++i)
         {
             let sprite = new PIXI.Sprite(this.textures[101]);
             container.addChild(sprite);
         }
         this.renderer.stage.addChild(container);
-
-
-        // this.particles = new Particles(this, this.layers.foreground);
 
         window.addEventListener('resize', this.resizeViewport.bind(this));
         gameContainer.appendChild(this.renderer.view);

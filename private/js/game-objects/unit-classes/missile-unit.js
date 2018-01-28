@@ -49,15 +49,26 @@ module.exports = class MissileUnit extends Unit {
 
         if (this.shooting) {
             if (this.shootingCooldown <= 0) {
-                const direction = this.direction + (Math.random() * 20 - 10);
-                this.game.gameObjects.push(new MissileProjectile(this.game, this.x, this.y, math.lengthDirX(1000, direction), math.lengthDirY(1000, direction), this));
-                this.shootingCooldown = 0.05;
+            	const direction = this.direction + (Math.random() * 20 - 10);
+                this.playShootNoise();
+                this.game.gameObjects.push(new MissileProjectile(this.game, this.x, this.y, math.lengthDirX(1000, this.direction), math.lengthDirY(1000, this.direction), this));
+                this.shootingCooldown = 1;
             }
         }
         this.shootingCooldown -= deltaTime;
     }
 
-    ai() {
+    playShootNoise() {
+
+        const sounds = [
+            'shoot-2',
+            'shoot-3',
+            'shoot-4',
+        ];
+        this.game.playAudioAtPoint(sounds[Math.floor(Math.random() * sounds.length)], this.x, this.y);
+    }
+
+        ai() {
         this.shooting = false;
         const target = this.findTarget();
         if (target) {

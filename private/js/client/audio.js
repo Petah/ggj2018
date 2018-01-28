@@ -10,6 +10,8 @@ class AudioBuffer {
             'shoot-2': '/sounds/shoot-2.ogg',
             'button': '/sounds/button.ogg',
             'radar': '/sounds/radar.wav',
+            'shoot-3': '/sounds/shoot-3.wav',
+            'shoot-4': '/sounds/shoot-4.wav',
         };
         this.buffer = [];
     }
