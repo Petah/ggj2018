@@ -45,6 +45,7 @@ module.exports = class KamikazeUnit extends Unit {
 
     loop(deltaTime, currentTime) {
         super.loop(deltaTime, currentTime);
+
         this.updateSprite(sprites);
 
         if (this.shooting) {
@@ -61,7 +62,7 @@ module.exports = class KamikazeUnit extends Unit {
             while (i--) {
                 if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
                     collisions[i].getHurt(this, 9000);
-                    this.game.removeGameObject(this);
+                    this.die(collisions[i]);
                     return;
                 }
             }
@@ -81,15 +82,23 @@ module.exports = class KamikazeUnit extends Unit {
         let i = collisions.length;
 
         if (i === 0) {
-            this.game.removeGameObject(this);
+            this.die();
         }
 
         while (i--) {
             if (collisions[i].type === 'Unit' && collisions[i].team.id !== this.team.id) {
                 collisions[i].getHurt(this, 9000);
-                this.game.removeGameObject(this);
+                this.die(collisions[i]);
             }
         }
+    }
+
+    die(target) {
+        this.game.server.send('explode', {
+            x: this.x,
+            y: this.y,
+        });
+        this.game.removeGameObject(this);
     }
 
     ai() {

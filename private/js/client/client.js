@@ -1,9 +1,12 @@
-
 console.log('Main');
 
 class Client {
     constructor(game) {
         this.game = game;
+
+        // Init renderer
+        const gameContainer = document.getElementById('game');
+        this.renderer = new Renderer(gameContainer);
     }
 
     connect() {
@@ -12,10 +15,6 @@ class Client {
 
         // Create WebSocket connection.
         this.socket = new WebSocket('ws://' + location.hostname + ':8081');
-
-        // Init renderer
-        const gameContainer = document.getElementById('game');
-        const renderer = new Renderer(gameContainer);
 
         // Init audio
         var audio = new Audio();
@@ -30,8 +29,8 @@ class Client {
             this.send('view', {
                 x: 0,
                 y: 0,
-                width: renderer.width,
-                height: renderer.height,
+                width: this.renderer.width,
+                height: this.renderer.height,
             });
         });
 
@@ -48,14 +47,14 @@ class Client {
                 case 'update': {
                     let i = message.data.updates.length;
                     while (i--) {
-                        renderer.moveSprite(...message.data.updates[i]);
+                        this.renderer.moveSprite(...message.data.updates[i]);
                     }
-                    renderer.cullSprites(message.data.updates);
-                    renderer.sortSprites();
+                    this.renderer.cullSprites(message.data.updates);
+                    this.renderer.sortSprites();
 
                     if (message.data.renderer) {
-                        renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
-                        renderer.cameraZoomAbsolute(message.data.renderer.zoom);
+                        this.renderer.cameraPanAbsolute(message.data.renderer.x, message.data.renderer.y);
+                        this.renderer.cameraZoomAbsolute(message.data.renderer.zoom);
                     }
                     break;
                 }
@@ -71,6 +70,22 @@ class Client {
                         // Check if object inside viewport
                         console.log(`Playing audioClip: ${message.data.audioClip}`);
                         audio.play(message.data.audioClip);
+                    }
+                    break;
+                }
+
+                case 'win': {
+                    console.log('win');
+                    // this.game.gameUI.hide();
+                    // this.game.winUI.show();
+                    break;
+                }
+
+                case 'explode': {
+                    if (this.renderer.explode) {
+                        this.renderer.explode.forEach((e) => {
+                            e.emit(message.data.x, message.data.y);
+                        })
                     }
                     break;
                 }
