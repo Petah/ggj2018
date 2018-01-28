@@ -14,15 +14,15 @@ const assets = {
     11: '/animations/collector2-side-left-5.png',
     12: '/animations/collector2-side-5.png',
 
-    20: '/images/kamikaze-front.png',
-    21: '/images/kamikaze-back.png',
-    22: '/images/kamikaze-left.png',
-    23: '/images/kamikaze-right.png',
+    20: '/animations/kamikaze-front-0.png',
+    21: '/animations/kamikaze-back-0.png',
+    22: '/animations/kamikaze-side-left-0.png',
+    23: '/animations/kamikaze-side-0.png',
 
-    30: '/images/kamikaze2-front.png',
-    31: '/images/kamikaze2-back.png',
-    32: '/images/kamikaze2-left.png',
-    33: '/images/kamikaze2-right.png',
+    30: '/animations/kamikaze2-front-0.png',
+    31: '/animations/kamikaze2-back-0.png',
+    32: '/animations/kamikaze2-side-left-0.png',
+    33: '/animations/kamikaze2-side-0.png',
 
     40: '/animations/shooter-front-walk-0.png',
     41: '/animations/shooter-back-walk-0.png',
@@ -274,6 +274,89 @@ const animations = {
         '/animations/shooter2-side-walk-left-8.png',
         '/animations/shooter2-side-walk-left-9.png',
     ],
+
+    // Kamikaze
+    20: [
+        '/animations/kamikaze-front-0.png',
+        '/animations/kamikaze-front-1.png',
+        '/animations/kamikaze-front-2.png',
+        '/animations/kamikaze-front-3.png',
+        '/animations/kamikaze-front-4.png',
+        '/animations/kamikaze-front-5.png',
+        '/animations/kamikaze-front-6.png',
+        '/animations/kamikaze-front-7.png',
+    ],
+    21: [
+        '/animations/kamikaze-back-0.png',
+        '/animations/kamikaze-back-1.png',
+        '/animations/kamikaze-back-2.png',
+        '/animations/kamikaze-back-3.png',
+        '/animations/kamikaze-back-4.png',
+        '/animations/kamikaze-back-5.png',
+        '/animations/kamikaze-back-6.png',
+        '/animations/kamikaze-back-7.png',
+    ],
+    22: [
+        '/animations/kamikaze-side-left-0.png',
+        '/animations/kamikaze-side-left-1.png',
+        '/animations/kamikaze-side-left-2.png',
+        '/animations/kamikaze-side-left-3.png',
+        '/animations/kamikaze-side-left-4.png',
+        '/animations/kamikaze-side-left-5.png',
+        '/animations/kamikaze-side-left-6.png',
+        '/animations/kamikaze-side-left-7.png',
+    ],
+    23: [
+        '/animations/kamikaze-side-0.png',
+        '/animations/kamikaze-side-1.png',
+        '/animations/kamikaze-side-2.png',
+        '/animations/kamikaze-side-3.png',
+        '/animations/kamikaze-side-4.png',
+        '/animations/kamikaze-side-5.png',
+        '/animations/kamikaze-side-6.png',
+        '/animations/kamikaze-side-7.png',
+    ],
+
+    30: [
+        '/animations/kamikaze2-front-0.png',
+        '/animations/kamikaze2-front-1.png',
+        '/animations/kamikaze2-front-2.png',
+        '/animations/kamikaze2-front-3.png',
+        '/animations/kamikaze2-front-4.png',
+        '/animations/kamikaze2-front-5.png',
+        '/animations/kamikaze2-front-6.png',
+        '/animations/kamikaze2-front-7.png',
+    ],
+    31: [
+        '/animations/kamikaze2-back-0.png',
+        '/animations/kamikaze2-back-1.png',
+        '/animations/kamikaze2-back-2.png',
+        '/animations/kamikaze2-back-3.png',
+        '/animations/kamikaze2-back-4.png',
+        '/animations/kamikaze2-back-5.png',
+        '/animations/kamikaze2-back-6.png',
+        '/animations/kamikaze2-back-7.png',
+    ],
+    32: [
+        '/animations/kamikaze2-side-left-0.png',
+        '/animations/kamikaze2-side-left-1.png',
+        '/animations/kamikaze2-side-left-2.png',
+        '/animations/kamikaze2-side-left-3.png',
+        '/animations/kamikaze2-side-left-4.png',
+        '/animations/kamikaze2-side-left-5.png',
+        '/animations/kamikaze2-side-left-6.png',
+        '/animations/kamikaze2-side-left-7.png',
+    ],
+    33: [
+        '/animations/kamikaze2-side-0.png',
+        '/animations/kamikaze2-side-1.png',
+        '/animations/kamikaze2-side-2.png',
+        '/animations/kamikaze2-side-3.png',
+        '/animations/kamikaze2-side-4.png',
+        '/animations/kamikaze2-side-5.png',
+        '/animations/kamikaze2-side-6.png',
+        '/animations/kamikaze2-side-7.png',
+    ],
 };
 
 class Renderer {
@@ -315,6 +398,9 @@ class Renderer {
         this.layers.foreground = new PIXI.Container();
         this.renderer.stage.addChild(this.layers.foreground);
 
+        this.layers.particles = new PIXI.Container();
+        this.renderer.stage.addChild(this.layers.particles);
+
         // Init background
         // let background1 = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage(assets[702]), 2000, 2000);
         // background1.setTransform(0, 0);
@@ -325,7 +411,7 @@ class Renderer {
         this.createBackground(703, 0.003);
 
         // Init effects
-        const effects = new Effects(this.renderer, this.layers.foreground);
+        const effects = new Effects(this.renderer, this.layers.particles);
         // effects.spawnRandomOrbs(1, 200, [
         //     0x379392,
         //     0xE8F895,

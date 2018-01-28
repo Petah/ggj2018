@@ -6,10 +6,10 @@ const sprites = {
     down: [20, 30],
     left: [22, 32],
     right: [23, 33],
-    upMove: [],
-    downMove: [],
-    leftMove: [],
-    rightMove: [],
+    upMove: [21, 31],
+    downMove: [20, 30],
+    leftMove: [22, 32],
+    rightMove: [23, 33],
 };
 
 module.exports = class KamikazeUnit extends Unit {
@@ -37,7 +37,7 @@ module.exports = class KamikazeUnit extends Unit {
         );
         this.type = 'Unit';
         this.subType = 'KamikazeUnit';
-        this.maxSpeed = 300;
+        this.maxSpeed = 240;
         this.health = 10;
         this.maxHealth = 10;
         this.collisionRadius = 80;
