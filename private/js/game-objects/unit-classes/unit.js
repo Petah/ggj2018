@@ -46,6 +46,8 @@ module.exports = class Unit extends MovableGameObject {
             this.game.playAudioAtPoint('tank-die', this.x, this.y);
         } else if(this.subType === 'CollectorUnit') {
             this.game.playAudioAtPoint('die', this.x, this.y);
+        } else if(this.subType === 'MissileUnit') {
+            this.game.playAudioAtPoint('missile-die', this.x, this.y);
         }
     }
 
@@ -80,6 +82,9 @@ module.exports = class Unit extends MovableGameObject {
                 this.lastPlayedWalkSound = currentTime;
             } else if(this.subType == 'MissileUnit') {
                 this.game.playAudioAtPoint('missile-walk', this.x, this.y);
+                this.lastPlayedWalkSound = currentTime;
+            }  else if(this.subType == 'TankUnit') {
+                this.game.playAudioAtPoint('tank-walk', this.x, this.y);
                 this.lastPlayedWalkSound = currentTime;
             }
         }
