@@ -122,7 +122,7 @@ module.exports = class CollectorUnit extends Unit {
                     this.timeToHold -= deltaTime;
                     if (this.timeToHold <= 0) {
                         console.log('held!!! team' + this.team.id + ' wins!');
-                        this.game.reset();
+                        this.game.win();
                     }
                     break;
                 }

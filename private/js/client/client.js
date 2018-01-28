@@ -74,6 +74,11 @@ class Client {
                     }
                     break;
                 }
+
+                case 'win': {
+                    this.gameUI.hide();
+                    this.winUI.show();
+                }
             }
         });
     }

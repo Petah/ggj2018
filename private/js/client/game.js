@@ -10,6 +10,7 @@ class Game {
 
         this.titleUi = new TitleUi(this);
         this.gameUi = new GameUi(this);
+        this.winUi = new WinUi(this);
     }
 
     start() {

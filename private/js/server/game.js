@@ -226,4 +226,8 @@ module.exports = class Game {
         }
         return result;
     }
+
+    win() {
+        this.server.send('win', {});
+    }
 }
