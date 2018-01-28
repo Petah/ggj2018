@@ -7,25 +7,19 @@ class GameUi {
     }
 
     render() {
-        if (this.data.canPickUp) {
-            this.hud.innerHTML = `Press [A] or [Space] to pick up part`;
+        let text = '';
+        for (let id in this.data.collectState) {
+            if (this.data.collectState[id] !== null) {
+                text += `Team ${id} is ${this.data.collectState[id]}<br>`;
+            }
         }
-
-        if (this.data.isStealing) {
-            this.hud.innerHTML= `Stealing ${this.data.stealType}!`;
-        }
-
-        if (this.data.hasPart) {
-            this.hud.innerHTML = `Carrying part`;
-        }
-
-        if (this.data.gameOver) {
-            this.hud.innerHTML = `Game over: ${this.hud.winningTeam} wins!`;
-        }
+        console.log(text);
+        this.hud.innerHTML = text;
     }
 
     show() {
         this.element.style.display = 'block';
+        this.hud.style.display = 'block';
     }
 
     hide() {

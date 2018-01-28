@@ -34,8 +34,6 @@ module.exports = class MissileUnit extends Unit {
             yVelocity,
             team
         );
-        this.health = 10;
-        this.maxHealth = 10;
         this.maxSpeed = 200;
         this.collisionRadius = 80;
         this.type = 'Unit';

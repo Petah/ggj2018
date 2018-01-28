@@ -59,7 +59,7 @@ module.exports = class CollectorUnit extends Unit {
         if (this.shooting) {
             switch (this.collectState) {
                 case 'collecting': {
-                    // console.log('collecting', this.collectTime);
+                    //console.log('collecting', this.collectTime);
                     this.accelerate(0, 0);
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
@@ -71,7 +71,7 @@ module.exports = class CollectorUnit extends Unit {
                     break;
                 }
                 case 'stealing': {
-                    // console.log('stealing', this.collectTime);
+                    //console.log('stealing', this.collectTime);
                     this.accelerate(0, 0);
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
@@ -91,11 +91,11 @@ module.exports = class CollectorUnit extends Unit {
                     break;
                 }
                 case 'placing': {
-                    // console.log('placing', this.collectTime, this.collectUnit);
+                    //console.log('placing', this.collectTime, this.collectUnit);
                     this.accelerate(0, 0);
                     this.collectTime -= deltaTime;
                     if (this.collectTime <= 0) {
-                        // console.log('place', this.collectUnit);
+                        //console.log('place', this.collectUnit);
                         if (this.collectUnit === true) {
                             const stack = new SatelliteStack(
                                 this.game,
@@ -117,38 +117,38 @@ module.exports = class CollectorUnit extends Unit {
                     break;
                 }
                 case 'holding': {
-                    // console.log('holding... ' + this.timeToHold);
+                    //console.log('holding... ' + this.timeToHold);
                     this.accelerate(0, 0);
                     this.timeToHold -= deltaTime;
                     if (this.timeToHold <= 0) {
-                        // console.log('held!!! team' + this.team.id + ' wins!');
-                        this.game.win();
+                        //console.log('held!!! ' + this.team + ' wins!');
+                        this.game.reset();
                     }
                     break;
                 }
                 default: {
                     let collision;
                     if (collision = this.canCollect()) {
-                        // console.log('can collect');
+                        //console.log('can collect');
                         this.collectState = 'collecting';
                         this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
                     } else if (collision = this.canSteal()) {
-                        // console.log('can steal');
+                        //console.log('can steal');
                         this.collectState = 'stealing';
                         this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
                     } else if (collision = this.canPlace()) {
-                        // console.log('can place', collision);
+                        //console.log('can place', collision);
                         this.collectState = 'placing';
                         this.collectTime = this.timeToCollect;
                         this.collectUnit = collision;
                     } else if (collision = this.canHold()) {
-                        // console.log('can hold', collision);
+                        //console.log('can hold', collision);
                         this.collectState = 'holding';
                         this.collectUnit = collision;
                     } else {
-                        console.log('can nothing');
+                        // //console.log('can nothing');
                     }
                 }
             }

@@ -12,6 +12,12 @@ class AudioBuffer {
             'radar': '/sounds/radar.wav',
             'shoot-3': '/sounds/shoot-3.wav',
             'shoot-4': '/sounds/shoot-4.wav',
+            'tank-die': '/sounds/tank-die.mp3',
+            'collector-walk':'/sounds/collector-walk.ogg',
+            'missile-walk':'/sounds/missile-walk.ogg',
+            'die':'/sounds/die.mp3',
+            'explode':'/sounds/explode.odd',
+
         };
         this.buffer = [];
     }
