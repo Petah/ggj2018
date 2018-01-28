@@ -25,6 +25,7 @@ module.exports = class Game {
 
         this.powerUpCooldown = 0;
         this.collisions = {};
+        this.stopped = false;
     }
 
     start() {
@@ -36,6 +37,9 @@ module.exports = class Game {
         let previousTime = hrTimeInit[0] + hrTimeInit[1] / 1000000000;
         let updates = 0;
         const gameLoop = () => {
+            if (this.stopped) {
+                return;
+            }
             const hrTime = process.hrtime();
             this.currentTime = hrTime[0] + hrTime[1] / 1000000000;
             this.deltaTime = this.currentTime - previousTime;
@@ -69,8 +73,8 @@ module.exports = class Game {
     stop() {
         logger.log('');
         logger.log('Game stop');
-        this.server.stop();
-
+        // this.server.stop();
+        this.stopped = true;
         clearImmediate(this.id);
         this.id = null;
     }
@@ -228,6 +232,7 @@ module.exports = class Game {
     }
 
     win() {
+        this.stop();
         this.server.send('win', {});
     }
 }

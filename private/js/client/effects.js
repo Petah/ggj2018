@@ -7,54 +7,56 @@ class Effects {
 
     getParticleConfig(config) {
         return Object.assign({
-            "alpha": {
-                "start": 0.8,
-                "end": 0.7
+            alpha: {
+                start: 1,
+                end: 1,
             },
-            "scale": {
-                "start": 1,
-                "end": 0.3
+            scale: {
+                start: 2,
+                end: 1,
             },
-            "color": {
-                "start": "e3f9ff",
-                "end": "0ec8f8"
+            color: {
+                start: "ffffff",
+                end: "ffffff",
             },
-            "speed": {
-                "start": 200,
-                "end": 200
+            speed: {
+                start: 200,
+                end: 0,
             },
-            "startRotation": {
-                "min": 0,
-                "max": 0
+            startRotation: {
+                min: 0,
+                max: 360,
             },
-            "rotationSpeed": {
-                "min": 0,
-                "max": 0
+            rotationSpeed: {
+                min: 0,
+                max: 0,
             },
-            "lifetime": {
-                "min": 0.8,
-                "max": 0.8
+            lifetime: {
+                min: 0.1,
+                max: 1,
             },
-            "frequency": 0.2,
-            "emitterLifetime": 0.41,
-            "maxParticles": 1000,
-            "pos": {
-                "x": 0 ,
-                "y": 0,
+            frequency: 0.008,
+            emitterLifetime: 0.31,
+            maxParticles: 30,
+            pos: {
+                x: 0,
+                y: 0,
             },
-            "addAtBack": false,
-            "spawnType": "burst",
-            "particlesPerWave": 8,
-            "particleSpacing": 45,
-            "angleStart": 0
+            addAtBack: false,
+            spawnType: "circle",
+            spawnCircle: {
+                x: 0,
+                y: 0,
+                r: 10,
+            }
         }, config);
     }
 
-    starburst(effectId = null, assetId, config = {}) {
+    starburst(effectId = null, assets, config = {}) {
         effectId = effectId || this.getRandomId();
         this.groups[effectId] = {};
 
-        this.groups[effectId].textures = [PIXI.Texture.fromImage(assetId)];
+        this.groups[effectId].textures = assets.map((assetId) => PIXI.Texture.fromImage(assetId));
         this.groups[effectId].container = new PIXI.particles.ParticleContainer(1000, {
             scale: true,
             position: true,
@@ -112,7 +114,7 @@ class Effects {
         radiusGroups.map((group) => {
             for (let i = 0; i < group[2]; i++) {
                 let circle = PIXI.Sprite.fromImage(assetId);
-                
+
                 circle.scaleMin = group[0];
                 circle.scaleMax = group[1];
 
